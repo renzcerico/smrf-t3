@@ -15,7 +15,7 @@ module.exports = {
     // poolMax: 10,
     // poolIncrement: 0
 
-    user: 'hr',
+    user: 't3',
     password: 'oracle',
     connectString: '//localhost:1521/xe',
     poolMin: 10,
