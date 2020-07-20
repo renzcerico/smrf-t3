@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
+// export interface Representative {
+//   id: number;
+//   department: string;
+// }
 @Component({
   selector: 'app-services-dialog',
   templateUrl: './services-dialog.component.html',
@@ -10,10 +14,34 @@ export class ServicesDialogComponent implements OnInit {
   serviceCode: string;
   serviceName: string;
   serviceDepartment: number;
+  representativeDepartment: Array<any> = [];
 
   constructor(public http: HttpClient) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.getRepresentativeDepartments();
+  }
+
+  getRepresentativeDepartments() {
+    this.http.get('/localapi/service-representatives')
+      .subscribe(
+        res => {
+          const data = res;
+
+          for (let i = 0; i < data.length; i++) {
+            const asd = {
+              id: data[i].REP_ID,
+              department: data[i].REP_NAME
+            };
+
+            this.representativeDepartment.push(asd);
+          }
+
+        },
+        err => {
+          console.log(err);
+        }
+      );
   }
 
   submitServices() {

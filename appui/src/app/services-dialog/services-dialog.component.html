@@ -7,12 +7,16 @@
         </mat-form-field>
         <mat-form-field class="w-100">
             <mat-label>Name</mat-label>
-            <input matInput cdkFocusInitial name="serviceName" [(ngModel)]="serviceName" required>
+            <input matInput name="serviceName" [(ngModel)]="serviceName" required>
         </mat-form-field>
         <mat-form-field class="w-100">
             <mat-label>Department</mat-label>
-            <input matInput cdkFocusInitial name="serviceDepartment" [(ngModel)]="serviceDepartment" required>
-        </mat-form-field>
+            <mat-select name="serviceDepartment" [(ngModel)]="serviceDepartment" required>
+              <mat-option *ngFor="let dept of representativeDepartment" [value]="dept.id">
+                {{ dept.department }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
     </div>
     <div mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>
