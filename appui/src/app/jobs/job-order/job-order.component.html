@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2"></div> -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="bg-white p-3 m-3 border-muted">
+                <h5 class="text-muted mr-auto">Service Request Details</h5>
+                <hr>
+
+                <app-request-summary [setRequest]="request" [transferRequest]="true"></app-request-summary>
+                <hr class="hr-dotted" />
+
+                <h5 class="text-muted mr-auto">Create &quot;NEW&quot; Job Order</h5>
+                <hr />
+
+                <app-job-order-form [requestDetails]="request" [createNew]="true"></app-job-order-form>
+            </div>
+        </div>
+        <!-- <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2"></div> -->
+    </div>
+</div>

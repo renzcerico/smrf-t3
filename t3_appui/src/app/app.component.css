@@ -1,0 +1,23 @@
+.dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    align-content: center;
+}
+
+.status-closed {
+    background-color: #666564;
+}
+
+.status-completed {
+    background-color: #70d651;
+}
+
+.status-open {
+    background-color: #5b57d9;
+}
+
+.status-wip {
+    background-color: #db4038;
+}

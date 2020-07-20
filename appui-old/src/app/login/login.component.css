@@ -1,0 +1,27 @@
+.h100 {
+    height: 100% !important;
+}
+
+.btn-primary {
+    background-color: #4c43ff !important;
+    border-color: #4c43ff !important;
+}
+
+.btn-primary:focus {
+    color: white;
+}
+
+.to-gray {
+    color: rgba(0, 0, 0, .70)
+}
+
+.border-muted {
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 5px;
+}
+
+label,
+button,
+.font-weight-500 {
+    font-weight: 500 !important;
+}

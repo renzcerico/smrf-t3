@@ -1,0 +1,74 @@
+<div class="modal-header">
+    <h5 class="modal-title">
+        <span [ngClass]="currentStatus"></span>
+        <span class="content pl-1 text-uppercase">
+            {{ currentStatusDesc }}
+        </span>
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body container">
+    <div class="d-flex justify-content-between p-2">
+        <div class="input-group input-group-sm">
+            <div class="input-group-prepend">
+                <p>Show</p>
+            </div>
+            <select class="mx-1" name="showCount" id="showCount" [(ngModel)]="showCount" (ngModelChange)="refreshSource()">
+                <option *ngFor="let opt of showCountOpts" [value]="opt">{{ opt }}</option>
+            </select>
+            <div class="input-group-append">
+                <p> Entries</p>
+            </div>                
+        </div>
+        
+        <div class="input-group input-group-sm">
+            <div class="input-group-prepend mr-2">
+                <p>Search:</p>
+            </div>
+            <input class="form-control" type="text" name="search" id="search" [(ngModel)]="searchVal" (ngModelChange)="refreshSource()">
+        </div>
+
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-md table-hover text-center" id="modal_table_header">
+            <thead class="text-capitalize">
+                <th class="align-middle" ngbAutofocus (click)="toggleOrder('BARCODE')">Barcode</th>
+                <th class="align-middle" (click)="toggleOrder('PO_NUMBER')">PO Number</th>
+                <th class="align-middle" (click)="toggleOrder('CONTROL_NUMBER')">Control Number</th>
+                <th class="align-middle" (click)="toggleOrder('CUSTOMER')">Customer</th>
+                <th class="align-middle"  (click)="toggleOrder('SHIPPING_DATE')">Shipping Date</th>
+            </thead>
+            <tbody *ngIf="headerList?.length > 0; else elseBlock">
+                <tr *ngFor="let header of headerList; let i = index" (click)="openHeader(header.BARCODE)">
+                    <td class="align-middle">{{header.BARCODE}}</td>
+                    <td class="align-middle">{{header.PO_NUMBER}}</td>
+                    <td class="align-middle">{{header.CONTROL_NUMBER}}</td>
+                    <td class="align-middle">{{header.CUSTOMER}}</td>
+                    <td class="align-middle">{{header.SHIPPING_DATE | date : 'd-MMM-y HH:mm:ss'}}</td>
+                </tr>
+            </tbody>
+            <ng-template #elseBlock>
+                <tbody>
+                    <tr>
+                        <td *ngIf="loading;" colspan="5"><div class="spinner-border text-success" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div></td>
+                        <td *ngIf="!loading" colspan="5">No Records Found</td>
+                    </tr>
+                </tbody>
+            </ng-template>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <div class="p-2">
+                <span *ngIf="totalCount">
+                    Showing {{showing[0]}} - {{showing[1]}} of {{totalCount}} 
+                    <span *ngIf="totalCount > 1">records</span>
+                    <span *ngIf="totalCount === 1">record</span>
+                </span>
+            </div>
+            <ngb-pagination class="mx-3 no-select" [collectionSize]="totalCount" [(page)]="pageNumber" [pageSize]="showCount" aria-label="Default pagination" (pageChange)="refreshSource()"></ngb-pagination>
+        </div>
+    </div>
+</div>

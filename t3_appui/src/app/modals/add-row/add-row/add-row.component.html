@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h6 class="modal-title pull-left text-muted">ADD ACTIVITY ROW</h6>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+        <!-- (click)="modal.dismiss()" -->
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="form-group col-12 col-md-12">
+            <label for="date">Date:</label>
+            <input 
+                class="form-control" 
+                [(ngModel)]="dateSelected"
+                ngbAutofocus 
+                type="date"
+                name="date"    
+                (ngModelChange)="updateEndTime()"
+                id="date">
+        </div>
+        <div class="form-group col-12 col-md-6">
+            <label for="start_time">Start Time:</label>
+            <input 
+                class="form-control" 
+                [(ngModel)]="startTime"
+                type="text"
+                name="start_time"
+                placeholder="HHmm"
+                (ngModelChange)="updateStartTime()"
+                (keydown)="limit(startTime, $event.key)"
+                id="start_time">
+        </div>
+        <div class="form-group col-12 col-md-6">
+            <label for="end_time">End Time: </label>
+            <input
+                class="form-control"
+                [(ngModel)]="endTime"
+                type="text"
+                (keydown)="limit(endTime, $event.key)"
+                (ngModelChange)="updateEndTime()"
+                name="end_time"
+                id="end_time">
+        </div>
+    </div>
+    <div class="my-2 w-100 text-right">
+        <button class="btn btn-success" type="button" (click)="addRow()">Add</button>
+    </div>
+</div>

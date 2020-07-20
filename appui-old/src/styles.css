@@ -1,0 +1,138 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html, 
+body { 
+    height: 100%;
+}
+
+.border-test {
+  border: 1px solid red;
+}
+
+input[type=file] {
+  background-color: transparent !important;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid gray;
+}
+
+.border-muted {
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 5px;
+}
+
+.to-gray {
+  color: rgba(0, 0, 0, .70)
+}
+
+.font-weight-500 {
+  font-weight: 500;
+}
+
+.read-only {
+  pointer-events: none !important;
+}
+
+.hr-dotted {
+  border-top: 1.5px dotted #683ab7a2;
+}
+
+/****** Style Star Rating Widget *****/
+.rating { 
+    margin-top: -20px !important;
+    border: none;
+    float: left;
+  }
+  
+  .rating > input { display: none; } 
+  .rating > label:before { 
+    margin: 8px;
+    font-size: 2.5em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+  }
+  
+  .rating > .half:before { 
+    content: "\f089";
+    position: absolute;
+  }
+  
+  .rating > label { 
+    color: #ddd; 
+   float: right; 
+  }
+  
+  /***** CSS Magic to Highlight Stars on Hover *****/
+  .rating > input:checked ~ label, /* show gold star when clicked */
+  .rating:not(:checked) > label:hover, /* hover current star */
+  .rating:not(:checked) > label:hover ~ label { color: #4c43ff;  } /* hover previous stars in list */
+  
+  .rating > input:checked + label:hover, /* hover current star when changing rating */
+  .rating > input:checked ~ label:hover,
+  .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+  .rating > input:checked ~ label:hover ~ label { color: #49467a;  } 
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+  .modal {
+    top: 68px !important;
+  }
+
+/* MATERIAL CSS */
+
+.mat-radio-checked .mat-radio-inner-circle {
+    background-color: #673ab7 !important;
+}
+
+.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #673ab7 !important;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #673ab7;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: rgb(103, 58, 183, .54);
+}
+
+/* IMG PREVIEW */
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  transition: 0.3s;
+}
+
+.overlay-content {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+  color: white;
+  text-decoration: none;
+}
+
+.closebtn:hover {
+  color:  #673ab7;
+  text-decoration: none;
+}

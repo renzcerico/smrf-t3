@@ -1,0 +1,266 @@
+<form class="m-3" #reqForm="ngForm" enctype="multipart/form-data">
+    <!-- <label class="font-weight-light small text-muted">Required <i class="text-danger font-weight-bold">*</i></label> -->
+    <div class="row">
+        <!-- Show only for head and manager. -->
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <label class="to-gray">Priority <i class="text-danger font-weight-bold">*</i></label>
+            <div class="form-group row justify-content-around">
+                <mat-radio-group aria-label="Priority Status">
+                    <mat-radio-button                           
+                            id="reqNormal" 
+                            name="reqPriority" 
+                            value="normal" 
+                            [(ngModel)]="reqPriority"
+                            [checked]="reqPriority === 'normal'" 
+                            ngDefaultControl
+                            #reqNormal
+                            (change)="priority(reqNormal.value)">
+                           Normal
+                    </mat-radio-button>
+                    &nbsp; &nbsp; &nbsp;
+                    <mat-radio-button 
+                            id="reqUrgent" 
+                            name="reqPriority" 
+                            value="urgent" 
+                            [(ngModel)]="reqPriority"
+                            [checked]="reqPriority === 'urgent'"
+                            ngDefaultControl 
+                            #reqUrgent  
+                            (change)="priority(reqUrgent.value)">
+                            Urgent
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <mat-form-field class="w-100">
+                <mat-label>Service Representative</mat-label>
+                <mat-select 
+                    id="reqRepresentative" 
+                    name="reqRepresentative"
+                    (selectionChange)="selectChangeHandler($event)"
+                    [(ngModel)]="reqRepresentative"
+                    matNativeControl required>
+                    <mat-option value="" disabled>Please select</mat-option>
+                    <mat-option *ngFor="let service of serviceRep; let i = index;" [value]="service.REP_ID">
+                        {{ service.REP_NAME }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="!reqRepresentative" class="small">
+                    Please fill out this field.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" *ngIf="reqRepresentative">
+            <mat-form-field class="w-100">
+                <input matInput 
+                       id="reqIncharge" 
+                       name="reqIncharge" 
+                       [(ngModel)]="reqIncharge" 
+                       readonly>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="form-group row">
+
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <mat-form-field class="w-100">
+                <input matInput 
+                       [matDatepicker]="myDatepicker" 
+                       id="reqDateRequired" 
+                       name="reqDateRequired" 
+                       [(ngModel)]="reqDateRequired" 
+                       autocomplete="off" 
+                       placeholder="Date required" required>
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+                <mat-error *ngIf="reqDateRequired == ''" class="small">
+                    Please fill out this field.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <mat-form-field class="w-100">
+                <mat-label>Department</mat-label>
+                <mat-select 
+                    id="reqDepartment" 
+                    name="reqDepartment"
+                    matNativeControl
+                    [(ngModel)]="reqDepartment" required>
+                    <mat-option value="" disabled>Please select</mat-option>
+                    <mat-option *ngFor="let department of departments"
+                            value="{{ department.ID }}">
+                        {{ department.NAME }}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>Your department</mat-hint>
+                <mat-error *ngIf="!reqDepartment" class="small">
+                    Please fill out this field.
+                </mat-error>
+            </mat-form-field>
+        </div> -->
+
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" *ngIf="reqDepartment === 7 || reqDepartment === 8">
+            <mat-form-field class="w-100">
+                <mat-label>Machine</mat-label>
+                <mat-select 
+                    id="reqMachine" 
+                    name="reqMachine"
+                    matNativeControl
+                    [(ngModel)]="reqMachine">
+                    <mat-option value="none">NONE</mat-option>
+                    <mat-option value="SO01">SO01</mat-option>
+                    <mat-option value="SO19">SO19</mat-option>
+                    <mat-option value="SO27">SO27</mat-option>
+                    <mat-option value="SO31">SO31</mat-option>
+                    <mat-option value="SO35">SO35</mat-option>
+                    <mat-option value="SO36">SO36</mat-option>
+                    <mat-option value="SO37">SO37</mat-option>
+                    <mat-option value="SO38">SO38</mat-option>
+                    <mat-option value="SO39">SO39</mat-option>
+                    <mat-option value="SO40">SO40</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    
+    <div *ngIf="reqRepresentative">
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Service Requirements</mat-label>
+                    <mat-select 
+                        name="reqSelect" 
+                        [(ngModel)]="reqSelect"  
+                        id="reqSelect"
+                        #reqService
+                        matNativeControl required>
+                        <mat-option value="0" disabled>Please select</mat-option>
+                        <mat-option *ngFor="let req of setRequestList;" value="{{ req.SR_TYPE_ID }}">{{ req.SR_TYPE_NAME }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!reqSelect" class="small">
+                        Please fill out this field.
+                    </mat-error>
+                    <!-- <mat-hint>
+                        To add service click the button/press enter.
+                    </mat-hint> -->
+                </mat-form-field> 
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="d-flex d-inline-block">
+                    <mat-form-field class="w-100">
+                        <input matInput name="reqRemarks" [(ngModel)]="reqRemarks" placeholder="Service Requests / Problems Encountered *">
+                        <mat-hint>
+                            Please click the button or press the enter to add a service requirements.
+                        </mat-hint>
+                    </mat-form-field>
+                      &nbsp;
+                    <div>
+                        <button class="btn btn-dark btn-sm"
+                            type="button"
+                            title="Add Service"
+                            (click)="setRequestDetails(reqService)">
+                            &rarr;
+                        </button>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-4" *ngIf="reqDetails.length > 0">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <table class="table table-bordered table-sm">
+                <thead class="text-white">
+                    <tr>
+                        <th class="w-80">Service Requirements</th>
+                        <th class="w-50">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let req of reqDetails">
+                        <td>{{ req.description }}</td>
+                        <td>
+                            {{ req.remarks }}
+                            <a href="#"
+                               title="DELETE {{req.description}}"
+                               class="text-danger float-right font-weight-bold"
+                               (click)="remove(req.request)">
+                                &times;
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Show only for user. -->
+    <div class="form-group row" *ngIf="userLevel === 'requestor'">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <app-recipient [recipientID]="reqRecipient"></app-recipient>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <label class="to-gray">Attachment</label>
+            <input type="file" id="reqAttachment" #attachment (change)="attachmentChange(attachment.files)" placeholder="Attachment" class="form-control mb-3" />
+        </div>
+    </div>
+    <div *ngIf="reqAttachment" class="form-group row">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center" *ngFor="let img of reqAttachment; let i = index;">
+            <a href="#" class="text-danger font-weight-bold d-block float-right" (click)="removeImg(i)">&times;</a>
+            <img [src]="img" class="img-fluid mb-2" (click)="previewImg(img)" /> <hr />
+        </div>
+    </div>
+
+    <div class="form-group row" *ngIf="userLevel === 'MANAGER' || userLevel === 'head'">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <mat-form-field class="w-100">
+                <textarea matInput 
+                          placeholder="Additional comments:" 
+                          [(ngModel)]="reqNotes" 
+                          name="reqNotes" 
+                          id="reqNotes">
+                </textarea>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <ngb-alert type="success" class="font-weight-500" [dismissible]="false" [hidden]="successRequest">
+        Request sent!
+    </ngb-alert>
+
+    <ngb-alert type="danger" class="font-weight-500" [dismissible]="false" [hidden]="errorRequired">
+        Please complete the required fields.
+    </ngb-alert>
+
+    <!-- Show if request type = request -->
+    <div class="form-group row" *ngIf="requestType === 'request'">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <button class="form-control text-uppercase" mat-raised-button color="warn" type="button">Cancel</button>
+        </div>
+        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <button class="form-control text-uppercase" mat-raised-button color="primary" (click)="btnRequest(reqForm)">Submit</button>
+        </div>
+    </div>
+
+    <!-- Show if request type = details && user level = head / manager -->
+    <div class="form-group row" *ngIf="reqStatus === 'delivered' && (userLevel === 'head' || userLevel === 'manager' || userLevel === 'user')">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <button class="btn btn-danger form-control text-uppercase">Reject</button>
+        </div>
+        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <button class="btn btn-success form-control text-uppercase">Approve</button>
+        </div>
+    </div>
+</form>

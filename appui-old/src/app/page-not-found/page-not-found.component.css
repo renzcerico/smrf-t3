@@ -1,0 +1,12 @@
+html,
+body {
+    height: 100%;
+}
+
+.page-not-found {
+    margin: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -1,0 +1,92 @@
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.nav-item.active a {
+    color: #28a745 !important;
+    border-bottom: 2px solid #28a745;
+} 
+
+.nav-item:hover a {
+    color: #28a745 !important;
+}
+
+.border-100 {
+    border-radius: 100px;
+}
+
+.text-green {
+    color: #28a745 !important;
+}
+
+form input {
+    border-right: 0;
+    border-left: 0;
+    border-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 15px !important;
+}
+
+form label {
+    color: #63605e !important;
+}
+
+form input:focus,
+form select:focus { 
+    border-bottom: 1px solid #28a745;
+}
+
+#user_profile_dropdown {
+    box-shadow: none;
+}
+
+.dropdown-item:hover {
+    color: #28a745 !important;
+}
+
+/*******************
+*  FLOATING LABELS *
+********************/
+
+.form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-label-group > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    line-height: 2.5;
+    color: #495057;
+    border: 1px solid transparent;
+    transition: all .1s ease-in-out;
+}
+
+.form-label-group input::placeholder,
+.form-label-group input::-moz-placeholder,
+.form-label-group input::-ms-input-placeholder,
+.form-label-group input::-webkit-input-placeholder,
+.form-label-group input:-ms-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+.form-label-group input ~ label {
+    font-size: 11px;
+    font-weight: 500 !important;
+    color: #777;
+}
+
+.updated {
+    font-weight: 500;
+    color: #28a745!important;
+}

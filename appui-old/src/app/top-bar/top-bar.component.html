@@ -1,0 +1,22 @@
+  <nav>
+    <mat-toolbar class="bg-light navbar-light">
+      <img src="/assets/img/logo.png" class="img-fluid" width="35px" 
+          tooltip="Tailin Abrasives Corporation" 
+          placement="bottom" /> &nbsp;
+      <a class="navbar-brand text-uppercase text-muted" 
+        href="#"
+        [routerLink]="['']">
+        Service Maintenance
+      </a>
+      <div class="text-right w-100 h-100" *ngIf="user">
+        <span class="navbar-text small text-muted">
+          <img src="/assets/img/avatar.png" width="25px" id="avatar" alt="avatar">
+          {{userProfile.name}}
+        </span>
+        <button class="h-100" color="primary" type="button" mat-button (click)="toggleMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-progress-bar [mode]="progressMode" value="100"></mat-progress-bar>
+  </nav>

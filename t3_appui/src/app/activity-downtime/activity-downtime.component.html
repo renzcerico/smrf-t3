@@ -1,0 +1,198 @@
+<div class="modal-header">
+    <h5 class="modal-title">Activity Downtime - {{isAuthorized}}<span class="text-danger">{{ activity.START_TIME | date : 'HH:mm'}} to {{ activity.END_TIME | date : 'HH:mm'}}</span></h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body container">
+    <div class="w-100 text-center text-md-left mb-3">
+        <span class="small text-muted font-weight-light">Legends: &nbsp;&nbsp;</span>
+        <p class="small font-weight-500 m-0 position-relative d-inline-block mr-2">
+            <span class="font-weight-bold text-danger">
+                <div class="td-indicator"></div>
+            </span>
+            <i class="text-underline legend-editable">&nbsp; &nbsp; optional &nbsp; &nbsp;</i>
+        </p>
+        <p class="small font-weight-500 m-0 position-relative d-inline-block">
+            <span class="font-weight-bold text-danger">
+                <div class="td-indicator-required"></div>
+            </span>
+            <i class="text-underline legend-editable">&nbsp; &nbsp; required &nbsp; &nbsp;</i>
+        </p>
+    </div>
+    <table id="modal_table" class="table table-sm table-bordered table-hover">
+        <thead class="text-uppercase">
+            <tr>
+                <th style="width: 40%;" class="align-middle" rowspan="2">Type</th>
+                <th style="width: 10%;" rowspan="2" class="align-middle">Minutes</th>
+                <th style="width: 10%;" rowspan="2" class="align-middle">Quantity</th>
+                <th style="width: 30%;" rowspan="2" class="align-middle">Remarks</th>
+                <th style="width: 10%;" colspan="2">Created</th>
+            </tr>
+            <tr>
+                <th>By</th>
+                <th>At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="isAuthorized">
+                <td class="text-right td-editable">
+                    <div class="td-indicator"></div>
+                    <select 
+                        name="downtime_type"
+                        ngbAutofocus
+                        id="downtime_type"
+                        class="form-control"
+                        #modalHeaderInput
+                        [(ngModel)]="selectedDowntimeType"
+                        (change)="modalEnter($event)"
+                        (ngModelChange)="handleDowntimeChange()"
+                    >
+                        <option value="{value: null}" selected disabled>Select Reason</option>
+                        <option *ngFor="let dtype of downtimeTypes; let i = index;" [ngValue]="dtype" [disabled]="dtype.DISABLED">{{ dtype.NAME }}</option>                
+                    </select>
+                </td>                
+                <td class="text-right td-editable">
+                    <div class="td-indicator"></div>
+                    <input
+                        type="number"
+                        min="0"
+                        max="60"
+                        class="form-control input-sm editable-content text-right"
+                        #modalHeaderInput
+                        (keyup.enter)="modalEnter($event)"
+                        (focus)="$event.target.select()"
+                        [(ngModel)]="mMinutes"
+                        (ngModelChange)="inputMinutes()"
+                    >
+                </td>
+                <td class="text-right td-editable">
+                    <div class="td-indicator"></div>
+                    <input
+                        type="number"
+                        min="0"
+                        #modalHeaderInput
+                        (keyup.enter)="modalEnter($event)"
+                        [(ngModel)]="mQuantity"
+                        (ngModelChange)="inputQuantity()"
+                        (focus)="$event.target.select()"
+                        class="form-control input-sm editable-content text-right">
+                </td>
+                <td class="td-editable">
+                    <div class="td-indicator"></div>
+                    <textarea
+                        name="remarks"
+                        id="remarks"
+                        #modalHeaderInput
+                        class="form-control editable-content"
+                        autosize
+                        [(ngModel)]="mRemarks"
+                        (keyup.enter)="modalEnter($event)"
+                        (keydown.enter)="$event.preventDefault()"
+                        rows="1">
+                    </textarea>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr *ngFor="let val of tempActDowntime; let i = index">
+                <td *ngIf="!isAuthorized" class="align-middle text-right">
+                    <span *ngIf="val.DOWNTIME_TYPE_ID">
+                        {{val.DOWNTIME}}
+                    </span>
+                    <span *ngIf="!val.DOWNTIME_TYPE_ID">
+                        
+                    </span>
+                </td>                
+                <td *ngIf="isAuthorized" class="text-right td-editable">
+                    <div class="td-indicator"></div>
+                    <!-- TODO: fix disable select when chosen on other input -->
+                    <select
+                        bind-attr.selected_id="tempActDowntime[i].DOWNTIME_TYPE_ID"
+                        name="downtime_type"
+                        ngbAutofocus
+                        id="downtime_type"
+                        class="form-control"
+                        (change)="handleSelectChange($event, i)"
+                        [(ngModel)]="tempActDowntime[i].DOWNTIME_TYPE_ID"
+                    >
+                        <option value="{value: -1}" selected disabled>Select Reason</option>
+                        <option *ngFor="let dtype of downtimeTypes; let i = index;" [ngValue]="dtype.ID" [disabled]="dtype.DISABLED">{{ dtype.NAME }}</option>                
+                    </select>
+                </td>
+                <td *ngIf="!isAuthorized" class="text-right align-middle">
+                    <span *ngIf="val.MINUTES">
+                        {{val.MINUTES}}
+                    </span>
+                    <span *ngIf="!val.MINUTES">
+                        
+                    </span>
+                </td>  
+                <td *ngIf="isAuthorized" class="text-right td-editable">
+                    <div class="td-indicator"></div>
+                    <input
+                        type="number"
+                        min="0"
+                        class="form-control input-sm editable-content text-right"
+                        (ngModelChange)="setIsChanged(i)"
+                        (focus)="$event.target.select()"
+                        [(ngModel)]="tempActDowntime[i].MINUTES">
+                </td>
+                <td *ngIf="!isAuthorized" class="align-middle text-right">
+                    <span *ngIf="val.QUANTITY">
+                        {{val.QUANTITY}}
+                    </span>
+                    <span *ngIf="!val.QUANTITY">
+                        
+                    </span>
+                </td>                 
+                <td *ngIf="isAuthorized" class="text-right td-editable">
+                    <div class="td-indicator"></div>
+                    <input
+                        type="number"
+                        min="0"
+                        class="form-control input-sm editable-content text-right"
+                        (ngModelChange)="setIsChanged(i)"
+                        (focus)="$event.target.select()"
+                        [(ngModel)]="tempActDowntime[i].QUANTITY">
+                </td>
+                <td *ngIf="!isAuthorized" class="align-middle text-center">
+                    <span *ngIf="val.REMARKS">
+                        {{val.REMARKS}}
+                    </span>
+                    <span *ngIf="!val.REMARKS">
+                        
+                    </span>
+                </td>                 
+                <td *ngIf="isAuthorized" class="td-editable">
+                    <div class="td-indicator"></div>
+                    <textarea
+                        name="remarks"
+                        id="remarks"
+                        class="form-control editable-content"
+                        autosize
+                        rows="1"
+                        (ngModelChange)="setIsChanged(i)"
+                        [(ngModel)]="tempActDowntime[i].REMARKS">
+                    </textarea>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>            
+        </tbody>
+        <tfoot class="text-right px-3">
+            <tr>
+                <th class="px-3">Subtotal</th>
+                <th class="px-3">{{ totalMinutes | number: '' }}</th>
+                <th class="px-3">{{ totalQuantity | number: '' }}</th>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div *ngIf="isAuthorized" class="modal-footer">
+    <button class="btn btn-md btn-secondary" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+    <button class="btn btn-md btn-success" (click)="handleSave()">Save</button>
+</div>

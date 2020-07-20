@@ -1,0 +1,158 @@
+<div class="container mt-2" id="header_production_order">
+    <form #headerForm>
+        <div *ngIf="currentStatus">
+            <span [ngClass]="currentStatus"></span>
+            <span class="content pl-1 text-uppercase">
+                {{ currentStatusDesc }}
+                <span class="text-muted">|</span>
+            </span>
+            <span class="title pl-1">Schedule Date:</span>
+            <span class="content pl-1">{{ headerObj.SCHEDULE_DATE_START | date : 'MM/d/yy' }}</span> 
+            <span class="title pl-2">Schedule Time: </span>
+            <span class="content pl-1">{{ headerObj.SCHEDULE_DATE_START | date : 'HHmm' }}-{{ headerObj.SCHEDULE_DATE_END | date : 'HHmm' }}</span>
+            <span class="title pl-2">Actual Start: </span>
+            <span class="content pl-1">{{ headerObj.ACTUAL_START | date : 'MM/d/yy HH:mm' }}</span>            
+            <span *ngIf="headerObj.STATUS !== 1" class="title pl-2">Actual End: </span>
+            <span *ngIf="headerObj.STATUS !== 1" class="content pl-1">{{ headerObj.ACTUAL_END | date : 'MM/d/yy HH:mm' }}</span>            
+        </div>
+        <div class="form-row">           
+            <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input name="barcode" type="text" id="barcode" class="form-control w-75" #barcode [ngModel]="headerObj.BARCODE" name="barcode" placeholder="#" required (change)="handleBarcodeChange(barcode.value)" autofocus>
+                    <label for="barcode">Control Number</label>
+                </div>                
+            </div>  
+            <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input name="po_number" type="text" id="po_number" class="form-control w-75" [ngModel]="headerObj.PO_NUMBER" placeholder="#" required>
+                    <label for="po_number">PO Number</label>
+                </div>                                                                  
+            </div>   
+            <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input readonly name="shipping_date" type="text" id="shipping_date" class="form-control w-75" [ngModel]="headerObj.SHIPPING_DATE | date : 'MM/d/yy'" placeholder="MM/DD/YYYY" required>
+                    <label for="shipping_date">Shipping Date</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input readonly name="order_qty" type="text" id="order_qty" class="form-control w-75" [ngModel]="headerObj.ORDER_QUANTITY | number : ''" placeholder="#" required>
+                    <label for="order_qty">Order Qty</label>
+                </div>
+            </div>
+            <!-- start -->
+            <!-- <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input name="schedule_date" type="text" id="schedule_date" class="form-control w-75" [ngModel]="headerObj.SCHEDULE_DATE_START | date : 'MM/d/yy'" name="schedule_date" placeholder="MM/DD/YY HH:mm" required >
+                    <label for="schedule_date">Schedule Date</label>
+                </div>                
+            </div>  
+            <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input name="schedule_time" type="text" id="schedule_time" class="form-control w-75" [ngModel]="scheduleTime" placeholder="HHmm - HHmm" required>
+                    <label for="schedule_time">Schedule Time</label>
+                </div>                                                                  
+            </div>   
+            <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input readonly name="actual_start" type="text" id="actual_start" class="form-control w-75" [ngModel]="headerObj.ACTUAL_START | date : 'MM/d/yy'" placeholder="MM/DD/YYYY" required>
+                    <label for="actual_start">Actual Start</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input readonly name="status" type="text" id="status" class="form-control w-75" [ngModel]="headerObj.STATUS" placeholder="#" required>
+                    <label for="status">Status</label>
+                </div>  
+            </div> -->
+            <!-- end --> 
+            
+            <div class="col-12 col-md-3 mt-1">
+                <div class="form-label-group">
+                    <input readonly name="customer" type="text" id="customer" class="form-control w-75" [ngModel]="headerObj.CUSTOMER" placeholder="Name" required>
+                    <label for="customer">Customer</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 mt-1">                
+                <div class="form-label-group">
+                    <input readonly name="customer_code" type="text" id="customer_code" class="form-control w-75" [ngModel]="headerObj.CUSTOMER_CODE" placeholder="Code" required>
+                    <label for="customer_code">Customer Code</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 mt-1">                
+                <div class="form-label-group">
+                    <input readonly name="customer_specs" type="text" id="customer_specs" class="form-control" [ngModel]="headerObj.CUSTOMER_SPEC" placeholder="Specification" required>
+                    <label for="customer_specs">Customer Specification</label>
+                </div>
+            </div>                        
+        </div>
+        <div *ngIf="seeResult == 'See less'">
+            <div class="form-row">
+                <!-- <div class="col-12 col-md-3 mt-1">
+                    <div class="form-label-group">
+                        <input readonly name="customer" type="text" id="customer" class="form-control w-75" [ngModel]="headerObj.CUSTOMER" placeholder="Name" required>
+                        <label for="customer">Customer</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 mt-1">                
+                    <div class="form-label-group">
+                        <input readonly name="customer_code" type="text" id="customer_code" class="form-control w-75" [ngModel]="headerObj.CUSTOMER_CODE" placeholder="Code" required>
+                        <label for="customer_code">Customer Code</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mt-1">                
+                    <div class="form-label-group">
+                        <input readonly name="customer_specs" type="text" id="customer_specs" class="form-control" [ngModel]="headerObj.CUSTOMER_SPEC" placeholder="Specification" required>
+                        <label for="customer_specs">Customer Specification</label>
+                    </div>
+                </div>               -->
+                <div class="col-12 col-md-3 mt-1">
+                    <div class="form-label-group">
+                        <input readonly name="old_code" type="text" id="old_code" class="form-control w-75" [ngModel]="headerObj.OLD_CODE" placeholder="Code" required>
+                        <label for="old_code">Old Code</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 mt-1">                
+                    <div class="form-label-group">
+                        <input readonly name="internal_code" type="text" id="internal_code" class="form-control w-75" [ngModel]="headerObj.INTERNAL_CODE" placeholder="Code" required>
+                        <label for="internal_code">Internal Code</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mt-1" style="z-index: 1049;" (mouseover)="handleProdMouseOver()" (mouseout)="prodHover = 0">                
+                    <div class="form-label-group h-100">
+                        <input *ngIf="prodHover === 0" readonly name="product_desc" type="text" id="product_desc" class="form-control" [ngModel]="headerObj.PRODUCT_DESCRIPTION" placeholder="Description" required>
+                        <span *ngIf="prodHover === 1" id="prod_span" readonly>{{ headerObj.PRODUCT_DESCRIPTION || 'Description' }}</span>
+                        <label for="product_desc">Product Description</label>
+                    </div>
+                </div>                                                  
+            </div>
+        </div>        
+    </form>
+</div>
+
+<div class="d-none w-100" id="container_see_more">
+    <div id="blur-container" class="blurred-bg p-3"></div>
+    <button class="btn btn-light text-muted border-radius-0 font-weight-500 btn-sm form-control" 
+        id="btn_see_more"
+        (click)="btnSee()">
+        {{ seeResult }}&nbsp; 
+        <fa-icon [icon]="iconResult"></fa-icon>
+    </button>
+</div>
+
+<div class="m-3 position-absolute right-0 d-flex btn-save-container">
+    <select *ngIf="isAuthorized && headerObj.STATUS < 3 && userType < 3" name="forwardTo" [(ngModel)]="receiverID" id="forwardTo" class="form-control">
+        <option value="0" disabled>Forward to</option>
+        <option *ngFor="let user of usersForwardList;" [value]="user.ID">
+            {{ user.FULL_NAME }}
+        </option>
+    </select>
+    <!-- <button class="btn mx-1  d-md-inline-block btn-warning border-100 font-weight-500 pl-5 pr-5 text-uppercase w-100" (click)="addRow()" *ngIf="isAuthorized && userType >= 3">Add Activity Row</button> -->
+    <button class="btn mx-1  d-md-inline-block btn-danger border-100 font-weight-500 pl-5 pr-5 text-uppercase w-100" (click)="updateHeaderStatus(1)" *ngIf="visibleButton === 'endprod'">End Production</button>
+    <button class="btn mx-1  d-md-inline-block btn-success border-100 font-weight-500 pl-5 pr-5 text-uppercase w-100" (click)="updateHeaderStatus(2)" *ngIf="visibleButton === 'approve'">Approve</button>
+    <button class="btn mx-1  d-md-inline-block btn-dark border-100 font-weight-500 pl-5 pr-5 text-uppercase w-100" (click)="header()" *ngIf="isAuthorized">Save</button>
+</div>
+
+<app-activity></app-activity>
+<app-material [actTotal]="actTotal" [(materials)]="matCollection"></app-material>
+<app-manpower></app-manpower>

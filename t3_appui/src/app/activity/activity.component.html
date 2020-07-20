@@ -1,0 +1,142 @@
+<div class="container-fluid mt-4" id="container_activity">
+    <div class="w-100 text-center text-md-left mb-3">
+        <span class="small text-muted font-weight-light">Legends: &nbsp;&nbsp;</span>
+        <p class="small font-weight-500 m-0 position-relative d-inline-block mr-2">
+            <span class="font-weight-bold text-danger">
+                <div class="td-indicator"></div>
+            </span>
+            <i class="text-underline legend-editable">&nbsp; &nbsp; optional &nbsp; &nbsp;</i>
+        </p>
+        <p class="small font-weight-500 m-0 position-relative d-inline-block">
+            <span class="font-weight-bold text-danger">
+                <div class="td-indicator-required"></div>
+            </span>
+            <i class="text-underline legend-editable">&nbsp; &nbsp; required &nbsp; &nbsp;</i>
+        </p>
+
+        <!-- <span class="dot status-closed ml-2"></span> 
+            <span class="small">&nbsp; CLOSED</span>
+        <span class="dot status-completed ml-2"></span> 
+            <span class="small">&nbsp; COMPLETED</span>
+        <span class="dot status-open ml-2"></span> 
+            <span class="small">&nbsp; OPEN</span>
+        <span class="dot status-wip ml-2"></span> 
+            <span class="small">&nbsp; WIP</span> -->
+    </div>
+
+    <div class="table-responsive">
+        <h6 class="text-center text-muted text-uppercase">Activity</h6>
+        <button class="btn-sm btn-success btn rounded mb-2" (click)="addRow()" *ngIf="isAuthorized && activeUser.USER_TYPE >= 3">Add Row</button>
+        <table class="table table-bordered table-sm table-hover text-center" id="table_activity">
+            <thead class="text-capitalize">
+                <tr>
+                    <th colspan="2">time</th>
+                    <th class="align-middle" rowspan="2">quantity</th>
+                    <th class="align-middle" rowspan="2">downtime</th>
+                    <th class="align-middle" rowspan="2">remarks</th>
+                    <th class="align-middle" rowspan="2">last updated by</th>
+                    <th colspan="2">date</th>
+                </tr>
+                <tr>
+                    <th>start</th>
+                    <th>end</th>
+                    <!-- <th>packed</th>
+                    <th>adjustment</th>
+                    <th>total</th> -->
+                    <th>entered</th>
+                    <th>updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td data-label="Start" class="align-middle"> {{ actualTime.start | date : 'HH:mm'}}</td>
+                    <td data-label="End" class="align-middle"> {{ actualTime.end | date : 'HH:mm'}}</td>
+                    <td class="align-bototm" data-label="Packed"></td>
+                    <td class="align-bototm" data-label="adjustment"></td>
+                    <td class="align-bototm" data-label="total"></td>
+                    <td class="align-bottom td-editable" data-label="Downtime">
+                        <div class="td-indicator"></div>
+                        <input
+                            id="actDowntime"
+                            name="downtime"
+                            type="number"
+                            min="0"
+                            value="0"
+                            #headerInput
+                            [(ngModel)]="actDowntime"
+                            (keyup.enter)="handleKeyUp($event)"
+                            class="form-control"/>
+                    </td>
+                    <td class="align-bottom td-editable" data-label="Remarks">
+                        <div class="td-indicator"></div>
+                        <textarea
+                            id="actRemarks"
+                            name="remarks"
+                            rows="1"
+                            autosize
+                            #headerInput
+                            [(ngModel)]="actRemarks"
+                            (keyup.enter)="handleKeyUp($event)"
+                            (keydown.enter)="handleKeyDown($event)"
+                            class="form-control">
+                        </textarea>
+                    </td>
+                    <td data-label="Updated By"></td>
+                    <td data-label="Date Entered"></td>
+                    <td data-label="Date Updated"></td>                                
+                </tr> -->
+                <tr #contentTr *ngFor="let activity of activities; let i = index;" (dblclick)="openModal($event, i)">
+                    <td class="align-middle" data-label="Start">{{ activity.START_TIME | date : 'HH:mm'}}</td>
+                    <td class="align-middle" data-label="End">{{ activity.END_TIME | date : 'HH:mm'}}</td>
+                    <td class="align-middle" data-label="Packed">
+                        <!-- {{ activity.TOTAL_BOXES | number: '' }} -->
+                        {{ activity.TOTAL | number: '' }}
+                    </td>
+                    <!-- <td class="align-middle" data-label="Adjustment">
+                        {{ activity.ADJ_QTY | number: '' }}
+                    </td>
+                    <td class="align-middle" data-label="Total">{{ activity.TOTAL }}</td> -->
+                    <td class="align-middle" data-label="Downtime" (dblclick)="openDowntimeModal($event, i)">
+                        {{ activity.TOTAL_DOWNTIME }}
+                    </td>
+                    <td *ngIf="isAuthorized && (i === 0 || activeUser.USER_TYPE > 1)" class="align-middle td-editable" data-label="Remarks">
+                        <textarea
+                            name="remarks"
+                            id="remarks"
+                            class="form-control editable-content ng-touched"
+                            [(ngModel)]="activities[i].REMARKS"
+                            (ngModelChange)="valueChanged(i)"
+                            (keydown.enter)="handleKeyDown($event)"
+                            (keyup.enter)="handleTrKeyUp($event)"
+                            (blur)="detectChange()"
+                            #editableTd 
+                            autosize
+                            rows="1">
+                        </textarea>
+                        <div class="td-indicator"></div>
+                    </td>
+                    <td *ngIf="!isAuthorized || (i > 0 && activeUser.USER_TYPE === 1)" class="text-center align-middle" data-label="Remarks">{{ activity.REMARKS }}</td>
+                    <td class="align-middle" data-label="Updated By">{{ activity.LAST_UPDATED_BY_NAME }}</td>
+                    <td class="align-middle" data-label="Date Entered">
+                        {{ activity.DATE_ENTERED | date : 'MMM d, y HH:mm' }}
+                        <!-- {{ activity.DATE_ENTERED ? (activity.DATE_ENTERED | date : 'MMM d, y HH:mm') : "" }} -->
+                    </td>
+                    <td class="align-middle" data-label="Date Updated">
+                        {{ activity.DATE_UPDATED !== 'Invalid date' ? (activity.DATE_UPDATED | date : 'MMM d, y HH:mm') : null  }}
+                    </td>                    
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="text-uppercase">
+                    <td colspan="2" class="text-right">Sub total:</td>
+                    <td class="text-right">{{ subTotal | number: '' }}</td>
+                    <td class="text-right">{{ downtimeSubTotal | number: '' }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

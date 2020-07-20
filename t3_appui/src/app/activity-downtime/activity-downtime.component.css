@@ -1,0 +1,47 @@
+#modal_table thead  th{
+    text-align: center;
+    background-color: #28a745;
+    color: white;
+    font-weight: 500 !important;
+    font-size: 15px !important;
+}
+
+#modal_table tbody td,
+.editable-content {
+    font-weight: 400 !important;
+    font-size: 13px !important;
+}
+
+#modal_table>tbody input,
+#modal_table>tbody select,
+.editable-content {
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+#modal_table>tbody select:focus,
+#modal_table>tbody input:focus{
+    box-shadow: none;
+}
+
+#modal_table>tbody tr:hover {
+    background-color: #b6ffb2 !important;
+}
+
+td, th {
+    border: 1px solid #9B8864 !important;
+    background-color: rgba(155, 136, 100, 0.123);
+}
+
+button:not(.close) {
+    font-weight: 500;
+    text-transform: capitalize;
+    width: 100%;
+    max-width: 200px;
+}
+
+td {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}

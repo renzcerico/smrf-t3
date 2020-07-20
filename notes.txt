@@ -1,0 +1,17 @@
+Requirements:
+Angular
+- AngularCLI version (7.3.2 or higher)
+- PORT 4200
+
+NodeJS
+- NodeJS version (10.1.2 or higher)
+- PORT 3070
+
+Commands:
+NodeJS
+Run backend/functions root folder.
+- node server.js
+
+Angular
+Run frontend/ui under "appui" folder
+- ng serve --port 4200 / ng serve

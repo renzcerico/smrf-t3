@@ -1,0 +1,36 @@
+.btn-danger {
+    background-color: #94190d !important;
+    border-color: #94190d !important;
+}
+
+.btn-success {
+    background-color: #2a8a1d !important;
+    border-color: #2a8a1d !important;
+}
+
+table thead {
+    background: #673ab7 !important;
+    /* #4c43ff */
+}
+
+table thead th {
+    font-weight: 600 !important;
+    text-align: center;
+    border-bottom: 0;
+}
+
+th, td {
+    /* #4c43ff */
+    border: 2px solid #673ab7;
+}
+
+td {
+    text-align: center;
+    font-weight: 500;
+    color: rgba(0, 0, 0, .70);
+    font-size: 13.5px !important;
+}
+
+.to-gray {
+    color: rgba(0, 0, 0, .70)
+}

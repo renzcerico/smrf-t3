@@ -1,0 +1,16 @@
+<mat-form-field class="w-100">
+    <mat-label>Approver</mat-label>
+    <mat-select 
+        id="reqRecipient" 
+        [(ngModel)]="recipientID"
+        #recipientVal
+        (selectionChange)="selectRecipient(recipientVal.value)"
+        matNativeControl
+        required>
+        <mat-option value="0" disabled>Please select</mat-option>
+        <mat-option *ngFor="let recipient of recipient;" value="{{ recipient.ID }}">{{ recipient.NAME }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="!recipientID" class="small">
+        Please fill out this field.
+    </mat-error>
+</mat-form-field> 

@@ -1,0 +1,106 @@
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="/assets/img/logo.png" class="img-fluid" width="35px" 
+            tooltip="Tailin Abrasives Corporation" 
+            placement="bottom" /> &nbsp;
+        <a class="navbar-brand font-weight-bold text-green mr-auto" href="/">T3 APPLICATION</a>
+        <span class="ml-3 navbar-text font-weight-bold text-green">
+            Official Time: {{timer}}
+        </span>
+        <button class="navbar-toggler" type="button" 
+            (click)="toggleNavbar()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02"
+            [ngClass]="{ 'show': navbarOpen }">
+            <!-- <ul class="navbar-nav ml-3">
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link text-success small bold" (click)="openHeaderModal(1)">WIP<span class="ml-1 badge badge-danger" *ngIf="headerCount[0].COUNT">{{headerCount[0].COUNT | counterPipe}}</span></a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link text-success small bold" (click)="openHeaderModal(2)">OPEN<span class="ml-1 badge badge-danger" *ngIf="headerCount[1].COUNT">{{headerCount[1].COUNT | counterPipe}}</span></a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link text-success small bold" (click)="openHeaderModal(3)">COMPLETED<span class="ml-1 badge badge-danger" *ngIf="headerCount[2].COUNT">{{headerCount[2].COUNT | counterPipe}}</span></a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link text-success small bold" (click)="openHeaderModal(4)">CLOSED<span class="ml-1 badge badge-danger" *ngIf="headerCount[3].COUNT">{{headerCount[3].COUNT | counterPipe}}</span></a></li>
+            </ul> -->
+            <ul class="navbar-nav ml-auto mr-3">
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-500 small" href="javascript:void(0)">DASHBOARD</a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link small" (click)="openHeaderModal(1, headerCount[0].WIP)">
+                    WIP
+                    <span class="ml-1 badge badge-danger" *ngIf="headerCount[0].WIP">
+                        {{ headerCount[0].WIP }}
+                    </span></a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link small" (click)="openHeaderModal(2, headerCount[0].OPEN)">OPEN<span class="ml-1 badge badge-danger" *ngIf="headerCount[0].OPEN">{{ headerCount[0].OPEN | counterPipe }}</span></a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link small" (click)="openHeaderModal(3, headerCount[0].COMPLETED)">COMPLETED<span class="ml-1 badge badge-danger" *ngIf="headerCount[0].COMPLETED">{{ headerCount[0].COMPLETED | counterPipe }}</span></a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link small" (click)="openHeaderModal(4, headerCount[0].CLOSED)">CLOSED<span class="ml-1 badge badge-danger" *ngIf="headerCount[0].CLOSED">{{ headerCount[0].CLOSED | counterPipe }}</span></a></li>
+                
+                <!-- <li class="nav-item">
+                    <a class="nav-link font-weight-500 small" href="javascript:void(0)">TRANSACTION</a>
+                </li> -->
+                <!-- <li class="nav-item" ngbDropdown>
+                    <a class="nav-link" ngbDropdownToggle id="navbarDropdown3" role="button">
+                        <fa-icon [icon]="faUser"></fa-icon>
+                        {{ username }}
+                    </a>
+                    <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                        <a ngbDropdownItem href="javascript:void(0)" (click)="$event.preventDefault()">Change Password</a>
+                        <a ngbDropdownItem href="javascript:void(0)" (click)="$event.preventDefault()">Logout</a>
+                    </div>
+                </li> -->
+            </ul>
+            <div>
+                <div id="user_profile" *ngIf="userProfile">
+                    <div display="dynamic" ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-none text-green" id="user_profile_dropdown" ngbDropdownToggle>
+                            <fa-icon [icon]="faUser"></fa-icon>
+                            {{ username }}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="user_profile_dropdown" class="dropdown-menu dropdown-menu-left">
+                            <a href="javascript:void(0)" ngbDropdownItem class="text-muted">Change Password</a>
+                            <a href="javascript:void(0)" (click)="loggedOut()" ngbDropdownItem class="text-muted">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <button type="button"
+                        *ngIf="!userProfile" 
+                        class="btn btn-success my-2 my-sm-0 border-100 pl-5 pr-5 font-weight-bold"
+                        (click)="openLoginModal()"
+                        >
+                        LOGIN
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- <ng-template #loginModal let-modal>
+        <div class="modal-header">
+            <h6 class="modal-title pull-left text-muted">LOGIN</h6>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-4">
+            <form id="form_login" [formGroup]="loginForm">    
+                <div class="form-label-group">
+                    <input type="text"
+                        ngBAutoFocus
+                        id="username" 
+                        class="form-control" 
+                        formControlName="username"
+                        #username
+                        placeholder="" required autofocus>
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-label-group">
+                    <input type="password" 
+                           id="password" 
+                           class="form-control" 
+                           formControlName="password"
+                           placeholder="" required>
+                    <label for="password">Password</label>
+                </div>
+                <ngb-alert class="alert-danger font-weight-500" [dismissible]="false" [hidden]="loginHidden">Invalid username or password.</ngb-alert>
+                <button class="btn btn-success border-100 form-control font-weight-bold mt-2"
+                        (click)="login()">LOGIN
+                </button>
+            </form>
+        </div>
+    </ng-template> -->

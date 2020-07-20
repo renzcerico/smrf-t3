@@ -1,0 +1,11 @@
+<mat-form-field class="w-100">
+    <mat-label>Manpower</mat-label>
+    <mat-select id="jobManpower" (selectionChange)="setManpower(jobManpower)" [(ngModel)]="jobManpower">
+        <mat-option value="0" disabled>Please select</mat-option>
+        <mat-option *ngFor="let manpower of manpower" 
+                value="{{ manpower.ID }}">
+            {{ manpower.FULL_NAME }}
+        </mat-option>
+    </mat-select>
+    <mat-hint class="small">To add manpower press enter / click the button.</mat-hint>
+</mat-form-field>

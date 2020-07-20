@@ -1,0 +1,8 @@
+--------------------------------------------------------
+--  File created - Thursday-June-11-2020   
+--------------------------------------------------------
+REM INSERTING into XX_SR_REPRESENTATIVES
+SET DEFINE OFF;
+Insert into XX_SR_REPRESENTATIVES (REP_ID,REP_CODE,REP_NAME,PERSON_ID) values (100,'EMD','EMD',48);
+Insert into XX_SR_REPRESENTATIVES (REP_ID,REP_CODE,REP_NAME,PERSON_ID) values (101,'MIS-IT','MIS - IT',49);
+Insert into XX_SR_REPRESENTATIVES (REP_ID,REP_CODE,REP_NAME,PERSON_ID) values (102,'MIS-DEV','MIS - Programmer',3);

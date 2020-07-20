@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="bg-white p-3 m-3 border-muted">
+                <div class="row m-1">
+                    <h5 class="text-muted">Department & Services</h5>
+                </div>
+                <hr>
+
+                <mat-tab-group>
+                    <mat-tab label="Department">
+                        <div class="table-responsive mt-4">
+                            <button mat-raised-button color="primary" (click)="showDepartmentDialog()">Add Department</button>
+        
+                            <table class="table table-bordered table-sm text-center mt-3" id="tbl_departments" width="100%">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th rowspan="2" class="align-middle">Name</th>
+                                    <th rowspan="2" class="align-middle">Representative</th>
+                                    <th rowspan="2" class="align-middle">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let dept of departments;">
+                                    <td class="align-middle">{{ dept.NAME | uppercase }}</td>
+                                    <td class="align-middle">
+                                        <!-- <button 
+                                            (click)="account()"
+                                            *ngIf="dept.REP_NAME === null"
+                                            mat-mini-fab 
+                                            color="primary" 
+                                            title="Add Representative"
+                                            aria-label="Add Representative">
+                                            <mat-icon>add</mat-icon>
+                                        </button> -->
+                                        <span *ngIf="dept.REP_NAME">
+                                            {{ dept.REP_NAME | titlecase }}
+                                        </span>
+                                        <span *ngIf="dept.REP_NAME === null">
+                                            -
+                                        </span>
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ dept.STATUS === null ? 'Active' : 'Inactive' }}
+                                        <a class="btn btn-link btn-sm font-weight-bold">&#8599;</a>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="departments.length === 0">
+                                    <td colspan="3">No departments found. </td>
+                                </tr>
+                            </tbody>
+                            </table>                
+                        </div>
+                    </mat-tab>
+                    <!-- SERVICES TAB -->
+                    <mat-tab label="Services">
+                        <div class="table-responsive mt-4">
+                            <button mat-raised-button color="primary" (click)="showDepartmentDialog()">Add Services</button>
+        
+                            <table class="table table-bordered table-sm text-center mt-3" id="tbl_services" width="100%">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th rowspan="2" class="align-middle">Code</th>
+                                    <th rowspan="2" class="align-middle">Description</th>
+                                    <th rowspan="2" class="align-middle">Department</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let service of services;">
+                                    <td class="align-middle">
+                                        {{ service.SR_TYPE_CODE | uppercase }}
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ service.SR_TYPE_NAME | titlecase }}
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ service.REP_NAME }}
+                                        <a class="btn btn-link btn-sm font-weight-bold float-right">&#8599;</a>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="services.length === 0">
+                                    <td colspan="3">No services found. </td>
+                                </tr>
+                            </tbody>
+                            </table>                
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,148 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1"></div> -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="bg-white p-3 m-3 border-muted">
+                <div class="row m-1">
+                    <h5 class="text-muted mr-auto">Service Request Details</h5>
+                    <a class="close" aria-label="Close" href="#" [routerLink]="['/manage-request']">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <hr>
+                    <div class="m-3">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                <label class="font-weight-light small text-muted mr-auto">Request No.: {{ controlNumber }}</label>
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <label class="font-weight-light small text-muted text-nowrap">Date Requested: {{ dateRequested | date: 'MMM d, y HH:mm' }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                <label class="font-weight-light small text-muted text-nowrap">Requested By: {{ requestedBy }}</label>
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <label class="font-weight-light small text-muted text-nowrap">Date Required: {{ requestedDateRequired | date: 'MMM d, y' }}</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                <label class="font-weight-light small text-muted text-nowrap">Department Head: {{ deptHead }}</label>
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <label class="font-weight-light small text-muted text-nowrap">Priority: {{ requestedPriority | titlecase }}</label>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="mb-2" *ngIf="requestedAttachment.length > 0">
+                                    <label class="font-weight-500 to-gray text-nowrap" *ngIf="requestedAttachment.length > 0">
+                                        Attachment: 
+                                        <mat-slide-toggle (click)="setAttachment();" class="font-weight-light">{{ attrAttachment === false ? 'Show' : 'Hide' }}</mat-slide-toggle>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" *ngFor="let img of requestedAttachment; let i = index;">
+                                <img *ngIf="attrAttachment" [src]="'/localapi/uploads/appui/' + img.IMG" class="w-100 h-100" (click)="previewImg('/localapi/uploads/appui/' + img.IMG)" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <!-- <label class="font-weight-500 to-gray text-nowrap">
+                                    Request
+                                </label> -->
+                                <div class="m-3">
+                                    <table class="table table-bordered table-sm">
+                                        <thead class="text-white">
+                                            <tr>
+                                                <th class="w-50">Service Requirements</th>
+                                                <th class="w-50">Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let req of reqDetails; let i = index;">
+                                                <td class="align-middle">
+                                                    <mat-select 
+                                                        name="reqSelect" 
+                                                        [(ngModel)]="reqDetails[i].DTL_SR_TYPE_ID"  
+                                                        #reqService
+                                                        matNativeControl>
+                                                        <mat-option value="0" disabled>Please select</mat-option>
+                                                        <mat-option *ngFor="let req of setRequestList;" [value]="req.SR_TYPE_ID">{{ req.SR_TYPE_NAME }}</mat-option>
+                                                    </mat-select>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="d-flex d-block">
+                                                        <span class="w-100" contenteditable="true">{{ reqDetails[i].DTL_REMARKS }}</span>
+                                                        <!-- {{ req.DTL_REMARKS }} -->
+                                                        <a href="#"
+                                                        title="DELETE {{ req.DTL_NAME }}"
+                                                        class="text-danger float-right font-weight-bold"
+                                                        (click)="remove(i)"
+                                                        >
+                                                            &times;
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <hr class="hr-dotted"> -->
+                        <div class="row" *ngIf="reqStatus === 0 && (userLevel === 'head' || userLevel === 'supervisor' || userLevel === 'admin')">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <mat-form-field class="w-100">
+                                    <textarea matInput placeholder="Additional comments:" name="reqNotes" [(ngModel)]="reqNotes" autofocus="true"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <ngb-alert type="success" class="font-weight-500" [dismissible]="false" [hidden]="notificationStatus">
+                            {{ notificationResult }}
+                        </ngb-alert>
+
+                        <!-- Show if request type = details && user level = head / manager -->
+                        <div class="form-group row mt-3" *ngIf="(reqStatus === 0) && (userLevel === 'head' || userLevel === 'supervisor' || userLevel === 'admin')">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                <button mat-raised-button color="warn" (click)="requestStatus(false)" class="w-100 text-uppercase">Reject</button>
+                            </div>
+                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                <button mat-raised-button color="primary" (click)="requestStatus(true)" class="w-100 text-uppercase">Approve</button>
+                            </div>
+                        </div>
+
+                        <!-- Show if request type = details && user level = user -->
+                        <div class="form-group row mt-3" *ngIf="reqStatus === 0 && (userLevel === 'requestor' || userLevel === 'chief')">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                <button mat-raised-button color="warn" (click)="requestUpdate(false, true)" class="w-100 text-uppercase">Delete</button>
+                            </div>
+                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                <button mat-raised-button color="primary" (click)="requestUpdate(true, true)" class="w-100 text-uppercase">Update</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-3" *ngIf="(reqStatus === 1) && (userLevel === 'head' || userLevel === 'supervisor' || userLevel === 'admin')">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                <button mat-raised-button color="warn" (click)="requestStatus(false)" class="w-100 text-uppercase">Reject</button>
+                            </div>
+                            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                <button mat-raised-button color="primary" (click)="requestUpdate(true, true)" class="w-100 text-uppercase">Update</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <!-- <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1"></div> -->
+    </div>
+</div>

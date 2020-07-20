@@ -1,0 +1,58 @@
+<div class="min-height">
+    <app-top-bar></app-top-bar>
+    
+    <div class="padding-bottom-40">
+        <mat-drawer-container class="w-100">
+            <mat-drawer #drawer [mode]="mobileQuery.matches ? 'over' : 'side'" opened *ngIf="isLoggedIn">
+            <ul class="list-group">
+                <li class="list-group-item" [routerLink]="['/request']" [ngClass]="{active: 'request' === activeMenu}">
+                    <a class="text-muted font-weight-500">Create Request</a>
+                </li>
+                <li class="list-group-item" [routerLink]="['/manage-request']" [ngClass]="{active: 'manage-request' === activeMenu || 'requests' === activeMenu}">
+                    <a class="text-muted font-weight-500">Manage Request</a>
+                </li>
+                <li class="list-group-item" 
+                    [routerLink]="['/job']" 
+                    (click)="jobStatus('approved')"
+                    *ngIf="userLevel === 'admin' || userLevel === 'supervisor' || userLevel === 'head'" 
+                    [ngClass]="{active: ('job' === activeMenu && this.status === 'approved') || 'jobs' === activeMenu}">
+                    <a  class="text-muted font-weight-500">Create Job Order</a>
+                </li>
+                <li class="list-group-item" 
+                    [routerLink]="['/job']" 
+                    (click)="jobStatus('wip')" 
+                    *ngIf="userLevel === 'admin' || userLevel === 'chief' || userLevel === 'supervisor' || userLevel === 'head'"
+                    [ngClass]="{active:('job' === activeMenu && this.status === 'wip') || 'manage-jobs' === activeMenu}">
+                    <a class="text-muted font-weight-500">Manage Job Order</a>
+                </li>
+                <li class="list-group-item" (click)="account()" *ngIf="userLevel === 'admin'">
+                    <a class="text-muted font-weight-500">Add Account</a>
+                </li>
+                <li class="list-group-item" 
+                    [ngClass]="{active: 'departments-services' === activeMenu}"
+                    [routerLink]="['/departments-services']" 
+                    *ngIf="userLevel === 'admin'">
+                    <a class="text-muted font-weight-500">Department & Services</a>
+                </li>
+                <li class="list-group-item" (click)="logout()" *ngIf="isLoggedIn">
+                    <a class="text-muted font-weight-500">Logout</a>
+                </li>
+            </ul>
+            </mat-drawer>
+            <mat-drawer-content>
+                <router-outlet></router-outlet>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<div class="overlay my-auto" [ngClass]="{'w-100': widthContent }">
+    <a href="#" class="closebtn" (click)="close()">&times;</a>
+    <div class="overlay-content my-auto">
+        <div>
+            <img [src]="myImage" class="img-fluid" class="img-500" />
+        </div>
+    </div>
+</div>

@@ -1,1 +1,2 @@
-# smrf-t3
+# angular-proxy-example
+This is an example for angular CLI proxy configuration

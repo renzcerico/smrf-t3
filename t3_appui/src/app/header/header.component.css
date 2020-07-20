@@ -1,0 +1,131 @@
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.border-100 {
+    border-radius: 100px;
+}
+
+.text-green {
+    color: #28a745 !important;
+}
+
+#header_production_order input, #prod_span,
+#forwardTo {
+    border-right: 0;
+    border-left: 0;
+    border-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 13px !important;
+}
+
+#forwardTo {
+    outline: none;
+}
+
+#header_production_order label {
+    color: #63605e !important;
+}
+
+#header_production_order input:focus { 
+    border-bottom: 1px solid #28a745;
+}
+
+#btn_see_more:hover,
+#btn_see_more:focus {
+    color: #28a745 !important;
+}
+
+input:read-only {
+    background: none !important;
+}
+
+#container_see_more:hover,
+#header_production_order:hover + #container_see_more {
+    margin-top: -25px;
+    display: block !important;
+    position: absolute;
+    z-index: 1000;
+}
+
+.blurred-bg {
+    background-color: rgb(248, 249, 250);
+    filter: blur(10px);
+}
+
+.border-radius-0 {
+    border-radius: 0;
+}
+
+/*******************
+*  FLOATING LABELS *
+********************/
+
+.form-label-group {
+    position: relative;
+}
+
+.form-label-group > label {
+    position: absolute;
+    top: -3px;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    line-height: 2.5;
+    color: #495057;
+    border: 1px solid transparent;
+    transition: all .1s ease-in-out;
+}
+
+.form-label-group input::placeholder,
+.form-label-group input::-moz-placeholder,
+.form-label-group input::-ms-input-placeholder,
+.form-label-group input::-webkit-input-placeholder,
+.form-label-group input:-ms-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+.form-label-group input ~ label {
+    font-size: 11px;
+    font-weight: 500 !important;
+    color: #777;
+}
+
+#prod_span {
+    border-bottom: 1px solid #ced4da;
+    /* white-space: nowrap; */
+    z-index: 2;
+    padding: 0 0.75rem;
+    position: absolute;
+    bottom: 0;
+    background-color: #fff2a6;
+    min-width: 87.5%;
+}
+
+#prod_span ~ label {
+    font-size: 11px;
+    font-weight: 500 !important;
+    color: #777; 
+}
+
+div.col-md-6 > .form-label-group > input {
+    width: 87.5%;
+}
+
+span.title {
+    color: #63605e !important;
+    font-size: 11px;
+    font-weight: 500 !important;
+}
+span.content {
+    font-size: 13px !important;
+    color: #495057;
+    font-weight: bold !important;
+}

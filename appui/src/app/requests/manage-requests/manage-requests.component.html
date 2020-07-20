@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1"></div> -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="bg-white p-3 m-3 border-muted">
+                <div class="row m-1">
+                    <h5 class="text-muted">Manage Service Requests</h5>
+                </div>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm text-center" id="tbl_manage" width="100%">
+                    <thead class="text-uppercase">
+                        <tr>
+                            <th rowspan="2" class="align-middle">Request <br />No.</th>
+                            <th rowspan="2" class="align-middle">Service <br />Status</th>
+                            <th rowspan="2" class="align-middle">{{ assignedPerson}}</th>
+                            <th rowspan="2" class="align-middle">Priority</th>
+                            <th rowspan="2" class="align-middle">Remarks</th>
+                            <th rowspan="2" class="align-middle">Service <br />Representative</th>
+                            <th rowspan="2" class="align-middle">Date <br />Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let req of requestsList;" [routerLink]="[req.router, req.REQ_ID]">
+                            <td>{{ req.REQ_ID }}</td>
+                            <td [class]="req.color">{{ req.REQ_STATUS | titlecase }}</td>
+                            <!-- <td [class]="req.color">{{ req.REQ_STATUS }}</td> -->
+                            <td>{{ req.NAME_CREATED_BY }}</td>
+                            <td>{{ req.REQ_PRIORITY }}</td>
+                            <td>{{ req.NOTES }}</td>
+                            <td>{{ req.NAME }}</td>
+                            <td>
+                                {{ req.CREATION_DATE | date: 'MMM dd, yyyy HH:mm' }} 
+                                <a class="btn btn-link btn-sm font-weight-bold float-right">&#8599;</a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="requestsList.length === 0">
+                            <td colspan="7">No records found.</td>
+                        </tr>
+                    </tbody>
+                    </table>                
+                </div>
+            
+            </div>
+        </div>
+        <!-- <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1"></div> -->
+    </div>
+</div>

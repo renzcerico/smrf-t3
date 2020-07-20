@@ -1,0 +1,20 @@
+.manpower_list,
+.start_time,
+.end_time,
+.remarks {
+    background-color: transparent !important;
+    border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #9B8864;
+    font-size: 13px !important;
+}
+
+.remarks {
+    resize: none;
+}
+
+option:disabled {
+    color: #c9c7c6;
+}

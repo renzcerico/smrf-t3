@@ -1,0 +1,80 @@
+<div class="container-fluid mt-4" id="container_material">
+    <div class="table-responsive">
+        <h6 class="text-center text-muted text-uppercase">Material</h6>
+        <table class="table table-bordered table-sm table-hover text-center" id="table_material">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="align-middle">ITEM</th>
+                    <th rowspan="2" class="align-middle">MATERIAL CODE</th>
+                    <th rowspan="2" class="align-middle">CATEGORY</th>
+                    <th rowspan="2" class="align-middle">STANDARD</th>
+                    <th rowspan="2" class="align-middle">REQUIREMENTS</th>
+                    <th colspan="3" class="align-middle">CONSUMPTION</th>
+                    <th rowspan="2" class="align-middle">REMARKS</th>
+                    <th rowspan="2" class="align-middle">LAST UPDATED BY</th>
+                    <th colspan="2">DATE</th>
+                </tr>
+                <tr>
+                    <th>USED</th>
+                    <th>REJECT</th>
+                    <th>TOTAL</th>
+                    <th>ENTERED</th>
+                    <th>UPDATED</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let material of materials; let i = index;">
+                    <td class="align-middle">{{ i + 1 }}</td>
+                    <td class="align-middle" data-label="Code">
+                        {{ material.MATERIAL_CODE }} <hr class="m-0">
+                        <small class="d-block">{{ material.MATERIAL_DESC }}</small>
+                    </td>
+                    <td class="align-middle" data-label="Quantity">{{ material.ITEM_CATEGORY }}</td>
+                    <td class="align-middle" data-label="Standard">{{ material.STANDARD }}</td>
+                    <td class="align-middle" data-label="Requirements">{{ material.REQUIREMENTS }}</td>
+                    <td class="align-middle" data-label="Used">{{ actTotal / material.STANDARD | number : '1.0-0'}}</td>
+                    <td *ngIf="isAuthorized"  class="align-middle td-editable" width="6%" data-label="Reject">
+                        <div class="td-indicator"></div>
+                        <input 
+                            type="number" 
+                            name="reject" 
+                            [(ngModel)]="materials[i].REJECT"
+                            (ngModelChange)="valueChanged(i, 'reject')"
+                            [attr.m-id]="material.ID"
+                            class="form-control text-right"
+                            (focus)="$event.target.select();"
+                            (keydown.enter)="onKeyDown($event)"
+                            min="0"
+                            #tdEditable />
+                    </td>
+                    <td *ngIf="!isAuthorized" class="align-middle" data-label="Reject">
+                        {{ material.REJECT | number : '1.0-0'}}
+                    </td>
+                    <td class="align-middle" data-label="Total">
+                        {{ (actTotal / material.STANDARD) + material.REJECT | number : '1.0-0'}}
+                    </td>
+                    <td *ngIf="isAuthorized" class="align-middle td-editable" data-label="Remarks">
+                        <div class="td-indicator"></div>
+                        <textarea                             
+                            [(ngModel)]="materials[i].REMARKS"
+                            (ngModelChange)="valueChanged(i)"
+                            name="remarks"
+                            class="form-control remarks"
+                            [attr.m-id]="material.id"
+                            #tdEditable
+                            autosize rows="1"
+                            (keydown.enter)="onKeyDown($event)">
+                            {{ material.REMARKS }}
+                        </textarea>
+                    </td>
+                    <td *ngIf="!isAuthorized" class="align-middle" data-label="Remarks">{{ material.REMARKS }}</td>
+                    <td class="align-middle" data-label="Last Updated By">{{ material.LAST_UPDATED_BY_NAME }}</td>
+                    <td class="align-middle" data-label="Date Entered">{{ material.DATE_ENTERED | date : 'MMM d, y HH:mm' }}</td>
+                    <td class="align-middle" data-label="Date Updated">
+                        {{ material.DATE_UPDATED | date : 'MMM d, y HH:mm' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

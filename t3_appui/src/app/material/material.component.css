@@ -1,0 +1,92 @@
+#table_activity thead  th,
+#table_manpower thead  th,
+#modal_table_header thead  th,
+#modal_table thead  th,
+#table_material thead  th,
+#tblAccounts thead th {
+    text-align: center;
+    background-color: #28a745;
+    color: white;
+    font-weight: 500 !important;
+    font-size: 15px !important;
+}
+
+#table_activity tbody td,
+#table_activity textarea,
+#modal_table_header tbody td,
+#modal_table tbody td,
+#table_manpower tbody td,
+#table_material tbody td,
+#table_material tbody input,
+#table_material tbody textarea,
+#tblAccounts thead td
+.editable-content {
+    font-weight: 400 !important;
+    font-size: 13px !important;
+}
+
+#table_material>tbody input,
+#modal_table>tbody input,
+#modal_table>tbody select,
+#table_material>tbody textarea,
+#modal_table>tbody textarea,
+#table_manpower>tbody input,
+#table_manpower>tbody select,
+#table_manpower>tbody textarea,
+.editable-content {
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+#table_activity>tbody input:focus,
+#modal_table>tbody input:focus,
+#modal_table>tbody select:focus,
+#table_activity>tbody textarea:focus,
+#modal_table>tbody textarea:focus,
+#table_manpower>tbody input:focus,
+#table_manpower>tbody select:focus,
+#table_manpower>tbody textarea:focus,
+#table_material>tbody input:focus,
+#table_material>tbody textarea:focus {
+    box-shadow: none;
+}
+
+#table_material tbody td:nth-child(4),
+#table_material tbody td:nth-child(8), 
+#table_material tbody td:nth-child(5),
+#table_material tbody td:nth-child(7),
+#table_material tbody td:nth-child(6) {
+    text-align: right;
+} 
+
+#table_activity>tbody tr:hover,
+#modal_table_header>tbody tr:hover,
+#table_manpower>tbody tr:hover,
+#table_material>tbody tr:hover {
+    background-color: #b6ffb2 !important;
+}
+
+#actLotNumber,
+#actPackedQty,
+#actDowntime,
+#actRemarks,
+.remarks {
+    background-color: transparent !important;
+    border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px #9B8864 solid ;
+    font-size: 13px !important;
+}
+
+#act_remarks,
+.remarks {
+    resize: none;
+}
+
+td, th {
+    border: 1px solid #9B8864 !important;
+    background-color: rgba(155, 136, 100, 0.123);
+}

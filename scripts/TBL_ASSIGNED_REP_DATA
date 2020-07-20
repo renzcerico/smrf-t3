@@ -1,0 +1,15 @@
+--------------------------------------------------------
+--  File created - Friday-June-12-2020   
+--------------------------------------------------------
+REM INSERTING into TBL_MANPOWER
+SET DEFINE OFF;
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (2,'9',1,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (3,'9',2,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (6,'11',1,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (7,'11',2,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (9,'17',1,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (10,'17',41,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (13,'10',1,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (14,'10',41,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (17,'18',1,null,null);
+Insert into TBL_MANPOWER (ID,JOB_ORDER_ID,MANPOWER_ID,REMARKS,CREATED_AT) values (141,'20',41,null,null);
