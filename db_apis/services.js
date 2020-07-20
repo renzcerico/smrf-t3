@@ -14,3 +14,21 @@ const get = async () => {
 };
 
 module.exports.get = get;
+
+const insert = async (data) => {
+    const sql = `INSERT INTO XX_SR_TYPES 
+                    ('SR_TYPE_ID', 'SR_TYPE_CODE', 'SR_TYPE_NAME', 'REP_ID')
+                VALUES(null, :code, :name, :dept)`;
+
+    const bind = {
+        'code': data.service_code,
+        'name': data.service_name,
+        'dept': data.service_department,
+    };
+
+    const result = await database.simpleExecute(sql, bind);
+
+    return result.rows;
+};
+
+module.exports.insert = insert;

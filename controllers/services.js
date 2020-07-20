@@ -11,3 +11,15 @@ const get = async (req, res, next) => {
 };
 
 module.exports.get = get;
+
+const insert = async (req, res, next) => {
+    try {
+        const rows = await services.insert(req.body);
+        
+        res.status(200).json(rows);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.insert = insert;
