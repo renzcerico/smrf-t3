@@ -129,4 +129,8 @@ export class MaterialService {
     return maxBoxQty;
   }
 
+  deleteMaterials() {
+    this.materialsSource.next([]);
+  }
+
 }

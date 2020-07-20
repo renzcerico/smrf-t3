@@ -121,4 +121,8 @@ export class ManpowerService {
     this.manpowerSource.next(manpowerArr);
   }
 
+  deleteManpower() {
+    this.manpowerSource.next([]);
+  }
+
 }

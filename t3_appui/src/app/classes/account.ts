@@ -30,8 +30,12 @@ export default class Account {
         this.USERNAME    = jsonObj.USERNAME || '';
         headerService.header$.subscribe(
             data => {
-              const headerObj = this.headerFactory.setHeader(data.header_obj);
-              this.IS_AUTHORIZED = headerObj;
+                if (Object.keys(data).length > 0) {
+                    const headerObj = this.headerFactory.setHeader(data.header_obj);
+                    this.IS_AUTHORIZED = headerObj;
+                } else {
+                    this.IS_AUTHORIZED = null;
+                }
             }
         );
     }

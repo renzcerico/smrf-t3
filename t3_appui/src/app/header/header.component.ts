@@ -179,7 +179,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         this.matArr = this.matComponent.materials;
     }
 
-    async ngOnInit() {
+    ngOnInit() {
         // this.headerService.getData('163178');
         this.barcode();
     }
@@ -226,6 +226,8 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         } else if (status === 'CLOSED' || status === 4) {
             this.currentStatus = 'dot status-closed';
             this.currentStatusDesc = 'CLOSED';
+        } else {
+            this.currentStatus = null;
         }
     }
 
@@ -393,11 +395,19 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     }
 
     setData(data) {
-        this.headerObj = this.headerFactory.setHeader(data.header_obj);
-        this.visibleStatus(this.headerObj.STATUS);
-        this.manpowerService.setManpower(data.manpower_collection);
-        this.activityService.setActivities(data.activity_collection);
-        this.materialService.setMaterials(data.materials_collection);
+        if (Object.keys(data).length > 0) {
+            this.headerObj = this.headerFactory.setHeader(data.header_obj);
+            this.visibleStatus(this.headerObj.STATUS);
+            this.manpowerService.setManpower(data.manpower_collection);
+            this.activityService.setActivities(data.activity_collection);
+            this.materialService.setMaterials(data.materials_collection);
+        } else {
+            this.currentStatus = '';
+            this.manpowerService.deleteManpower();
+            this.activityService.deleteActivities();
+            this.materialService.deleteMaterials();
+            this.headerObj = {};
+        }
     }
 
     setForwardList() {

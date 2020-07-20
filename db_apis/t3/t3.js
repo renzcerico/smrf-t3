@@ -140,7 +140,14 @@ const getActivityDowntime = async (activity_id) => {
 }
 
 const getDowntimeTypes = async () => {
-    const q = `BEGIN ${process.env.SCHEMA}.T3_PACKAGE.GET_DOWNTIME_TYPES (:cursor); END;`;
+    // const q = `BEGIN ${process.env.SCHEMA}.T3_PACKAGE.GET_DOWNTIME_TYPES (:cursor); END;`;
+    const q = `
+        BEGIN
+            OPEN :cursor FOR
+            SELECT dt.*
+            FROM ${process.env.SCHEMA}.tbl_downtime_types dt;
+        END;
+    `;
     let binds = {
         cursor: {
             dir: oracle.BIND_OUT,
@@ -149,6 +156,7 @@ const getDowntimeTypes = async () => {
     }
     let res = await database.resultsetExecute(q, binds)
     .catch(error => { console.log('caugth', error.message)});
+    consoleSuccess(res);
     return res;
 }
 
@@ -224,6 +232,31 @@ const changePassword = async (data) => {
 }
 
 module.exports.changePassword = changePassword;
+
+const createDowntimeTypes = async (downtime_type) => {
+    const q = `
+        BEGIN
+                INSERT INTO ${process.env.SCHEMA}.tbl_downtime_types
+                VALUES (
+                    NULL,
+                    :downtime_type,
+                    0,
+                    NULL
+                );
+            COMMIT;
+        END;
+        `;
+    let binds = {
+        downtime_type
+    };
+    // consoleSuccess(binds);
+    let res = await database.simpleExecute(q, binds)
+        .catch(error => { console.log('caught', error.message); });
+    // consoleSuccess(res);
+    return res;
+}
+
+module.exports.createDowntimeTypes = createDowntimeTypes;
 
 const consoleError = (text) => {
     console.log('\x1b[47m','\x1b[31m', text, '\x1b[0m');

@@ -23,7 +23,13 @@ export default class Material {
         this.ID = jsonObj.ID || null;
         this.QUANTITY = jsonObj.QUANTITY || jsonObj.STD_QTY || null;
         this.STANDARD = jsonObj.STANDARD || jsonObj.STD_QTY || null;
-        this.REQUIREMENTS = jsonObj.REQUIREMENTS || jsonObj.REQUIRE_QTY || null;
+        if (jsonObj.REQUIREMENTS) {
+            this.REQUIREMENTS = parseFloat(jsonObj.REQUIREMENTS.toFixed(2));
+        } else if (jsonObj.REQUIRE_QTY) {
+            this.REQUIREMENTS = parseFloat(jsonObj.REQUIRE_QTY.toFixed(2));
+        } else {
+            this.REQUIREMENTS = 0;
+        }
         this.USED = jsonObj.USED || 0;
         this.REJECT = jsonObj.REJECT || 0;
         this.REMARKS = jsonObj.REMARKS || '';

@@ -58,7 +58,11 @@ export class ActivityService {
     );
     headerService.header$.subscribe(
       data => {
-        this.headerObj = this.headerFactory.setHeader(data.header_obj).getJson();
+        if (Object.keys(data).length > 0) {
+          this.headerObj = this.headerFactory.setHeader(data.header_obj).getJson();
+      } else {
+          this.headerObj = {};
+      }
       }
     );
     servertimeService.time$.subscribe(
@@ -236,6 +240,10 @@ export class ActivityService {
         this.activities.unshift(filler);
       }
     }
+  }
+
+  deleteActivities() {
+    this.activitiesSource.next([]);
   }
 
 }

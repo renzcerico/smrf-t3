@@ -53,7 +53,8 @@ export class LoginComponent implements OnInit {
       this.username = this.apiResponse.USERNAME;
       this.headerService.getUserForwardList();
       this.userService.setUser(this.apiResponse);
-      this.headerService.refreshSource();
+      // this.headerService.refreshSource();
+      this.headerService.setHeaderObj({});
       this.headerService.setUpdatedHeaderCountPerStatus('login');
       this.modalService.dismissAll();
       setTimeout(() => {
