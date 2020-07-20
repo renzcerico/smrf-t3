@@ -27,21 +27,21 @@
             <div class="input-group-prepend mr-2">
                 <p>Search:</p>
             </div>
-            <input class="form-control" type="text" name="search" id="search" [(ngModel)]="searchVal" (ngModelChange)="refreshSource()">
+            <input class="form-control" type="text" name="search" ngbAutofocus id="search" [(ngModel)]="searchVal" (ngModelChange)="refreshSource()">
         </div>
 
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-md table-hover text-center" id="modal_table_header">
             <thead class="text-capitalize">
-                <th class="align-middle" ngbAutofocus (click)="toggleOrder('BARCODE')">Barcode</th>
+                <th class="align-middle" (click)="toggleOrder('BARCODE')">Barcode</th>
                 <th class="align-middle" (click)="toggleOrder('PO_NUMBER')">PO Number</th>
                 <th class="align-middle" (click)="toggleOrder('CONTROL_NUMBER')">Control Number</th>
                 <th class="align-middle" (click)="toggleOrder('CUSTOMER')">Customer</th>
                 <th class="align-middle"  (click)="toggleOrder('SHIPPING_DATE')">Shipping Date</th>
             </thead>
             <tbody *ngIf="headerList?.length > 0; else elseBlock">
-                <tr *ngFor="let header of headerList; let i = index" (click)="openHeader(header.BARCODE)">
+                <tr #headertr *ngFor="let header of headerList; let i = index" (dblclick)="openHeader(header.BARCODE)" [ngClass]="{'highlight': activeIndex === i}">
                     <td class="align-middle">{{header.BARCODE}}</td>
                     <td class="align-middle">{{header.PO_NUMBER}}</td>
                     <td class="align-middle">{{header.CONTROL_NUMBER}}</td>

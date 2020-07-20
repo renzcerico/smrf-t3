@@ -30,11 +30,13 @@ export class ActivityDetailsComponent implements OnInit {
   userType: number;
   // tslint:disable-next-line: variable-name
   _isAuthorized: boolean;
-
+  inputErrors: Array<number> = [];
   @ViewChildren('modalHeaderInput') modalHeaderInput !: QueryList<ElementRef>;
 
   constructor(public activeModal: NgbActiveModal,
-              private activityFactory: ActivityFactory) {
+              private activityFactory: ActivityFactory,
+              private el: ElementRef,
+              private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -48,17 +50,47 @@ export class ActivityDetailsComponent implements OnInit {
 
   modalEnter(event) {
     const elArr = this.modalHeaderInput.toArray();
+    const withErrors = [];
     const active = elArr.findIndex(index => {
       return (index.nativeElement.parentElement === event.target.parentElement);
     });
 
-    if (event.target.attributes.required && (!event.target.value || event.target.value < 1)) {
-      return;
-    }
+    // if (event.target.attributes.required && (!event.target.value || event.target.value < 1)) {
+    //   return;
+    // }
+    elArr.forEach(el => {
+      const id = el.nativeElement.attributes.id.value;
+      let errorMessage = '';
+      if (el.nativeElement.hasAttribute('required') && (!el.nativeElement.value || el.nativeElement.value < 1)) {
+        errorMessage = 'This field is required';
+      }
+
+      if (id === 'packed_input') {
+        if (el.nativeElement.value % 1) {
+          errorMessage = 'This field can not contain decimal places';
+        }
+        if (el.nativeElement.value < 0) {
+          errorMessage = 'This field can not contain a negative value';
+        }
+      }
+
+      if (errorMessage.length) {
+        withErrors.push({
+          el: el.nativeElement,
+          errorMessage
+        });
+      }
+    });
 
     if (active < elArr.length - 1) {
       elArr[active + 1].nativeElement.focus();
     } else {
+
+      if (withErrors.length) {
+        this.showErrors(withErrors);
+        return;
+      }
+
       const newActivityDetail = {
         LOT_NUMBER      : this.mLotNumber,
         PACKED_QTY      : this.mPacked,
@@ -101,6 +133,16 @@ export class ActivityDetailsComponent implements OnInit {
   }
 
   async handleSave() {
+    if (this.inputErrors.length) {
+      Swal.fire({
+        title: 'Error',
+        showCancelButton: true,
+        text: 'Please fix all errors before submitting',
+        icon: 'warning',
+        confirmButtonText: 'Ok'
+      });
+      return;
+    }
     if ( this.mLotNumber !== ''
       || this.mPacked !== 0) {
         let isConfirmed: boolean;
@@ -167,6 +209,54 @@ export class ActivityDetailsComponent implements OnInit {
       }).then( val => {
         this.mPacked = 0;
       });
+    }
+  }
+
+  showErrors(errors: Array<any>): void {
+    errors.forEach(error => {
+      error.el.classList.add('is-invalid');
+      const invalidComponent = this.el.nativeElement.querySelector('div[for="' + error.el.attributes.id.value + '"]');
+      this.renderer.setProperty(invalidComponent, 'innerHTML', error.errorMessage);
+      // invalidComponent.innerHTML('burat');
+    });
+    errors[0].el.focus();
+  }
+
+  handleInputChange(event) {
+    // if (event.target.hasClass('is-invalid')) {
+      event.target.classList.remove('is-invalid');
+    // }
+  }
+
+  denyDecimal(event) {
+    if (event.keyCode === 110 || event.keyCode === 190) {
+      return false;
+    }
+  }
+
+  adjBlur(event, index) {
+    if (event.target.value % 1) {
+      const currInput = this.inputErrors.findIndex(el => el === index);
+      const invalidComponent = this.el.nativeElement.querySelector('#adj_' + index);
+      this.renderer.setProperty(invalidComponent, 'innerHTML', 'This field can not contain decimal places');
+      if (currInput < 0) {
+        event.target.classList.add('is-invalid');
+        this.inputErrors.push(index);
+      }
+    } else if ((this.tempActDetails[index].ADJ_QTY + this.tempActDetails[index].PACKED_QTY) < 0) {
+      const currInput = this.inputErrors.findIndex(el => el === index);
+      const invalidComponent = this.el.nativeElement.querySelector('#adj_' + index);
+      this.renderer.setProperty(invalidComponent, 'innerHTML', 'Invalid Adjustment value');
+      if (currInput < 0) {
+        event.target.classList.add('is-invalid');
+        this.inputErrors.push(index);
+      }
+    } else {
+      const currInput = this.inputErrors.findIndex(el => el === index);
+      if (currInput >= 0) {
+        this.inputErrors.splice(currInput, 1);
+        event.target.classList.remove('is-invalid');
+      }
     }
   }
 }

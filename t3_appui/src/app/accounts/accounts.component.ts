@@ -215,6 +215,8 @@ export class AccountsComponent implements OnInit {
       if (isAuthorized.USER_LEVEL.toUpperCase().trim() !== 'ADMIN') {
         this.router.navigate(['/']);
       }
+    } else {
+      this.router.navigate(['/']);
     }
   }
 

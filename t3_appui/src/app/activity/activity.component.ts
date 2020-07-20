@@ -196,7 +196,16 @@ export class ActivityComponent implements OnInit, AfterContentChecked {
 
   addRow() {
     const modalRef = this.modalService.open(AddRowComponent, {size: 'md'});
-    // modalRef.componentInstance.actualStart = this.headerObj.ACTUAL_START;
+    modalRef.componentInstance.actualStart = this.activityService.headerObj.ACTUAL_START;
+  }
+
+  isSameDay(index: number): boolean {
+    const prevDate = moment(this.activities[index - 1].START_TIME);
+    const actDate = moment(this.activities[index].START_TIME);
+    if (prevDate.isSame(actDate, 'day')) {
+      return true;
+    }
+    return false;
   }
 
 }

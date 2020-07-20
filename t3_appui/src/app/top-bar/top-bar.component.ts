@@ -1,3 +1,4 @@
+import { ChangePasswordComponent } from './../modals/change-password/change-password.component';
 import { ServertimeService } from './../services/servertime.service';
 import { environment } from './../../environments/environment';
 import { UserService } from './../services/user.service';
@@ -99,6 +100,10 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
         modalRef.componentInstance.showCount = 10;
         modalRef.componentInstance.pageNumber = 1;
         modalRef.componentInstance.totalCount = totalCount;
+    }
+
+    showChangePasswordModal() {
+        const modalRef = this.modalService.open(ChangePasswordComponent, {size: 'sm'});
     }
 
     loggedOut() {

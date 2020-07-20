@@ -38,3 +38,8 @@ button:not(.close) {
     width: 100%;
     max-width: 200px;
 }
+
+.is-invalid {
+    border-bottom: 2px solid #dc3545 !important;
+    box-shadow: #dc3545 !important;
+}

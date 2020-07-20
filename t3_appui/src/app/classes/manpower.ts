@@ -15,7 +15,7 @@ export class Manpower {
     constructor(jsonObj) {
         this.ID = jsonObj.ID || null;
         this.POSITION_ID = jsonObj.POSITION_ID || null;
-        this.MANPOWER_ID = jsonObj.MANPOWER_ID || -1;
+        this.MANPOWER_ID = jsonObj.MANPOWER_ID || 0;
         this.START_TIME = jsonObj.START_TIME || '';
         this.END_TIME = jsonObj.END_TIME || '';
         this.REMARKS = jsonObj.REMARKS || '';

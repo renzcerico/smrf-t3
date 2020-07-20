@@ -22,12 +22,18 @@ import { ActivityComponent } from './activity/activity.component';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { ActivityDowntimeComponent } from './activity-downtime/activity-downtime.component';
 import { AccountsComponent } from './accounts/accounts.component';
-
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { Routes, RouterModule } from '@angular/router';
 import { HeaderModalComponent } from './header-modal/header-modal.component';
 import { CounterPipePipe } from './counter-pipe.pipe';
 import { LoginComponent } from './modals/login/login.component';
 import { AddRowComponent } from './modals/add-row/add-row/add-row.component';
+import { ChangePasswordComponent } from './modals/change-password/change-password.component';
+
+
+const maskConfig: Partial<IConfig> = {
+    validation: false,
+};
 
 @NgModule({
 declarations: [
@@ -44,14 +50,16 @@ AccountsComponent,
 HeaderModalComponent,
 CounterPipePipe,
 LoginComponent,
-AddRowComponent
+AddRowComponent,
+ChangePasswordComponent
 ],
 entryComponents: [
 ActivityDetailsComponent,
 ActivityDowntimeComponent,
 HeaderModalComponent,
 LoginComponent,
-AddRowComponent
+AddRowComponent,
+ChangePasswordComponent,
 ],
 imports: [
 AutosizeModule,
@@ -59,6 +67,7 @@ BrowserModule,
 FontAwesomeModule,
 AppRoutingModule,
 FormsModule,
+NgxMaskModule.forRoot(maskConfig),
 ReactiveFormsModule,
 BrowserAnimationsModule,
 HttpClientModule,

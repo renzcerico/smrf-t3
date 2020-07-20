@@ -130,3 +130,18 @@ const get = async (req, res, next) => {
 };
 
 module.exports.get = get;
+
+const changePassword = async (req = {}, res, next = null) => {
+    try {
+        let data = req.body;
+        delete data.confirm_password;
+        data.user_id = req.session.t3_user.ID;
+        const request = await t3.changePassword(data)
+        .catch(error => { console.log('caught', error.message); });
+        res.status(201).json(request);
+      } catch (err) {
+        next(err);
+      }
+}
+
+module.exports.changePassword = changePassword;

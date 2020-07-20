@@ -54,7 +54,7 @@
                             {{ username }}
                         </button>
                         <div ngbDropdownMenu aria-labelledby="user_profile_dropdown" class="dropdown-menu dropdown-menu-left">
-                            <a href="javascript:void(0)" ngbDropdownItem class="text-muted">Change Password</a>
+                            <a href="javascript:void(0)" ngbDropdownItem class="text-muted" (click)="showChangePasswordModal()">Change Password</a>
                             <a href="javascript:void(0)" (click)="loggedOut()" ngbDropdownItem class="text-muted">Logout</a>
                         </div>
                     </div>

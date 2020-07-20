@@ -17,44 +17,40 @@ export class AddRowComponent implements OnInit {
   fullStartTime: any;
   fullEndTime: any;
   actualStart: string;
-  dateSelected: Date;
-    constructor(private activityFactory: ActivityFactory, private activeModal: NgbActiveModal, private activityService: ActivityService, ) {
-    this.startTime = '';
-    this.endTime = 'HHmm';
+  dateSelected: string;
+  minDate: string;
+  maxDate: string;
+  constructor(private activityFactory: ActivityFactory,
+              private activeModal: NgbActiveModal,
+              private activityService: ActivityService, ) {
+  this.startTime = '';
+  this.endTime = 'HHmm';
   }
 
   ngOnInit() {
-  }
-
-  limit(val= '', key) {
-    const pattern = /^['0-9']$/i;
-    const count = val.toString().length;
-
-    if (pattern.test(key)) {
-      if (count === 4) {
-        return false;
-      }
-    }
+    this.minDate = moment(this.actualStart).subtract(1, 'day').format('YYYY-MM-DD');
+    this.maxDate = moment(this.actualStart).add(1, 'day').format('YYYY-MM-DD');
+    this.dateSelected = moment(this.actualStart).format('YYYY-MM-DD');
   }
 
   updateStartTime() {
     if (this.startTime.length === 4 ) {
-      const time = this.startTime.slice(0, 2);
-      const min = this.startTime.slice(2, 4);
+      const time = parseInt(this.startTime.slice(0, 2), 10);
+      const min = parseInt(this.startTime.slice(2, 4), 10);
       const timeStr = moment(this.dateSelected).format('MM/DD/YYYY') + ' ' + time + ':' + min;
       this.fullStartTime = moment(timeStr);
       this.fullEndTime = moment(this.fullStartTime).add(1, 'hours').startOf('hour');
       const endTimeObj = moment(this.fullEndTime).format('HHmm');
       this.endTime = endTimeObj;
     } else {
-      this.endTime = 'HHmm';
+      this.endTime = '';
     }
   }
 
   updateEndTime() {
     if (this.startTime.length === 4 ) {
-      const time = this.endTime.slice(0, 2);
-      const min = this.endTime.slice(2, 4);
+      const time = parseInt(this.endTime.slice(0, 2), 10);
+      const min = parseInt(this.endTime.slice(2, 4), 10);
       const timeStr = moment(this.dateSelected).format('MM/DD/YYYY') + ' ' + time + ':' + min;
       this.fullEndTime = moment(timeStr);
     }
@@ -67,7 +63,6 @@ export class AddRowComponent implements OnInit {
       END_TIME        : this.fullEndTime,
       IS_NEW          : 1,
     });
-    console.log(act);
     const validate = this.validate(act.START_TIME, act.END_TIME);
     if (validate.isValid) {
       this.activityService.addCustomActivity(act);
@@ -95,6 +90,12 @@ export class AddRowComponent implements OnInit {
         message: 'Invalid Value'
       };
       return res;
+    }
+    if (!moment(this.dateSelected).isBetween(moment(this.minDate).subtract(1, 'day'), moment(this.maxDate).add(1, 'day'))) {
+      res = {
+        isValid: false,
+        message: 'Invalid Date'
+      };
     }
     if (!this.activityService.isActivityAllowed(startTime)) {
       res = {

@@ -47,45 +47,8 @@
                     <th>updated</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- <tr>
-                    <td data-label="Start" class="align-middle"> {{ actualTime.start | date : 'HH:mm'}}</td>
-                    <td data-label="End" class="align-middle"> {{ actualTime.end | date : 'HH:mm'}}</td>
-                    <td class="align-bototm" data-label="Packed"></td>
-                    <td class="align-bototm" data-label="adjustment"></td>
-                    <td class="align-bototm" data-label="total"></td>
-                    <td class="align-bottom td-editable" data-label="Downtime">
-                        <div class="td-indicator"></div>
-                        <input
-                            id="actDowntime"
-                            name="downtime"
-                            type="number"
-                            min="0"
-                            value="0"
-                            #headerInput
-                            [(ngModel)]="actDowntime"
-                            (keyup.enter)="handleKeyUp($event)"
-                            class="form-control"/>
-                    </td>
-                    <td class="align-bottom td-editable" data-label="Remarks">
-                        <div class="td-indicator"></div>
-                        <textarea
-                            id="actRemarks"
-                            name="remarks"
-                            rows="1"
-                            autosize
-                            #headerInput
-                            [(ngModel)]="actRemarks"
-                            (keyup.enter)="handleKeyUp($event)"
-                            (keydown.enter)="handleKeyDown($event)"
-                            class="form-control">
-                        </textarea>
-                    </td>
-                    <td data-label="Updated By"></td>
-                    <td data-label="Date Entered"></td>
-                    <td data-label="Date Updated"></td>                                
-                </tr> -->
-                <tr #contentTr *ngFor="let activity of activities; let i = index;" (dblclick)="openModal($event, i)">
+            <tbody *ngIf="activities.length > 0; else elseBlock">
+                <tr *ngFor="let activity of activities; let i = index;" #contentTr (dblclick)="openModal($event, i)" title="{{activity.START_TIME | date : 'MMM dd, yyyy'}}">
                     <td class="align-middle" data-label="Start">{{ activity.START_TIME | date : 'HH:mm'}}</td>
                     <td class="align-middle" data-label="End">{{ activity.END_TIME | date : 'HH:mm'}}</td>
                     <td class="align-middle" data-label="Packed">
@@ -126,7 +89,16 @@
                     </td>                    
                 </tr>
             </tbody>
-            <tfoot>
+            <ng-template #elseBlock>
+                <tbody>
+                    <tr>
+                        <td colspan="8">
+                            No Records Found
+                        </td>
+                    </tr>
+                </tbody>
+            </ng-template>            
+            <tfoot *ngIf="activities.length > 0">
                 <tr class="text-uppercase">
                     <td colspan="2" class="text-right">Sub total:</td>
                     <td class="text-right">{{ subTotal | number: '' }}</td>

@@ -209,6 +209,22 @@ const getServerTime = async () => {
 
 module.exports.getServerTime = getServerTime;
 
+
+const changePassword = async (data) => {
+    const q = `begin ${process.env.SCHEMA}.T3_PACKAGE.CHANGE_PASSWORD (:user_id, :old_password, :new_password, :status); end;`;
+    let binds = data;
+    binds.status = {
+        dir: oracle.BIND_OUT,
+        type: oracle.DB_TYPE_CHAR
+    }
+    consoleSuccess(binds);
+    const res = await database.simpleExecute(q, binds)
+        .catch(error => { console.log('caught', error.message); });
+    return parseInt(res.outBinds.status, 10);
+}
+
+module.exports.changePassword = changePassword;
+
 const consoleError = (text) => {
     console.log('\x1b[47m','\x1b[31m', text, '\x1b[0m');
 }

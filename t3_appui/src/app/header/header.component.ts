@@ -393,7 +393,6 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     }
 
     setData(data) {
-        console.log(data);
         this.headerObj = this.headerFactory.setHeader(data.header_obj);
         this.visibleStatus(this.headerObj.STATUS);
         this.manpowerService.setManpower(data.manpower_collection);

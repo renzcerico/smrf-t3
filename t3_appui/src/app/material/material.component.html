@@ -22,7 +22,7 @@
                     <th>UPDATED</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="materials.length > 0; else elseBlock">
                 <tr *ngFor="let material of materials; let i = index;">
                     <td class="align-middle">{{ i + 1 }}</td>
                     <td class="align-middle" data-label="Code">
@@ -75,6 +75,15 @@
                     </td>
                 </tr>
             </tbody>
+            <ng-template #elseBlock>
+                <tbody>
+                    <tr>
+                        <td colspan="12">
+                            No Records Found
+                        </td>
+                    </tr>
+                </tbody>
+            </ng-template>            
         </table>
     </div>
 </div>

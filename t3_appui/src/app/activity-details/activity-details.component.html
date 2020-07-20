@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Activity Details - <span class="text-danger">{{ in_activity.START_TIME | date : 'HH:mm'}} to {{ in_activity.END_TIME | date : 'HH:mm'}}</span></h5>
+    <h5 class="modal-title">Activity Details - <span class="text-danger">{{ in_activity.START_TIME | date : 'MM/dd/yyyy HH:mm'}} to {{ in_activity.END_TIME | date : 'HH:mm'}}</span></h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -42,8 +42,13 @@
                         class="form-control input-sm editable-content text-right"
                         #modalHeaderInput
                         required
+                        id="lot_number_input"
                         [(ngModel)]="mLotNumber"
+                        (change)="handleInputChange($event)"
                         (keyup.enter)="modalEnter($event)">
+                    <div for="lot_number_input" class="invalid-feedback">
+                        This field is required
+                    </div>
                 </td>
                 <td class="align-bottom td-editable">
                     <div class="td-indicator-required"></div>
@@ -55,8 +60,12 @@
                         required
                         (focus)="$event.target.select()"
                         [(ngModel)]="mPacked"
-                        (ngModelChange)="inputPacked()"
+                        id="packed_input"
+                        (change)="handleInputChange($event)"
                         (keyup.enter)="modalEnter($event)">
+                        <div for="packed_input" class="invalid-feedback">
+                            This field is required
+                        </div>
                 </td>
                 <td class="align-middle text-right px-3">
                     0
@@ -89,8 +98,13 @@
                         type="number"
                         class="form-control input-sm editable-content text-right"
                         (ngModelChange)="setIsChanged(i, 'adjustment')"
+                        (blur)="adjBlur($event, i)"
+                        (keydown)="denyDecimal($event)"
                         (focus)="$event.target.select()"
                         [(ngModel)]="tempActDetails[i].ADJ_QTY">
+                        <div [id]="'adj_' + i" class="invalid-feedback">
+                            This field can not contain decimal places
+                        </div>
                 </td>
                 <td class="align-middle text-right px-3">
                     {{ val.PACKED_QTY + val.ADJ_QTY | number: '' }}

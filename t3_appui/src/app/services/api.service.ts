@@ -65,6 +65,10 @@ export class ApiService {
         return this.http.post('/t3api/get-all-accounts', data);
     }
 
+    changePassword(data): Observable<any> {
+        return this.http.post('/t3api/change-password', data);
+    }
+
     getManpowerList(): Observable<any> {
         return this.http.get('/t3api/get-manpower-list');
     }

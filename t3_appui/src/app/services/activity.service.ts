@@ -201,23 +201,24 @@ export class ActivityService {
     let isPush: boolean;
 
     let diff = moment(activity.START_TIME).diff(this.activities[0].START_TIME, 'hours');
+    console.log(diff);
     if (diff < 0) {
-      diff = moment(this.activities[this.activities.length - 1].START_TIME).diff(activity.START_TIME, 'hours');
-      startAct = activity;
-      endAct = this.activities[this.activities.length - 1];
+      startAct = this.activities[this.activities.length - 1];
+      endAct = activity;
+      diff = moment(startAct.START_TIME).diff(endAct.START_TIME, 'hours');
+      console.log(diff);
       isPush = true;
     } else {
       startAct = this.activities[0];
       endAct = activity;
       isPush = false;
     }
-    console.log(diff);
     let filler: Activity;
     let start: string;
     let end: string;
     for (let index = 0; index < diff; index++) {
       if (isPush) {
-        start = moment(startAct.END_TIME).subtract(index, 'hours').format('DD-MMM-YYYY HH:mm:ss');
+        start = moment(startAct.START_TIME).subtract((index + 1), 'hours').format('DD-MMM-YYYY HH:mm:ss');
         end = moment(start).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
       } else {
         start = moment(startAct.END_TIME).add(index, 'hours').format('DD-MMM-YYYY HH:mm:ss');

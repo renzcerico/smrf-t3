@@ -54,6 +54,10 @@ t3_router.route('/set-user')
 t3_router.route('/get-server-time')
   .get(t3.getServerTime);
 
+t3_router.route('/change-password')
+  .post(t3.changePassword);
+
 t3_router.route('/t3Batch_info/:barcode')
   .get(t3.get);
+
 module.exports = t3_router;

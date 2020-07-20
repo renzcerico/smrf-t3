@@ -1,5 +1,5 @@
 import { HeaderService } from './../services/header.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef, HostListener } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -19,6 +19,39 @@ export class HeaderModalComponent implements OnInit {
   totalCount: number;
   orderBy = '';
   orderOrder = 'ASC';
+  activeIndex: number;
+
+  @ViewChildren('headertr') headerTr !: QueryList<ElementRef>;
+
+  @HostListener('document:keydown.arrowup')
+  handleArrowUp(event) {
+    const elArr = this.headerTr.toArray();
+    if (this.activeIndex === null || this.activeIndex === 0) {
+      this.activeIndex = elArr.length - 1;
+    } else {
+      this.activeIndex = this.activeIndex - 1;
+    }
+    elArr[this.activeIndex].nativeElement.focus();
+  }
+
+  @HostListener('document:keydown.arrowdown')
+  handleArrowDown(event) {
+    const elArr = this.headerTr.toArray();
+    if (this.activeIndex === null || this.activeIndex === (elArr.length - 1)) {
+      this.activeIndex = 0;
+    } else {
+      this.activeIndex = this.activeIndex + 1;
+    }
+    elArr[this.activeIndex].nativeElement.focus();
+  }
+
+  @HostListener('document:keyup.enter')
+  handleEnter(event) {
+    if (this.activeIndex !== null) {
+      const barcode = this.headerList[this.activeIndex].BARCODE;
+      this.openHeader(barcode);
+    }
+  }
 
   constructor(public activeModal: NgbActiveModal, public headerService: HeaderService) { }
   ngOnInit() {
@@ -37,6 +70,7 @@ export class HeaderModalComponent implements OnInit {
       this.currentStatusDesc = 'CLOSED';
     }
     this.getHeaderbyStatus(this.paginationData);
+    this.activeIndex = null;
   }
 
   async getHeaderbyStatus(data) {
@@ -46,13 +80,14 @@ export class HeaderModalComponent implements OnInit {
             this.loading = false;
             this.headerList = res.data;
             this.totalCount = res.counter;
+            this.activeIndex = null;
         }
     );
   }
 
   openHeader(barcode) {
-    this.headerService.getData(barcode);
     this.activeModal.dismiss('Cross click');
+    this.headerService.getData(barcode);
   }
 
   refreshSource() {

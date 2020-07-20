@@ -19,3 +19,7 @@
 .no-select {
     user-select: none;
 }
+
+.highlight {
+    background-color: #b6ffb2 !important;
+}

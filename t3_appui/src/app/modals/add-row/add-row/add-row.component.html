@@ -15,9 +15,11 @@
                 [(ngModel)]="dateSelected"
                 ngbAutofocus 
                 type="date"
-                name="date"    
-                (ngModelChange)="updateEndTime()"
-                id="date">
+                name="date"
+                [min]="minDate" 
+                [max]="maxDate"
+                id="date"
+                (ngModelChange)="updateStartTime()">
         </div>
         <div class="form-group col-12 col-md-6">
             <label for="start_time">Start Time:</label>
@@ -28,7 +30,7 @@
                 name="start_time"
                 placeholder="HHmm"
                 (ngModelChange)="updateStartTime()"
-                (keydown)="limit(startTime, $event.key)"
+                [mask]="'00:00'"
                 id="start_time">
         </div>
         <div class="form-group col-12 col-md-6">
@@ -37,7 +39,8 @@
                 class="form-control"
                 [(ngModel)]="endTime"
                 type="text"
-                (keydown)="limit(endTime, $event.key)"
+                [mask]="'00:00'"
+                placeholder="HHmm"
                 (ngModelChange)="updateEndTime()"
                 name="end_time"
                 id="end_time">
