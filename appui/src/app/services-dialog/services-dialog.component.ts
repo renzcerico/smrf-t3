@@ -26,7 +26,7 @@ export class ServicesDialogComponent implements OnInit {
     this.http.get('/localapi/service-representatives')
       .subscribe(
         res => {
-          const data = res;
+          const data: any = res;
 
           for (let i = 0; i < data.length; i++) {
             const asd = {
