@@ -96,4 +96,7 @@ router.route('/departments')
 router.route('/services')
   .get(services.get);
 
+router.route('/services')
+  .post(services.insert);
+
 module.exports = router;

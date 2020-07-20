@@ -16,14 +16,14 @@ const get = async () => {
 module.exports.get = get;
 
 const insert = async (data) => {
-    const sql = `INSERT INTO XX_SR_TYPES 
-                    ('SR_TYPE_ID', 'SR_TYPE_CODE', 'SR_TYPE_NAME', 'REP_ID')
+    const sql = `INSERT INTO ${ process.env.SCHEMA }.XX_SR_TYPES 
+                    (SR_TYPE_ID, SR_TYPE_CODE, SR_TYPE_NAME, REP_ID)
                 VALUES(null, :code, :name, :dept)`;
 
     const bind = {
         'code': data.service_code,
         'name': data.service_name,
-        'dept': data.service_department,
+        'dept': parseInt(data.service_deparment)
     };
 
     const result = await database.simpleExecute(sql, bind);
