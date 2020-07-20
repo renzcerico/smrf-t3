@@ -1,0 +1,21 @@
+<form>
+    <h1 mat-dialog-title>Services</h1>
+    <div mat-dialog-content style="max-width: 350px;">
+        <mat-form-field class="w-100">
+            <mat-label>Code</mat-label>
+            <input matInput cdkFocusInitial name="serviceCode" [(ngModel)]="serviceCode" required>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <mat-label>Name</mat-label>
+            <input matInput cdkFocusInitial name="serviceName" [(ngModel)]="serviceName" required>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <mat-label>Department</mat-label>
+            <input matInput cdkFocusInitial name="serviceDepartment" [(ngModel)]="serviceDepartment" required>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="primary" (click)="submitServices();">Add</button>
+    </div>
+</form>

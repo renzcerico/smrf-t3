@@ -4,6 +4,7 @@ import { UserComponent } from './../user/user.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './../user.service';
 import { DepartmentComponent } from './../department/department.component';
+import { ServicesDialogComponent } from './../services-dialog/services-dialog.component';
 
 @Component({
   selector: 'app-department-services',
@@ -55,6 +56,10 @@ export class DepartmentServicesComponent implements OnInit {
 
   showDepartmentDialog() {
     this.dialog.open(DepartmentComponent);
+  }
+
+  showServicesDialog() {
+    this.dialog.open(ServicesDialogComponent);
   }
 
 }

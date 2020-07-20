@@ -58,6 +58,7 @@ import { RecipientComponent } from './recipient/recipient.component';
 import { ManpowerComponent } from './manpower/manpower.component';
 import { DepartmentServicesComponent } from './department-services/department-services.component';
 import { DepartmentComponent } from './department/department.component';
+import { ServicesDialogComponent } from './services-dialog/services-dialog.component';
 
 import * as $ from 'jquery';
 
@@ -85,7 +86,8 @@ import * as $ from 'jquery';
     RecipientComponent,
     ManpowerComponent,
     DepartmentServicesComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    ServicesDialogComponent
   ],
   imports: [
     NgbModule,
