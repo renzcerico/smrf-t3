@@ -23,7 +23,7 @@ const getAllUser = async () => {
                     middle_name,
                     username,
                     user_level,
-                    (SELECT name FROM TBL_DEPARTMENT WHERE ID = department) department_name,
+                    (SELECT name FROM ${ process.env.SCHEMA }.TBL_DEPARTMENT WHERE ID = department) department_name,
                     department as department_id 
                  FROM ${ process.env.SCHEMA }.TBL_USER
                  ORDER BY TO_NUMBER(DEPARTMENT) ASC`;

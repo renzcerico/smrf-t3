@@ -50,3 +50,41 @@ const insert = async (dept) => {
 };
 
 module.exports.insert = insert;
+
+const getByID = async (id) => {
+    const sql = `SELECT 
+                   sr.REP_ID,
+                   sr.PERSON_ID,
+                   td.ID department_id,
+                   td.NAME
+               FROM ${ process.env.SCHEMA }.TBL_DEPARTMENT td
+               LEFT JOIN ${ process.env.SCHEMA }.XX_SR_REPRESENTATIVES sr ON sr.dept_id = td.id
+               WHERE td.ID = :id`;
+
+    const bind = {
+        id
+    };
+
+    const result = await database.simpleExecute(sql, bind);
+
+    return result.rows;
+};
+
+module.exports.getByID = getByID;
+
+const update = async (data) => {
+    const sql = `UPDATE ${ process.env.SCHEMA }.TBL_DEPARTMENT
+                    SET NAME = :department
+                WHERE ID = :id`;
+
+    const bind = {
+        id: parseInt(data.id),
+        department: data.department
+    };
+
+    const result = await database.simpleExecute(sql, bind);
+
+    return result.rows;
+};
+
+module.exports.update = update;

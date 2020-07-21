@@ -3,15 +3,15 @@
     <div mat-dialog-content style="max-width: 350px;">
         <mat-form-field class="w-100">
             <mat-label>Code</mat-label>
-            <input matInput cdkFocusInitial name="serviceCode" [(ngModel)]="serviceCode" required>
+            <input matInput cdkFocusInitial name="serviceCode" [(ngModel)]="servicesCode" required>
         </mat-form-field>
         <mat-form-field class="w-100">
             <mat-label>Name</mat-label>
-            <input matInput name="serviceName" [(ngModel)]="serviceName" required>
+            <input matInput name="serviceName" [(ngModel)]="servicesName" required>
         </mat-form-field>
         <mat-form-field class="w-100">
             <mat-label>Department</mat-label>
-            <mat-select name="serviceDepartment" [(ngModel)]="serviceDepartment" required>
+            <mat-select name="serviceDepartment" [(ngModel)]="servicesDepartment" required>
               <mat-option *ngFor="let dept of representativeDepartment" [value]="dept.id">
                 {{ dept.department }}
               </mat-option>
@@ -20,6 +20,8 @@
     </div>
     <div mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-raised-button color="primary" (click)="submitServices();">Add</button>
+        <button mat-raised-button color="primary" (click)="submitServices();">
+          {{ servicesID ? 'Update' : 'Add' }}
+        </button>
     </div>
 </form>
