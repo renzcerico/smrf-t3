@@ -21,6 +21,8 @@ const getAllUser = async () => {
                     last_name,
                     first_name,
                     middle_name,
+                    CONCAT(
+                        CONCAT(last_name, ', '), first_name) name,
                     username,
                     user_level,
                     (SELECT name FROM ${ process.env.SCHEMA }.TBL_DEPARTMENT WHERE ID = department) department_name,
@@ -47,3 +49,44 @@ const deleteUser = async (data) => {
 };
 
 module.exports.deleteUser = deleteUser;
+
+const getByID = async (id) => {
+    const sql = `SELECT
+                    id,
+                    last_name,
+                    first_name,
+                    middle_name,
+                    username,
+                    user_level,
+                    TO_NUMBER(department) department
+                 FROM ${ process.env.SCHEMA }.TBL_USER
+                 WHERE ID = :id`;
+
+    const bind = {
+        id
+    };
+
+    const result = await database.simpleExecute(sql, bind);
+
+    return result.rows;
+};
+
+module.exports.getByID = getByID;
+
+const update = async (data) => {
+    const sql = `UPDATE ${ process.env.SCHEMA }.TBL_USER 
+                    SET LAST_NAME   = :last_name,
+                        FIRST_NAME  = :first_name,
+                        MIDDLE_NAME = :middle_name,
+                        USERNAME    = :username,
+                        USER_LEVEL  = :user_level,
+                        DEPARTMENT  = :department
+                WHERE ID = :id`;
+
+    const user = Object.assign({}, data);
+    const result = await database.simpleExecute(sql, user);
+
+    return result;
+};
+
+module.exports.update = update;

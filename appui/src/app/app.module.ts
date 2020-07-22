@@ -87,7 +87,7 @@ import * as $ from 'jquery';
     ManpowerComponent,
     DepartmentServicesComponent,
     DepartmentComponent,
-    ServicesDialogComponent
+    ServicesDialogComponent,
   ],
   imports: [
     NgbModule,
@@ -112,7 +112,7 @@ import * as $ from 'jquery';
         { path: 'closed/:id', component: RequestClosedComponent },
         { path: 'job', component: JobComponent },
         { path: 'manage-jobs/:id', component: ManageJobOrderComponent },
-        { path: 'departments-services', component: DepartmentServicesComponent },
+        { path: 'administrator', component: DepartmentServicesComponent },
         { path: '**', component: PageNotFoundComponent },
       ]}
     ]),

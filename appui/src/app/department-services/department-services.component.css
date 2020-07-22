@@ -1,5 +1,6 @@
 #tbl_departments thead th,
-#tbl_services thead th {
+#tbl_services thead th,
+#tbl_accounts thead th {
     font-weight: 500 !important;
     background-color: #673ab7;
     color: white;

@@ -16,9 +16,10 @@ export class DepartmentComponent implements OnInit {
   departmentName;
   representativeID: number;
   serviceRepresentativeID: number;
-  departmentID: number;
+  departmentID: number = null;
   users: Array<{ id: number, name: string }> = [];
   editDepartment = false;
+  response: any;
 
   constructor(public http: HttpClient, public router: Router, @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
@@ -131,15 +132,18 @@ export class DepartmentComponent implements OnInit {
         this.http.get('localapi/users/dept/' + department)
             .subscribe(
                 res => {
-                    const data = res;
+                    // const data = res;
+                    this.response = res;
 
-                    for (let i = 0; i < data.length; i++) {
-                      const json = {
-                          id: data[i].ID,
-                          name: data[i].FULL_NAME,
-                      };
+                    if (this.response) {
+                        for (let i = 0; i < this.response.length; i++) {
+                          const json = {
+                              id: this.response[i].ID,
+                              name: this.response[i].FULL_NAME,
+                          };
 
-                      this.users.push(json);
+                          this.users.push(json);
+                        }
                     }
                 },
                 err => {

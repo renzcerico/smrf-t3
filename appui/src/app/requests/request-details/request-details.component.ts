@@ -85,7 +85,7 @@ export class RequestDetailsComponent implements OnInit {
         req_notes: this.reqNotes,
         req_status: reqStatus
     };
-    
+
     this.http.post(url, data)
              .subscribe(
                res => {

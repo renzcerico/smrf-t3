@@ -117,4 +117,10 @@ router.route('/service-representatives')
 router.route('/service-representatives/:id')
   .post(serviceRepresentative.update);
 
+router.route('/users/:id')
+  .get(user.getByID);
+
+router.route('/users/:id')
+  .post(user.update);
+
 module.exports = router;
