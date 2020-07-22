@@ -60,4 +60,7 @@ t3_router.route('/change-password')
 t3_router.route('/t3Batch_info/:barcode')
   .get(t3.get);
 
+t3_router.route('/create-downtime-types')
+.post(t3.createDowntimeTypes);
+
 module.exports = t3_router;

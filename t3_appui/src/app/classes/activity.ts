@@ -40,10 +40,13 @@ export default class Activity {
     get TOTAL_BOXES() {
         return this.TOTAL / this.materialService.maxBoxQty();
     }
+
     get TOTAL_DOWNTIME() {
         let totalDowntime = 0;
         this.ACTIVITY_DOWNTIME.forEach(element => {
-          totalDowntime += element.MINUTES;
+            if (!element.IS_DELETED) {
+                totalDowntime += element.MINUTES;
+            }
         });
         return totalDowntime;
     }

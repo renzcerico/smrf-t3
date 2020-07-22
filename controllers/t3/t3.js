@@ -145,3 +145,17 @@ const changePassword = async (req = {}, res, next = null) => {
 }
 
 module.exports.changePassword = changePassword;
+
+const createDowntimeTypes = async (req = {}, res, next = null) => {
+    console.log('\x1b[32m', 'dt: ', req.body, '\x1b[0m');
+    try {
+        let downtimeTypes = req.body.downtime_types
+        const request = await t3.createDowntimeTypes(downtimeTypes)
+        .catch(error => { console.log('caught', error.message); });
+        res.status(201).json(request);
+      } catch (err) {
+        next(err);
+      }
+}
+
+module.exports.createDowntimeTypes = createDowntimeTypes;

@@ -13,7 +13,7 @@ export class ApiService {
   url: string;
   response: any = {};
   constructor(public http: HttpClient) {
-    //   this.url = environment.BE_SERVER;
+      this.url = environment.BE_SERVER;
   }
 
     setHeaders() {
@@ -27,82 +27,82 @@ export class ApiService {
     }
 
     getHeader(): Observable<any> {
-        return this.http.get('/t3api/header');
+        return this.http.get(this.url + '/t3api/header');
     }
 
     loginAPI(data): Observable<any> {
-        return this.http.post('/t3api/login', data, this.setHeaders());
+        return this.http.post(this.url + '/t3api/login', data, this.setHeaders());
     }
 
     getManpower(): Observable<any> {
-        return this.http.get('/t3api/personnel');
+        return this.http.get(this.url + '/t3api/personnel');
     }
 
     getExternalData(barcode): Observable<any> {
         barcode = 'SO01-022020-818454';
-        return this.http.get('http://t2apps.tailinsubic.com/api/t2_header?prodno=' + barcode);
+        return this.http.get(this.url + 'http://t2apps.tailinsubic.com/api/t2_header?prodno=' + barcode);
     }
 
     getAllByBarcode(data): Observable<any> {
         // const data = 'SO01-022020-818454';
         data = String(data).toUpperCase();
-        return this.http.get('/t3api/get_all_by_barcode/' + data);
+        return this.http.get(this.url + '/t3api/get_all_by_barcode/' + data);
     }
 
     header(data): Observable<any> {
-        return this.http.post('/t3api/store_all', data);
+        return this.http.post(this.url + '/t3api/store_all', data);
     }
 
     createAccount(data): Observable<any> {
-        return this.http.post('/t3api/accounts', data);
+        return this.http.post(this.url + '/t3api/accounts', data);
     }
 
     resetPassword(id): Observable<any> {
-        return this.http.post('/t3api/accounts/reset', id);
+        return this.http.post(this.url + '/t3api/accounts/reset', id);
     }
 
     getAllAccounts(data): Observable<any> {
-        return this.http.post('/t3api/get-all-accounts', data);
+        return this.http.post(this.url + '/t3api/get-all-accounts', data);
     }
 
     changePassword(data): Observable<any> {
-        return this.http.post('/t3api/change-password', data);
+        return this.http.post(this.url + '/t3api/change-password', data);
     }
 
     getManpowerList(): Observable<any> {
-        return this.http.get('/t3api/get-manpower-list');
+        return this.http.get(this.url + '/t3api/get-manpower-list');
     }
 
     getAccountById(id): Observable<any> {
-        return this.http.get('/t3api/accounts/' + id);
+        return this.http.get(this.url + '/t3api/accounts/' + id);
     }
 
     getDowntimeTypes(): Observable<any> {
-        return this.http.get('/t3api/get_downtime_types');
+        return this.http.get(this.url + '/t3api/get_downtime_types');
     }
 
     getNewBatch(barcode): Observable<any> {
-        return this.http.get('/t3api/t3Batch_info/' + barcode);
+        return this.http.get(this.url + '/t3api/t3Batch_info/' + barcode);
     }
 
     getHeaderCountPerStatus(): Observable<any> {
-        return this.http.get('/t3api/get_header_count_per_status', this.setHeaders());
+        return this.http.get(this.url + '/t3api/get_header_count_per_status', this.setHeaders());
     }
 
     isAuth(): Observable<any> {
-        return this.http.get('/t3api/auth', this.setHeaders());
+        return this.http.get(this.url + '/t3api/auth', this.setHeaders());
     }
 
     logout(): Observable<any> {
-        return this.http.get('/t3api/logout', this.setHeaders());
+        return this.http.get(this.url + '/t3api/logout', this.setHeaders());
     }
 
     forwardList(): Observable<any> {
-        return this.http.get('/t3api/forward-list', this.setHeaders());
+        return this.http.get(this.url + '/t3api/forward-list', this.setHeaders());
     }
 
     getServerTime(): Observable<any> {
-        return this.http.get('/t3api/get-server-time');
+        return this.http.get(this.url + '/t3api/get-server-time');
     }
 
 }

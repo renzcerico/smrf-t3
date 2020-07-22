@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
     styleUrls: ['./material.component.css']
 })
 
-export class MaterialComponent implements OnInit, AfterContentChecked {
+export class MaterialComponent implements OnInit {
     @ViewChildren('tdEditable') tdEditable !: QueryList<ElementRef>;
     @Input() actTotal: number;
     @Input() materials = [];
@@ -31,13 +31,12 @@ export class MaterialComponent implements OnInit, AfterContentChecked {
             console.log(err);
           }
         );
+        userService.isAuthorized$.subscribe(isAuthorized => {
+            this.isAuthorized = isAuthorized;
+        });
     }
 
     ngOnInit() {
-    }
-
-    ngAfterContentChecked() {
-      (this.activeUser ? this.isAuthorized = this.activeUser.IS_AUTHORIZED : this.isAuthorized = false);
     }
 
     valueChanged(index: number, field: string = '') {

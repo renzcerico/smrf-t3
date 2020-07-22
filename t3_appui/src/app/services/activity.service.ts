@@ -28,6 +28,7 @@ export class ActivityService {
   downtimeTypes: any = [];
   timer: any;
   servertime: any;
+  isToEndProd: boolean;
 
   constructor(
     private apiService: ApiService,
@@ -58,12 +59,16 @@ export class ActivityService {
     );
     headerService.header$.subscribe(
       data => {
-        this.headerObj = this.headerFactory.setHeader(data.header_obj).getJson();
+        if (Object.keys(data).length > 0) {
+          this.headerObj = this.headerFactory.setHeader(data.header_obj).getJson();
+      } else {
+          this.headerObj = {};
+      }
       }
     );
     servertimeService.time$.subscribe(
       datetime => {
-          this.servertime = moment(datetime);
+        this.servertime = moment(datetime).format('DD-MMM-YYYY HH:mm:ss');
       }
   );
     this.startTimer();
@@ -100,14 +105,14 @@ export class ActivityService {
 
   get actualTime() {
     let res = {start: null, end: null, exact: null};
-    let start = this.servertime.startOf('hour');
+    let start = moment(this.servertime).startOf('hour');
     if (Object.entries(this.headerObj).length > 0) {
       if (start.isSame(this.shifts[this.headerObj.SHIFT].breaktime_start)) {
         start = this.shifts[this.headerObj.SHIFT].breaktime_end;
       }
     }
     const end = moment(start).add(1, 'hours');
-    const exact = this.servertime;
+    const exact = moment(this.servertime);
     res = {start, end, exact};
     this.setActualTime(res);
     return res;
@@ -135,6 +140,7 @@ export class ActivityService {
         const activity = this.activityFactory.createActivity(element);
         activitiesArr.push(activity);
     });
+    this.isToEndProd = false;
     this.activitiesSource.next(activitiesArr);
   }
 
@@ -236,6 +242,27 @@ export class ActivityService {
         this.activities.unshift(filler);
       }
     }
+  }
+
+  deleteActivities() {
+    this.activitiesSource.next([]);
+  }
+
+  addEndProdRow() {
+    const start = moment(this.activities[0].START_TIME).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
+    const act = this.activityFactory.createActivity({
+      HEADER_ID       : this.headerObj.ID,
+      START_TIME      : start,
+      END_TIME        : this.servertime,
+      IS_NEW          : 1,
+    });
+    this.activities.unshift(act);
+    this.isToEndProd = true;
+  }
+
+  removeEndProdRow() {
+    this.activities.splice(0, 1);
+    this.isToEndProd = false;
   }
 
 }

@@ -1,4 +1,3 @@
-import { ActivityDetailsComponent } from './../activity-details/activity-details.component';
 import {
   Component,
   ElementRef,
@@ -9,6 +8,7 @@ import {
 } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-activity-downtime',
   templateUrl: './activity-downtime.component.html',
@@ -76,6 +76,7 @@ export class ActivityDowntimeComponent implements OnInit {
         , CREATED_AT      : ''
         , IS_NEW          : 1
         , IS_CHANGED      : 0
+        , IS_DELETED      : 0
       };
       this.isChanged = 1;
       this.tempActDowntime.push(newActivityDowntime);
@@ -130,7 +131,9 @@ export class ActivityDowntimeComponent implements OnInit {
   get totalMinutes() {
     let res = 0;
     this.tempActDowntime.forEach(el => {
-      res += el.MINUTES;
+      if (!el.IS_DELETED) {
+        res += el.MINUTES;
+      }
     });
     return res;
   }
@@ -204,5 +207,9 @@ export class ActivityDowntimeComponent implements OnInit {
         this.mQuantity = 0;
       });
     }
+  }
+
+  toggleDelete(index: number) {
+    this.tempActDowntime[index].IS_DELETED = this.tempActDowntime[index].IS_DELETED ? 0 : 1;
   }
 }

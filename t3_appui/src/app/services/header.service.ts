@@ -65,9 +65,9 @@ export class HeaderService {
               public http: HttpClient,
               ) {
     // this.getHeaderCountPerStatus();
+    this.url = environment.BE_SERVER;
+    this.socket = io(this.url);
     this.setUpdatedHeaderCountPerStatus('load');
-    this.socket = io();
-
     this.getUpdatedHeader.subscribe();
     this.getHeaderCountPerStatus.subscribe();
   }
@@ -97,7 +97,7 @@ export class HeaderService {
   getHeaderByStatus(data): Observable<any> {
     // const data = 'SO01-022020-818454';
     // data = String(data).toUpperCase();
-    return this.http.post('/t3api/get_header_by_status/', data, this.apiService.setHeaders());
+    return this.http.post(this.url + '/t3api/get_header_by_status/', data, this.apiService.setHeaders());
   }
 
   async getData(barcodeNum, isCurrentUser = false) {

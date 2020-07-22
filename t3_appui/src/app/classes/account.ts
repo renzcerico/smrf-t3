@@ -1,6 +1,8 @@
+import { ManpowerService } from './../services/manpower.service';
 import { HeaderFactory } from './header-factory';
 import Header from './header';
 import { HeaderService } from './../services/header.service';
+import Manpower from './manpower';
 
 export default class Account {
     ID: number;
@@ -18,8 +20,14 @@ export default class Account {
         manager     : 3,
         admin       : 4
     };
-    _IS_AUTHORIZED;
-    constructor(jsonObj: any, public headerService: HeaderService, private headerFactory: HeaderFactory) {
+    headerObj: Header;
+    manpower: Manpower;
+    manpowers: Array<Manpower>;
+    constructor(jsonObj: any,
+                public headerService: HeaderService,
+                private headerFactory: HeaderFactory,
+                private manpowerService: ManpowerService) {
+
         this.ID          = jsonObj.ID || null;
         this.FIRST_NAME  = jsonObj.FIRST_NAME || '';
         this.MIDDLE_NAME = jsonObj.MIDDLE_NAME || '';
@@ -28,55 +36,9 @@ export default class Account {
         this.USER_LEVEL  = jsonObj.USER_LEVEL || '';
         this.CREATED_AT  = jsonObj.CREATED_AT || '';
         this.USERNAME    = jsonObj.USERNAME || '';
-        headerService.header$.subscribe(
-            data => {
-              const headerObj = this.headerFactory.setHeader(data.header_obj);
-              this.IS_AUTHORIZED = headerObj;
-            }
-        );
     }
 
     get USER_TYPE() {
         return this.userTypes[this.USER_LEVEL.toLowerCase()];
-    }
-
-    get IS_AUTHORIZED() {
-        return this._IS_AUTHORIZED;
-    }
-
-    set IS_AUTHORIZED(headerObj: Header) {
-        if (headerObj) {
-            if (headerObj.STATUS > this.USER_TYPE) {
-                this._IS_AUTHORIZED = false;
-            } else if (headerObj.STATUS < this.USER_TYPE) {
-                this._IS_AUTHORIZED = true;
-            } else {
-                switch (headerObj.STATUS) {
-                    case 1:
-                        this._IS_AUTHORIZED = true;
-                        break;
-                    case 2:
-                        if (headerObj.REVIEWED_BY === this.ID) {
-                            this._IS_AUTHORIZED = true;
-                        } else {
-                            this._IS_AUTHORIZED = false;
-                        }
-                        break;
-                    case 3:
-                        if (headerObj.APPROVED_BY === this.ID) {
-                            this._IS_AUTHORIZED = true;
-                        } else {
-                            this._IS_AUTHORIZED = false;
-                        }
-                        break;
-                    default:
-                        this._IS_AUTHORIZED = false;
-                        break;
-                }
-            }
-            // return false;
-        } else {
-            this._IS_AUTHORIZED = false;
-        }
     }
 }

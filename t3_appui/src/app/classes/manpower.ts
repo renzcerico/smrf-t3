@@ -1,4 +1,4 @@
-export class Manpower {
+export default class Manpower {
     ID: number;
     POSITION_ID: number;
     MANPOWER_ID: number;
@@ -12,7 +12,7 @@ export class Manpower {
     IS_CHANGED: number;
     IS_NEW: number;
     LAST_UPDATED_BY_NAME: string;
-    constructor(jsonObj) {
+    constructor(jsonObj: any) {
         this.ID = jsonObj.ID || null;
         this.POSITION_ID = jsonObj.POSITION_ID || null;
         this.MANPOWER_ID = jsonObj.MANPOWER_ID || 0;

@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { Manpower } from './../classes/manpower';
+import Manpower from './../classes/manpower';
 import { ManpowerService } from './../services/manpower.service';
 import { Component, OnInit, AfterContentChecked, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { ApiService } from '../services/api.service';
@@ -12,46 +12,31 @@ import * as moment from 'moment';
   templateUrl: './manpower.component.html',
   styleUrls: ['../material/material.component.css', '../manpower/manpower.component.css']
 })
-export class ManpowerComponent implements OnInit, AfterContentChecked {
+export class ManpowerComponent implements OnInit {
   @ViewChildren('tdEditable') tdEditable !: QueryList<ElementRef>;
   positions = [
     {
-      position      : 'In-Feeder',
+      position      : 'Supervisor',
       selected      : 0,
       selected_index: 0
     },
     {
-      position      : 'Inspector 1',
+      position      : 'In Charge',
       selected      : 0,
       selected_index: 0
     },
     {
-      position      : 'Inspector 2',
+      position      : 'Ring Inputter 1',
       selected      : 0,
       selected_index: 0
     },
     {
-      position      : 'Roller',
-      selected      : 0,
-      selected_index: 0
-    },
-    {
-      position      : 'Out-Feeder',
-      selected      : 0,
-      selected_index: 0
-    },
-    {
-      position      : 'Strapping',
-      selected      : 0,
-      selected_index: 0
-    },
-    {
-      position      : 'Stamping',
+      position      : 'Ring Inputter 2',
       selected      : 0,
       selected_index: 0
     }
   ];
-  manpowers: any = [];
+  tempManpower: any = [];
   accounts: Array<any>;
   manpowerSelected = [];
   manpowerOnFocus = 0;
@@ -80,10 +65,10 @@ export class ManpowerComponent implements OnInit, AfterContentChecked {
         console.log(err);
       }
     );
-  }
 
-  ngAfterContentChecked() {
-    (this.activeUser ? this.isAuthorized = this.activeUser.IS_AUTHORIZED : this.isAuthorized = false);
+    userService.isAuthorized$.subscribe(isAuthorized => {
+      this.isAuthorized = isAuthorized;
+    });
   }
 
   ngOnInit() {
@@ -214,6 +199,24 @@ export class ManpowerComponent implements OnInit, AfterContentChecked {
       }
     }
     return hasErrors;
+  }
+
+  get manpowers(): Array<Manpower> {
+    return this.tempManpower;
+  }
+
+  set manpowers(manpowerCollection: Array<Manpower>) {
+    if (manpowerCollection.length > 0 && this.activeUser) {
+      const index = manpowerCollection.findIndex(el => el.MANPOWER_ID === this.activeUser.ID);
+      const inchargeIndex = manpowerCollection.findIndex(el => el.POSITION_ID === 2);
+      if (manpowerCollection[inchargeIndex].MANPOWER_ID === 0) {
+        if (index !== -1) {
+          manpowerCollection[index].MANPOWER_ID = 0;
+        }
+        manpowerCollection[inchargeIndex].MANPOWER_ID = this.activeUser.ID;
+      }
+    }
+    this.tempManpower = manpowerCollection;
   }
 
 }
