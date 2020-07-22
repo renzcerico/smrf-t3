@@ -1,3 +1,4 @@
+import { HeaderService } from './../services/header.service';
 import {
   Component,
   ElementRef,
@@ -22,7 +23,7 @@ import { AddRowComponent } from '../modals/add-row/add-row/add-row.component';
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.css', '../material/material.component.css', '../app.component.css']
 })
-export class ActivityComponent implements OnInit, AfterContentChecked {
+export class ActivityComponent implements OnInit {
 
   @ViewChildren('contentTr') contentTr !: QueryList<ElementRef>;
   @ViewChildren('editableTd') editableTd !: QueryList<ElementRef>;
@@ -38,6 +39,9 @@ export class ActivityComponent implements OnInit, AfterContentChecked {
   userID;
   userType: number;
   isAuthorized: boolean;
+  isToEndProd: boolean;
+  headerObj: any;
+
   get subTotal() {
     let subTotal = 0;
     if (this.activities.length) {
@@ -62,6 +66,7 @@ export class ActivityComponent implements OnInit, AfterContentChecked {
       private activityService: ActivityService,
       private cdr: ChangeDetectorRef,
       private modalService: NgbModal,
+      private headerService: HeaderService,
       private userService: UserService) {
     activityService.activities$.subscribe(
       activities => {
@@ -78,10 +83,18 @@ export class ActivityComponent implements OnInit, AfterContentChecked {
         this.actualTime = actualTime;
       }
     );
-  }
-
-  ngAfterContentChecked() {
-    (this.activeUser ? this.isAuthorized = this.activeUser.IS_AUTHORIZED : this.isAuthorized = false);
+    userService.isAuthorized$.subscribe(isAuthorized => {
+      this.isAuthorized = isAuthorized;
+    });
+    headerService.header$.subscribe(
+      data => {
+        if (Object.keys(data).length > 0) {
+          this.headerObj = data.header_obj;
+      } else {
+          this.headerObj = {};
+      }
+      }
+    );
   }
 
   ngOnInit() {
@@ -196,7 +209,7 @@ export class ActivityComponent implements OnInit, AfterContentChecked {
 
   addRow() {
     const modalRef = this.modalService.open(AddRowComponent, {size: 'md'});
-    modalRef.componentInstance.actualStart = this.activityService.headerObj.ACTUAL_START;
+    modalRef.componentInstance.actualStart = this.headerObj.ACTUAL_START;
   }
 
   isSameDay(index: number): boolean {
@@ -206,6 +219,16 @@ export class ActivityComponent implements OnInit, AfterContentChecked {
       return true;
     }
     return false;
+  }
+
+  addEndProdRow() {
+    if (this.headerObj.STATUS === 1) {
+      if (!this.activityService.isToEndProd) {
+        this.activityService.addEndProdRow();
+      } else {
+        this.activityService.removeEndProdRow();
+      }
+    }
   }
 
 }

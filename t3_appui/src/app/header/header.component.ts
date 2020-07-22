@@ -107,7 +107,13 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
       }
 
     get showSaveButton() {
-        return (this.headerObj.STATUS <= this.userType) || this.userType >= 3 && this.headerObj.STATUS < 4;
+        if (this.headerObj.STATUS === 1) {
+            if (!this.activityService.isToEndProd && this.isAuthorized) {
+                return true;
+            }
+        } else {
+            return this.isAuthorized;
+        }
     }
 
     apiResponse: any;
@@ -156,7 +162,10 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
                 this.timer = moment(datetime);
             }
         );
-        this.socket = io();
+        userService.isAuthorized$.subscribe(isAuthorized => {
+            this.isAuthorized = isAuthorized;
+        });
+        this.socket = io(environment.BE_SERVER);
         this.headerService.getUserForwardList();
     }
 
@@ -167,9 +176,6 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         this.setForwardList();
         if (this.activeUser) {
             this.userType = this.activeUser.USER_TYPE;
-            this.isAuthorized = this.activeUser.IS_AUTHORIZED;
-        } else {
-            this.isAuthorized = false;
         }
     }
 
@@ -289,6 +295,8 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
                             text: 'Transaction Saved.',
                             icon: 'success',
                             confirmButtonText: 'Okay',
+                        }).then(response => {
+                            this.userService.logOut();
                         });
                         const emitData = {
                             barcode: json.header_obj.BARCODE,

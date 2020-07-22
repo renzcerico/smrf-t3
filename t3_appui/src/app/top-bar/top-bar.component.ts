@@ -61,7 +61,17 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
                 this.timer = moment(datetime).format('HH:mm:ss');
             }
         );
-        this.userLoggedIn();
+        userService.user$.subscribe(
+            user => {
+                if (user) {
+                    this.userProfile = user;
+                    this.username = user.USERNAME;
+                } else {
+                    this.userProfile = null;
+                    this.username = null;
+                }
+            });
+        // this.userLoggedIn();
     }
 
     ngOnInit() {
@@ -71,20 +81,20 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
     ngAfterContentChecked() {
         // this.headerService.getHeaderCountPerStatus();
     }
-    userLoggedIn() {
-        this.userService.user
-            .subscribe(
-                res => {
-                    if (res) {
-                        this.userProfile = res;
-                        this.username = res.USERNAME;
-                    }
-                },
-                err => {
-                    console.log(err);
-                }
-            );
-    }
+    // userLoggedIn() {
+    //     this.userService.user
+    //         .subscribe(
+    //             res => {
+    //                 if (res) {
+    //                     this.userProfile = res;
+    //                     this.username = res.USERNAME;
+    //                 }
+    //             },
+    //             err => {
+    //                 console.log(err);
+    //             }
+    //         );
+    // }
 
     openLoginModal() {
         this.modalService.open(LoginComponent);
@@ -107,14 +117,6 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
     }
 
     loggedOut() {
-        this.apis.logout()
-            .subscribe(
-                res => {
-                    location.reload();
-                },
-                err => {
-                    console.log(err);
-                }
-            );
+        this.userService.logOut();
     }
 }

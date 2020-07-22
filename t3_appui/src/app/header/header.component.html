@@ -1,4 +1,4 @@
-<div class="container mt-2" id="header_production_order">
+<div class="container-fluid mt-2" id="header_production_order">
     <form #headerForm>
         <div *ngIf="currentStatus">
             <span [ngClass]="currentStatus"></span>
@@ -6,10 +6,6 @@
                 {{ currentStatusDesc }}
                 <span class="text-muted">|</span>
             </span>
-            <span class="title pl-1">Schedule Date:</span>
-            <span class="content pl-1">{{ headerObj.SCHEDULE_DATE_START | date : 'MM/d/yy' }}</span> 
-            <span class="title pl-2">Schedule Time: </span>
-            <span class="content pl-1">{{ headerObj.SCHEDULE_DATE_START | date : 'HHmm' }}-{{ headerObj.SCHEDULE_DATE_END | date : 'HHmm' }}</span>
             <span class="title pl-2">Actual Start: </span>
             <span class="content pl-1">{{ headerObj.ACTUAL_START | date : 'MM/d/yy HH:mm' }}</span>            
             <span *ngIf="headerObj.STATUS !== 1" class="title pl-2">Actual End: </span>
@@ -20,7 +16,7 @@
                 <div class="form-label-group">
                     <input name="barcode" type="text" id="barcode" class="form-control w-75" #barcode [ngModel]="headerObj.BARCODE" name="barcode" placeholder="#" required (change)="handleBarcodeChange(barcode.value)" autofocus>
                     <label for="barcode">Control Number</label>
-                </div>                
+                </div>
             </div>  
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
@@ -30,13 +26,13 @@
             </div>   
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input readonly name="shipping_date" type="text" id="shipping_date" class="form-control w-75" [ngModel]="headerObj.SHIPPING_DATE | date : 'MM/d/yy'" placeholder="MM/DD/YYYY" required>
+                    <input readonly name="shipping_date" type="text" id="shipping_date" class="form-control" [ngModel]="headerObj.SHIPPING_DATE | date : 'MM/d/yy'" placeholder="MM/DD/YYYY" required>
                     <label for="shipping_date">Shipping Date</label>
                 </div>
             </div>
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input readonly name="order_qty" type="text" id="order_qty" class="form-control w-75" [ngModel]="headerObj.ORDER_QUANTITY | number : ''" placeholder="#" required>
+                    <input readonly name="order_qty" type="text" id="order_qty" class="form-control" [ngModel]="headerObj.ORDER_QUANTITY | number : ''" placeholder="#" required>
                     <label for="order_qty">Order Qty</label>
                 </div>
             </div>
@@ -140,17 +136,16 @@
     </button>
 </div>
 
-<div class="m-3 position-absolute right-0 d-flex btn-save-container">
-    <select *ngIf="isAuthorized && headerObj.STATUS < 3 && userType < 3" name="forwardTo" [(ngModel)]="receiverID" id="forwardTo" class="form-control">
+<div class="m-3 position-absolute right-0 row btn-save-container">
+    <select *ngIf="isAuthorized && headerObj.STATUS < 3 && userType < 3" name="forwardTo" [(ngModel)]="receiverID" id="forwardTo" class="form-control col-12 col-md-2">
         <option value="0" disabled>Forward to</option>
         <option *ngFor="let user of usersForwardList;" [value]="user.ID">
             {{ user.FULL_NAME }}
         </option>
     </select>
-    <!-- <button class="btn mx-1  d-md-inline-block btn-warning border-100 font-weight-500 pl-5 pr-5 text-uppercase w-100" (click)="addRow()" *ngIf="isAuthorized && userType >= 3">Add Activity Row</button> -->
-    <button class="btn mx-1  d-md-inline-block btn-danger border-100 font-weight-500 pl-5 pr-5 text-uppercase w-100" (click)="updateHeaderStatus(1)" *ngIf="visibleButton === 'endprod'">End Production</button>
-    <button class="btn mx-1  d-md-inline-block btn-success border-100 font-weight-500 pl-5 pr-5 text-uppercase w-100" (click)="updateHeaderStatus(2)" *ngIf="visibleButton === 'approve'">Approve</button>
-    <button class="btn mx-1  d-md-inline-block btn-dark border-100 font-weight-500 pl-5 pr-5 text-uppercase w-100" (click)="header()" *ngIf="isAuthorized">Save</button>
+    <button class="btn col-12 col-md-5 btn-danger border-100 font-weight-500 px-2 text-uppercase" (click)="updateHeaderStatus(1)" *ngIf="visibleButton === 'endprod'">End Production</button>
+    <button class="btn col-12 col-md-5 btn-success border-100 font-weight-500 px-2 text-uppercase" (click)="updateHeaderStatus(2)" *ngIf="visibleButton === 'approve'">Approve</button>
+    <button class="btn col-12 col-md-5 btn-dark border-100 font-weight-500 px-2 text-uppercase" (click)="header()" *ngIf="showSaveButton">Save</button>
 </div>
 
 <app-activity></app-activity>

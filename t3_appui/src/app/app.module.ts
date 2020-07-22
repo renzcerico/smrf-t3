@@ -15,7 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { MaterialComponent } from './material/material.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ManpowerComponent } from './manpower/manpower.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './footer/footer.component';
 import { AutosizeModule } from 'ngx-autosize';
 import { ActivityComponent } from './activity/activity.component';
@@ -29,7 +29,7 @@ import { CounterPipePipe } from './counter-pipe.pipe';
 import { LoginComponent } from './modals/login/login.component';
 import { AddRowComponent } from './modals/add-row/add-row/add-row.component';
 import { ChangePasswordComponent } from './modals/change-password/change-password.component';
-
+import { faTrash as farTrash } from '@fortawesome/free-solid-svg-icons';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -72,6 +72,7 @@ ReactiveFormsModule,
 BrowserAnimationsModule,
 HttpClientModule,
 NgbModule,
+// AngularFontAwesomeModule
 ],
 providers: [
 ApiService,
@@ -83,4 +84,7 @@ HeaderFactory,
 bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor(private lib: FaIconLibrary) {
+        lib.addIcons(farTrash);
+    }
 }

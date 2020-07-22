@@ -140,14 +140,14 @@ const getActivityDowntime = async (activity_id) => {
 }
 
 const getDowntimeTypes = async () => {
-    // const q = `BEGIN ${process.env.SCHEMA}.T3_PACKAGE.GET_DOWNTIME_TYPES (:cursor); END;`;
-    const q = `
-        BEGIN
-            OPEN :cursor FOR
-            SELECT dt.*
-            FROM ${process.env.SCHEMA}.tbl_downtime_types dt;
-        END;
-    `;
+    const q = `BEGIN ${process.env.SCHEMA}.T3_PACKAGE.GET_DOWNTIME_TYPES (:cursor); END;`;
+    // const q = `
+    //     BEGIN
+    //         OPEN :cursor FOR
+    //         SELECT dt.*
+    //         FROM ${process.env.SCHEMA}.tbl_downtime_types dt;
+    //     END;
+    // `;
     let binds = {
         cursor: {
             dir: oracle.BIND_OUT,
