@@ -39,8 +39,9 @@ export class ActivityService {
   ) {
     const dayshift = 'dayshift';
     const nightshift = 'nightshift';
-    const date = new Date();
-    const dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+
+    const dateString = moment(this.servertime).format('MM/DD/YYYY');
+
     this.shifts[dayshift] = {
       first_hour: moment( dateString + ' 08:00', 'MM/DD/YYYY HH:mm'),
       breaktime_start: moment( dateString + ' 12:00', 'MM/DD/YYYY HH:mm'),

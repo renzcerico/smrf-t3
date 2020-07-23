@@ -119,7 +119,7 @@ div.col-md-6 > .form-label-group > input {
     width: 87.5%;
 }
 
-span.title {
+span.title, label.title {
     color: #63605e !important;
     font-size: 11px;
     font-weight: 500 !important;
@@ -135,4 +135,14 @@ span.content {
     #header_production_order input {
         font-size: 18px;
     } */
+}
+
+#shift_select{
+    background-color: transparent !important;
+    border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px #9B8864 solid ;
+    font-size: 13px !important;
 }

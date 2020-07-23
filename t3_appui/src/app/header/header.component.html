@@ -9,7 +9,22 @@
             <span class="title pl-2">Actual Start: </span>
             <span class="content pl-1">{{ headerObj.ACTUAL_START | date : 'MM/d/yy HH:mm' }}</span>            
             <span *ngIf="headerObj.STATUS !== 1" class="title pl-2">Actual End: </span>
-            <span *ngIf="headerObj.STATUS !== 1" class="content pl-1">{{ headerObj.ACTUAL_END | date : 'MM/d/yy HH:mm' }}</span>            
+            <span *ngIf="headerObj.STATUS !== 1" class="content pl-1">{{ headerObj.ACTUAL_END | date : 'MM/d/yy HH:mm' }}</span>
+            <div class="form-inline  d-inline-block">
+                <div class="ml-2 form-group">
+                    <label class="title" for="shift">Shift: </label>
+                    <select class="form-control" name="shift" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
+                        <option value="dayshift">DS</option>
+                        <option value="nightshift">NS</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-inline  d-inline-block">
+                <div class="ml-2 form-group">
+                    <label class="title" for="mfg_date">MFG date: </label>
+                    <input class="form-control" type="date" name="mfg_date" id="mfg_date" [(ngModel)]="headerObj.MFG_DATE" (ngModelChange)="setIsChanged()">
+                </div>
+            </div>
         </div>
         <div class="form-row">           
             <div class="col-12 col-md-3 mt-1">

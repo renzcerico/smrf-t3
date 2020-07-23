@@ -429,4 +429,8 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
             }
         );
     }
+
+    setIsChanged(): void {
+        this.headerObj.IS_CHANGED = 1;
+    }
 }

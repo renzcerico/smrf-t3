@@ -1,6 +1,4 @@
 import { ServertimeService } from './../services/servertime.service';
-import { ActivityService } from './../services/activity.service';
-import Activity from './activity';
 import * as moment from 'moment';
 export default class Header {
     ID: number;
@@ -21,8 +19,6 @@ export default class Header {
     SHIFT: string;
     SCHEDULE_DATE_START: string;
     SCHEDULE_DATE_END: string;
-    ACTIVITIES: Array<Activity>;
-    // activityService: ActivityService;
     IS_NEW: number;
     IS_CHANGED: number;
     FORWARDED_BY: number;
@@ -31,7 +27,9 @@ export default class Header {
     REVIEWED_AT: string;
     APPROVED_AT: string;
     FORWARDED_AT: string;
+    MFG_DATE: string;
     servertime: any;
+    shifts: Array<any> = [];
 
     constructor(jsonObj, private servertimeService: ServertimeService) {
         servertimeService.time$.subscribe(
@@ -39,6 +37,22 @@ export default class Header {
                 this.servertime = moment(datetime).format('DD-MMM-YYYY HH:mm:ss');
             }
         );
+        const dayshift = 'dayshift';
+        const nightshift = 'nightshift';
+        const dateString = moment(this.servertime).format('MM/DD/YYYY');
+
+        this.shifts[dayshift] = {
+          first_hour: moment( dateString + ' 08:00', 'MM/DD/YYYY HH:mm'),
+          breaktime_start: moment( dateString + ' 12:00', 'MM/DD/YYYY HH:mm'),
+          breaktime_end: moment( dateString + ' 13:00', 'MM/DD/YYYY HH:mm')
+        };
+
+        this.shifts[nightshift] = {
+          first_hour: moment(dateString + ' 19:00', 'MM/DD/YYYY HH:mm'),
+          breaktime_start: moment(dateString + ' 00:00', 'MM/DD/YYYY HH:mm'),
+          breaktime_end: moment(dateString + ' 01:00', 'MM/DD/YYYY HH:mm')
+        };
+
         this.ID = jsonObj.ID || null;
         this.BARCODE = jsonObj.BARCODE || (jsonObj.HEADER_ID ? jsonObj.HEADER_ID.toString() : '') || '';
         this.ACTUAL_START = (jsonObj.ACTUAL_START ? moment(jsonObj.ACTUAL_START ).format('DD-MMM-YYYY HH:mm:ss') : this.servertime );
@@ -54,7 +68,20 @@ export default class Header {
         this.OLD_CODE = jsonObj.OLD_CODE || jsonObj.PRODUCT_CODE_OLD || '';
         this.INTERNAL_CODE = jsonObj.INTERNAL_CODE || jsonObj.PRODUCT_CODE || '';
         this.PRODUCT_DESCRIPTION = jsonObj.PRODUCT_DESCRIPTION || jsonObj.PRODUCT_DESC || '';
-        this.SHIFT = jsonObj.SHIFT || 'dayshift';
+        if (jsonObj.SHIFT) {
+            this.SHIFT = jsonObj.SHIFT;
+        } else {
+            if (moment(this.servertime).isBetween(this.shifts[dayshift].first_hour, this.shifts[nightshift].first_hour)) {
+                this.SHIFT = 'dayshift';
+            } else {
+                this.SHIFT = 'nightshift';
+            }
+        }
+        if (jsonObj.MFG_DATE) {
+            this.MFG_DATE = moment(jsonObj.MFG_DATE).format('YYYY-MM-DD');
+        } else {
+            this.MFG_DATE = moment(this.servertime).format('YYYY-MM-DD');
+        }
         this.SCHEDULE_DATE_START = jsonObj.SCHEDULE_DATE_START || '';
         this.SCHEDULE_DATE_END = jsonObj.SCHEDULE_DATE_END || '';
         this.FORWARDED_BY = jsonObj.FORWARDED_BY || null;
@@ -94,7 +121,8 @@ export default class Header {
             APPROVED_AT: this.APPROVED_AT,
             FORWARDED_AT: this.FORWARDED_AT,
             IS_CHANGED: this.IS_CHANGED,
-            IS_NEW: this.IS_NEW
+            IS_NEW: this.IS_NEW,
+            MFG_DATE: moment(this.MFG_DATE).format('DD-MMM-YYYY HH:mm:ss')
         };
         return obj;
     }
