@@ -34,7 +34,7 @@
                 [(ngModel)]="selectedDept" required>
                 <mat-option value="" disabled>Please select</mat-option>
                 <mat-option *ngFor="let department of departments"
-                        value="{{ department.ID }}">
+                        [value]="department.ID">
                     {{ department.NAME }}
                 </mat-option>
             </mat-select>
@@ -57,7 +57,9 @@
 
     <div mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-raised-button color="primary" (click)="create(formAcct)">CREATE</button>
+        <button mat-raised-button color="primary" (click)="submitAccount(formAcct)">
+            {{ userID ? 'Update' : 'Add' }}
+        </button>
     </div>
 
 </form>

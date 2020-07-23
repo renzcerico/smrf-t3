@@ -5,9 +5,19 @@
             <mat-label>Name</mat-label>
             <input matInput cdkFocusInitial name="departmentName" [(ngModel)]="departmentName" required>
         </mat-form-field>
+        <mat-form-field class="w-100" *ngIf="editDepartment">
+            <mat-label>Representative</mat-label>
+            <mat-select name="representativeID" [(ngModel)]="representativeID">
+              <mat-option *ngFor="let user of users" [value]="user.id">
+                {{ user.name }}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <div mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-raised-button color="primary" (click)="submitDepartment();">Add</button>
+        <button mat-raised-button color="primary" (click)="submitDepartment();">
+            {{ editDepartment ? 'Update' : 'Add' }}
+        </button>
     </div>
 </form>

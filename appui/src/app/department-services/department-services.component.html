@@ -3,14 +3,13 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="bg-white p-3 m-3 border-muted">
                 <div class="row m-1">
-                    <h5 class="text-muted">Department & Services</h5>
+                    <h5 class="text-muted">Administrator</h5>
                 </div>
                 <hr>
-
                 <mat-tab-group>
                     <mat-tab label="Department">
                         <div class="table-responsive mt-4">
-                            <button mat-raised-button color="primary" (click)="showDepartmentDialog()">Add Department</button>
+                            <button mat-raised-button color="primary" (click)="showDepartmentDialog(null)">Add Department</button>
         
                             <table class="table table-bordered table-sm text-center mt-3" id="tbl_departments" width="100%">
                             <thead class="text-uppercase">
@@ -21,18 +20,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let dept of departments;">
+                                <tr *ngFor="let dept of departments;" (click)="showDepartmentDialog(dept.ID)">
                                     <td class="align-middle">{{ dept.NAME | uppercase }}</td>
                                     <td class="align-middle">
-                                        <!-- <button 
-                                            (click)="account()"
-                                            *ngIf="dept.REP_NAME === null"
-                                            mat-mini-fab 
-                                            color="primary" 
-                                            title="Add Representative"
-                                            aria-label="Add Representative">
-                                            <mat-icon>add</mat-icon>
-                                        </button> -->
                                         <span *ngIf="dept.REP_NAME">
                                             {{ dept.REP_NAME | titlecase }}
                                         </span>
@@ -42,7 +32,7 @@
                                     </td>
                                     <td class="align-middle">
                                         {{ dept.STATUS === null ? 'Active' : 'Inactive' }}
-                                        <a class="btn btn-link btn-sm font-weight-bold">&#8599;</a>
+                                        <a class="btn btn-link btn-sm font-weight-bold float-right">&#8599;</a>
                                     </td>
                                 </tr>
                                 <tr *ngIf="departments.length === 0">
@@ -55,7 +45,7 @@
                     <!-- SERVICES TAB -->
                     <mat-tab label="Services">
                         <div class="table-responsive mt-4">
-                            <button mat-raised-button color="primary" (click)="showServicesDialog()">Add Services</button>
+                            <button mat-raised-button color="primary" (click)="showServicesDialog(null);">Add Services</button>
         
                             <table class="table table-bordered table-sm text-center mt-3" id="tbl_services" width="100%">
                             <thead class="text-uppercase">
@@ -66,7 +56,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let service of services;">
+                                <tr *ngFor="let service of services;" (click)="showServicesDialog(service.SR_TYPE_ID);">
                                     <td class="align-middle">
                                         {{ service.SR_TYPE_CODE | uppercase }}
                                     </td>
@@ -85,8 +75,48 @@
                             </table>                
                         </div>
                     </mat-tab>
+                    <!-- Accounts TAB -->
+                    <mat-tab label="Accounts">
+                        <div class="table-responsive mt-4">
+                            <button mat-raised-button color="primary" (click)="showAccountDialog(null)">Add Account</button>
+        
+                            <table class="table table-bordered table-sm text-center mt-3" id="tbl_accounts" width="100%">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th rowspan="2" class="align-middle">Name</th>
+                                    <th rowspan="2" class="align-middle">Username</th>
+                                    <th rowspan="2" class="align-middle">Department</th>
+                                    <th rowspan="2" class="align-middle">User Level</th>
+                                    <!-- <th rowspan="2" class="align-middle">Status</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let account of accounts;" (click)="showAccountDialog(account.USER_ID)">
+                                    <td class="align-middle">
+                                        {{ account.NAME | uppercase }}
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ account.USERNAME | lowercase }}
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ account.DEPARTMENT_NAME | uppercase }}
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ account.USER_LEVEL | uppercase }}
+                                        <a class="btn btn-link btn-sm font-weight-bold float-right">&#8599;</a>
+                                    </td>
+                                    <!-- <td class="align-middle">
+                                        {{ account.status }}
+                                    </td> -->
+                                </tr>
+                                <tr *ngIf="accounts.length === 0">
+                                    <td colspan="4">No accounts found.</td>
+                                </tr>
+                            </tbody>
+                            </table>                
+                        </div>
+                    </mat-tab>
                 </mat-tab-group>
-            
             </div>
         </div>
     </div>

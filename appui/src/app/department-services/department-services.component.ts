@@ -12,8 +12,9 @@ import { ServicesDialogComponent } from './../services-dialog/services-dialog.co
   styleUrls: ['./department-services.component.css']
 })
 export class DepartmentServicesComponent implements OnInit {
-  departments: any;
-  services: any;
+  departments: any = [];
+  services: any = [];
+  accounts: any = [];
 
   constructor(public http: HttpClient,
               public userService: UserService,
@@ -22,6 +23,7 @@ export class DepartmentServicesComponent implements OnInit {
   async ngOnInit() {
     await this.getAllDepartments();
     await this.getAllServices();
+    await this.getAllAccounts();
   }
 
   async getAllDepartments() {
@@ -50,16 +52,41 @@ export class DepartmentServicesComponent implements OnInit {
     );
   }
 
-  account() {
-    this.dialog.open(UserComponent);
+  async getAllAccounts() {
+    const url = '/localapi/users';
+    await this.http.get(url)
+    .subscribe(
+      data => {
+        this.accounts = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
-  showDepartmentDialog() {
-    this.dialog.open(DepartmentComponent);
+  showAccountDialog(id) {
+    this.dialog.open(UserComponent, {
+      data: {
+        id
+      }
+    });
   }
 
-  showServicesDialog() {
-    this.dialog.open(ServicesDialogComponent);
+  showDepartmentDialog(id) {
+    this.dialog.open(DepartmentComponent, {
+      data: {
+        id
+      }
+    });
+  }
+
+  showServicesDialog(id) {
+    this.dialog.open(ServicesDialogComponent, {
+      data: {
+        id
+      }
+    });
   }
 
 }

@@ -35,3 +35,37 @@ const insert = async (req, res, next) => {
 };
 
 module.exports.insert = insert;
+
+const getByID = async (req, res, next) => {
+    try {
+        const departmentID = req.params.id;
+
+        const rows = await department.getByID(departmentID);
+
+        res.status(200).json(rows);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.getByID = getByID;
+
+const update = async (req, res, next) => {
+    try {
+        const departmentName = req.body.departmentName;
+        const id = req.params.id;
+
+        const data = {
+            id,
+            department: departmentName.toUpperCase()
+        };
+
+        const rows = await department.update(data);
+
+        res.status(200).json(rows);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.update = update;

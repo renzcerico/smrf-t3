@@ -78,8 +78,16 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <div class="d-flex d-block">
-                                                        <span class="w-100" contenteditable="true">{{ reqDetails[i].DTL_REMARKS }}</span>
-                                                        <!-- {{ req.DTL_REMARKS }} -->
+                                                        <!-- <span class="w-100" contenteditable="true">
+                                                            {{ reqDetails[i].DTL_REMARKS }}
+                                                        </span> -->
+                                                        <textarea 
+                                                            cdkTextareaAutosize
+                                                            #autosize="cdkTextareaAutosize"
+                                                            cdkAutosizeMinRows="1"
+                                                            class="w-100"
+                                                            [(ngModel)]="reqDetails[i].DTL_REMARKS"></textarea>
+                                                        <!-- <input type="text" class="w-100" [(ngModel)]="reqDetails[i].DTL_REMARKS" /> -->
                                                         <a href="#"
                                                         title="DELETE {{ req.DTL_NAME }}"
                                                         class="text-danger float-right font-weight-bold"

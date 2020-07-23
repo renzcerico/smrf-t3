@@ -34,3 +34,19 @@ td {
 .to-gray {
     color: rgba(0, 0, 0, .70)
 }
+
+textarea {
+    font-weight: 600 !important;
+    color: rgba(0, 0, 0, .70);
+    text-align: center;
+
+    border: none;
+    overflow: hidden;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none;
+}

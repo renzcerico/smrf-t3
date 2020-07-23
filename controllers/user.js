@@ -7,7 +7,7 @@ const post = async (req, res, next) => {
             last_name: transform(req.body.last_name),
             first_name: transform(req.body.first_name),
             middle_name: transform(req.body.middle_name),
-            username: req.body.username,
+            username: req.body.username.replace(/\s/g, ''),
             user_level: req.body.user_level,
             department: req.body.department
         };
@@ -58,3 +58,45 @@ const deleteUser = async (req, res, next) => {
 }; 
 
 module.exports.deleteUser = deleteUser;
+
+const getByID = async (req, res, next) => {
+    try {
+        const id = parseInt(req.params.id);
+
+        const users = await user.getByID(id);
+        
+        if (users.length > 0) {
+            res.status(200).json(users);
+        } else {
+            res.status(200).send('No results found.');
+        }
+
+    } catch(err) {
+        next(err);
+    }
+};
+
+module.exports.getByID = getByID;
+
+const update = async (req, res, next) => {
+    try {
+        const id = parseInt(req.params.id);
+        const data = {
+            id,
+            last_name: transform(req.body.last_name),
+            first_name: transform(req.body.first_name),
+            middle_name: transform(req.body.middle_name),
+            username: req.body.username.replace(/\s/g, ''),
+            user_level: req.body.user_level,
+            department: req.body.department
+        };
+
+        const result = await user.update(data);
+
+        res.status(200).json(result);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.update = update;

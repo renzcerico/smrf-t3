@@ -96,7 +96,31 @@ router.route('/departments')
 router.route('/services')
   .get(services.get);
 
+router.route('/services/:id')
+  .get(services.getByID);
+
+router.route('/services/:id')
+  .post(services.update);
+
 router.route('/services')
   .post(services.insert);
+
+router.route('/departments/:id')
+  .get(department.getByID);
+
+router.route('/departments/:id')
+  .post(department.update);
+
+router.route('/service-representatives')
+  .post(serviceRepresentative.insert);
+
+router.route('/service-representatives/:id')
+  .post(serviceRepresentative.update);
+
+router.route('/users/:id')
+  .get(user.getByID);
+
+router.route('/users/:id')
+  .post(user.update);
 
 module.exports = router;
