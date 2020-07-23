@@ -193,8 +193,10 @@ export class ActivityService {
   }
 
   isActivityAllowed(actStartTime: string) {
-    const diff = this.activities.find((activity) => (moment(activity.START_TIME).diff(moment(actStartTime), 'hours') === 0)) || null;
-    if (diff) {
+    const index = this.activities.findIndex((activity) => {
+      return moment(activity.START_TIME).startOf('hour') === moment(actStartTime).startOf('hour');
+    });
+    if (index > -1) {
       return false;
     } else {
       return true;
@@ -206,13 +208,12 @@ export class ActivityService {
     let endAct: Activity;
     let isPush: boolean;
 
-    let diff = moment(activity.START_TIME).diff(this.activities[0].START_TIME, 'hours');
-    console.log(diff);
+    console.log('adding....');
+    let diff = moment(activity.START_TIME).startOf('hour').diff(moment(this.activities[0].START_TIME).startOf('hour'), 'hours');
     if (diff < 0) {
       startAct = this.activities[this.activities.length - 1];
       endAct = activity;
       diff = moment(startAct.START_TIME).diff(endAct.START_TIME, 'hours');
-      console.log(diff);
       isPush = true;
     } else {
       startAct = this.activities[0];
@@ -227,13 +228,8 @@ export class ActivityService {
         start = moment(startAct.START_TIME).subtract((index + 1), 'hours').format('DD-MMM-YYYY HH:mm:ss');
         end = moment(start).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
       } else {
-        if (index === 0 ) {
-          start = endAct.START_TIME;
-          end = endAct.END_TIME;
-        } else {
-          start = moment(startAct.END_TIME).add(index, 'hours').format('DD-MMM-YYYY HH:mm:ss');
-          end = moment(start).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
-        }
+        start = moment(startAct.END_TIME).add(index, 'hours').format('DD-MMM-YYYY HH:mm:ss');
+        end = moment(start).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
       }
       filler = this.activityFactory.createActivity({
         HEADER_ID       : this.headerObj.ID,
@@ -243,8 +239,10 @@ export class ActivityService {
       });
       if (isPush) {
         this.activities.push(filler);
+        console.log('added');
       } else {
         this.activities.unshift(filler);
+        console.log('added');
       }
     }
   }

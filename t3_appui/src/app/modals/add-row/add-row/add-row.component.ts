@@ -63,9 +63,9 @@ export class AddRowComponent implements OnInit {
       END_TIME        : this.fullEndTime,
       IS_NEW          : 1,
     });
-    console.log(act);
     const validate = this.validate(act.START_TIME, act.END_TIME);
     if (validate.isValid) {
+      console.log('validated');
       this.activityService.addCustomActivity(act);
       this.activeModal.dismiss('success');
     } else {
@@ -79,6 +79,7 @@ export class AddRowComponent implements OnInit {
   }
 
   validate(startTime: string, endTime: string) {
+    console.log('validating...');
     const mntStart = moment(startTime);
     const mntEnd = moment(endTime);
     let res = {
