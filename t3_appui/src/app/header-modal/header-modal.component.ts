@@ -24,7 +24,7 @@ export class HeaderModalComponent implements OnInit {
   @ViewChildren('headertr') headerTr !: QueryList<ElementRef>;
 
   @HostListener('document:keydown.arrowup')
-  handleArrowUp(event) {
+  handleArrowUp() {
     const elArr = this.headerTr.toArray();
     if (this.activeIndex === null || this.activeIndex === 0) {
       this.activeIndex = elArr.length - 1;
@@ -35,7 +35,7 @@ export class HeaderModalComponent implements OnInit {
   }
 
   @HostListener('document:keydown.arrowdown')
-  handleArrowDown(event) {
+  handleArrowDown() {
     const elArr = this.headerTr.toArray();
     if (this.activeIndex === null || this.activeIndex === (elArr.length - 1)) {
       this.activeIndex = 0;
@@ -46,7 +46,7 @@ export class HeaderModalComponent implements OnInit {
   }
 
   @HostListener('document:keyup.enter')
-  handleEnter(event) {
+  handleEnter() {
     if (this.activeIndex !== null) {
       const barcode = this.headerList[this.activeIndex].BARCODE;
       this.openHeader(barcode);

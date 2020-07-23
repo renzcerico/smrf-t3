@@ -63,7 +63,7 @@ export class ActivityComponent implements OnInit {
   }
 
   constructor(
-      private activityService: ActivityService,
+      public activityService: ActivityService,
       private cdr: ChangeDetectorRef,
       private modalService: NgbModal,
       private headerService: HeaderService,

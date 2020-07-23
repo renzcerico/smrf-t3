@@ -38,7 +38,11 @@ function initialize() {
       //Enabling CORS
       const allowed = [
         'http://localhost:4200',
-        'http://localhost:4201'
+        'http://localhost:4201',
+        'http://localhost:4203',
+        'http://localhost:3000',
+        'http://t3apps.tailinsubic.com/',
+        'http://service.tailinsubic.com/'
       ];
       const origin = req.headers.origin;
       if(allowed.indexOf(origin) > -1) {

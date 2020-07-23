@@ -4,7 +4,8 @@ const dbConfig = require('../config/database.js');
 const numRows = 10;  // number of rows to return from each call to getRows()
 
 async function initialize() {
-  const pool = await oracledb.createPool(dbConfig.hrPool);
+  const db = process.env.DB;
+  const pool = await oracledb.createPool(dbConfig[db]);
 }
 
 module.exports.initialize = initialize;

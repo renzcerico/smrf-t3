@@ -36,12 +36,7 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
     //     password: new FormControl('')
     // });
     apiResponse: any;
-    headerCount = [
-        {STATUS: 1, COUNT: 0},
-        {STATUS: 2, COUNT: 0},
-        {STATUS: 3, COUNT: 0},
-        {STATUS: 4, COUNT: 0}
-    ];
+    headerCount: Array<any>;
     serverTime: string;
     timer: any;
 
@@ -51,6 +46,12 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
                 private servertimeService: ServertimeService,
                 public userService: UserService
     ) {
+        this.headerCount = [
+            {STATUS: 1, COUNT: 0},
+            {STATUS: 2, COUNT: 0},
+            {STATUS: 3, COUNT: 0},
+            {STATUS: 4, COUNT: 0}
+        ];
         headerService.headerCount$.subscribe(
             headerCount => {
                 this.headerCount = headerCount;

@@ -21,7 +21,7 @@ export class AddRowComponent implements OnInit {
   minDate: string;
   maxDate: string;
   constructor(private activityFactory: ActivityFactory,
-              private activeModal: NgbActiveModal,
+              public activeModal: NgbActiveModal,
               private activityService: ActivityService, ) {
   this.startTime = '';
   this.endTime = 'HHmm';

@@ -15,7 +15,7 @@ export class ChangePasswordComponent implements OnInit {
   message: string;
   wrongPassword: boolean;
 
-  constructor(private apiService: ApiService, private activeModal: NgbActiveModal) { }
+  constructor(private apiService: ApiService, public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
     this.wrongPassword = false;

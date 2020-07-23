@@ -111,7 +111,6 @@
                     <td *ngIf="isAuthorized" class="align-bottom td-editable" data-label="Remarks">
                         <div class="td-indicator"></div>
                         <textarea class="form-control remarks" 
-                            (keyup.enter)="time('', $event)"
                             (keydown.enter)="preventEnter($event)" 
                             autosize rows="1" 
                             (ngModelChange)="handleInput(i)"
