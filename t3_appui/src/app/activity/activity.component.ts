@@ -223,11 +223,13 @@ export class ActivityComponent implements OnInit {
 
   addEndProdRow() {
     if (this.headerObj.STATUS === 1) {
-      if (!this.activityService.isToEndProd) {
-        this.activityService.addEndProdRow();
-      } else {
+      this.activityService.addEndProdRow();
+    }
+  }
+
+  removeEndProdRow() {
+    if (this.headerObj.STATUS === 1) {
         this.activityService.removeEndProdRow();
-      }
     }
   }
 
