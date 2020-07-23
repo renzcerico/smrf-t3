@@ -1,0 +1,12 @@
+Elements too small
+Add row time
+Show mfg shift
+delete downtime ux
+end prod ux
+
+
+Delete downtime - done
+logout on save - done
+In charge selection on load - done
+Edit privilledge supervisor/incharge - done
+End Production - done

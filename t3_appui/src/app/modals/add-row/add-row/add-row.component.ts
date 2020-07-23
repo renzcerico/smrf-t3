@@ -28,9 +28,9 @@ export class AddRowComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.minDate = moment(this.actualStart).subtract(1, 'day').format('YYYY-MM-DD');
-    this.maxDate = moment(this.actualStart).add(1, 'day').format('YYYY-MM-DD');
     this.dateSelected = moment(this.actualStart).format('YYYY-MM-DD');
+    this.minDate = moment(this.dateSelected).subtract(1, 'day').format('YYYY-MM-DD');
+    this.maxDate = moment(this.dateSelected).add(1, 'day').format('YYYY-MM-DD');
   }
 
   updateStartTime() {
@@ -63,6 +63,7 @@ export class AddRowComponent implements OnInit {
       END_TIME        : this.fullEndTime,
       IS_NEW          : 1,
     });
+    console.log(act);
     const validate = this.validate(act.START_TIME, act.END_TIME);
     if (validate.isValid) {
       this.activityService.addCustomActivity(act);

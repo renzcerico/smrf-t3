@@ -41,7 +41,7 @@ export default class Header {
         );
         this.ID = jsonObj.ID || null;
         this.BARCODE = jsonObj.BARCODE || (jsonObj.HEADER_ID ? jsonObj.HEADER_ID.toString() : '') || '';
-        this.ACTUAL_START = jsonObj.ACTUAL_START || this.servertime;
+        this.ACTUAL_START = (jsonObj.ACTUAL_START ? moment(jsonObj.ACTUAL_START ).format('DD-MMM-YYYY HH:mm:ss') : this.servertime );
         this.ACTUAL_END = (jsonObj.ACTUAL_END ? moment(jsonObj.ACTUAL_END ).format('DD-MMM-YYYY HH:mm:ss') : '' ) || '';
         this.STATUS = jsonObj.STATUS || 1;
         this.PO_NUMBER = jsonObj.PO_NUMBER || jsonObj.CUST_PO_NUMBER || '';

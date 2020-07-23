@@ -29,7 +29,7 @@
 
         <ng-container *ngIf="activityService.headerObj">
             <button class="btn-sm btn-success btn rounded mb-2" (click)="addRow()" *ngIf="isAuthorized && activeUser.USER_TYPE >= 2 && activityService.headerObj.STATUS > 1">Add Row</button>
-            <button class="btn-sm btn-success btn rounded mb-2" (click)="addEndProdRow()" *ngIf="activityService.headerObj.STATUS === 1">Add Row</button>
+            <button class="btn-sm btn-success btn rounded mb-2" (click)="addEndProdRow()" *ngIf="activityService.headerObj.STATUS === 1 && isAuthorized">Add Row</button>
         </ng-container>
 
         <table class="table table-bordered table-sm table-hover text-center" id="table_activity">

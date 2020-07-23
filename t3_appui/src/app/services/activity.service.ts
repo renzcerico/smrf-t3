@@ -227,8 +227,13 @@ export class ActivityService {
         start = moment(startAct.START_TIME).subtract((index + 1), 'hours').format('DD-MMM-YYYY HH:mm:ss');
         end = moment(start).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
       } else {
-        start = moment(startAct.END_TIME).add(index, 'hours').format('DD-MMM-YYYY HH:mm:ss');
-        end = moment(start).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
+        if (index === 0 ) {
+          start = endAct.START_TIME;
+          end = endAct.END_TIME;
+        } else {
+          start = moment(startAct.END_TIME).add(index, 'hours').format('DD-MMM-YYYY HH:mm:ss');
+          end = moment(start).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
+        }
       }
       filler = this.activityFactory.createActivity({
         HEADER_ID       : this.headerObj.ID,
@@ -249,7 +254,8 @@ export class ActivityService {
   }
 
   addEndProdRow() {
-    const start = moment(this.activities[0].START_TIME).add(1, 'hours').format('DD-MMM-YYYY HH:mm:ss');
+    const start = moment(this.activities[0].END_TIME).startOf('hour').format('DD-MMM-YYYY HH:mm:ss');
+    this.activities[0].END_TIME = start;
     const act = this.activityFactory.createActivity({
       HEADER_ID       : this.headerObj.ID,
       START_TIME      : start,

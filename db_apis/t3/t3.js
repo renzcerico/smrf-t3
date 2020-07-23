@@ -69,9 +69,9 @@ const getAllByBarcode = async (data) => {
         .catch(error => { console.log('caught', error.message); });
     let res = {};
     if (header_res.length > 0) {
-        const activities = await getDataByHeaderId(process.env.SCHEMA + '.TBL_ACTIVITY' , header_res[0].ID);
-        const manpower = await getDataByHeaderId(process.env.SCHEMA + '.TBL_T3_MANPOWER' ,  header_res[0].ID);
-        const materials = await getDataByHeaderId(process.env.SCHEMA + '.TBL_MATERIAL' ,  header_res[0].ID);
+        const activities = await getDataByHeaderId('TBL_ACTIVITY' , header_res[0].ID);
+        const manpower = await getDataByHeaderId('TBL_T3_MANPOWER' ,  header_res[0].ID);
+        const materials = await getDataByHeaderId('TBL_MATERIAL' ,  header_res[0].ID);
         res = {
             header_obj          : header_res[0],
             activity_collection : activities,
@@ -96,7 +96,7 @@ const getDataByHeaderId = async (table ,headerid) => {
     }
     let res = await database.resultsetExecute(q, binds)
     .catch(error => { console.log('caught', error.message); });
-    if (table == process.env.SCHEMA + '.TBL_ACTIVITY') {
+    if (table == 'TBL_ACTIVITY') {
         for ( let i = 0; i <= res.length - 1; i++ ){
             let activity_details = await getActivityDetails(res[i].ID).then(res => {
                 return res;
