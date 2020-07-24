@@ -26,7 +26,7 @@ const getAllUser = async () => {
                     username,
                     user_level,
                     (SELECT name FROM ${ process.env.SCHEMA }.TBL_DEPARTMENT WHERE ID = department) department_name,
-                    department as department_id 
+                    department as department_id
                  FROM ${ process.env.SCHEMA }.TBL_USER
                  ORDER BY TO_NUMBER(DEPARTMENT) ASC`;
 
@@ -37,15 +37,21 @@ const getAllUser = async () => {
 
 module.exports.getAllUser = getAllUser;
 
-const deleteUser = async (data) => {
-    const id = data.id;
-    const apiKey = data.apiKey;
+const deleteUser = async (id) => {
     
-    const sql = `DELETE FROM ${ process.env.SCHEMA }.TBL_USER WHERE ID = :id`;
-    
-    const result = await database.simpleExecute(sql, id);
+    const bind = {
+        id
+    };
 
-    return 200;
+    // const sql = `DELETE FROM ${ process.env.SCHEMA }.TBL_DEPARTMENT WHERE ID = :id`;
+    const sql = `BEGIN 
+                    DELETE FROM ${ process.env.SCHEMA }.TBL_USER WHERE ID = :id;
+                    COMMIT;
+                END;`;
+    
+    const result = await database.simpleExecute(sql, bind);
+
+    return result;
 };
 
 module.exports.deleteUser = deleteUser;

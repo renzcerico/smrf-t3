@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { faTrash, faUndo } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-activity-downtime',
@@ -31,6 +32,8 @@ export class ActivityDowntimeComponent implements OnInit {
   // tslint:disable-next-line: variable-name
   _isAuthorized: boolean;
   userType;
+  iconDelete = faTrash;
+  iconUndo = faUndo;
 
   @ViewChildren('modalHeaderInput') modalHeaderInput !: QueryList<ElementRef>;
 

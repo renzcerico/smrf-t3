@@ -34,7 +34,7 @@ td, th {
     background-color: rgba(155, 136, 100, 0.123);
 }
 
-button:not(.close) {
+.modal-footer button:not(.close) {
     font-weight: 500;
     text-transform: capitalize;
     width: 100%;
@@ -44,4 +44,12 @@ button:not(.close) {
 td {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+}
+
+.border-100 {
+    border-radius: 100px;
+}
+
+.downtime-deleted {
+    text-decoration: line-through;
 }

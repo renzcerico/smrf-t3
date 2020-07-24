@@ -28,11 +28,13 @@
         <h6 class="text-center text-muted text-uppercase">Activity</h6>
 
         <ng-container *ngIf="activityService.headerObj">
-            <button class="btn-sm btn-success btn rounded mb-2" (click)="addRow()" *ngIf="isAuthorized && activeUser.USER_TYPE >= 2 && activityService.headerObj.STATUS > 1">Add Row</button>
-            <ng-container *ngIf="activityService.headerObj.STATUS === 1 && isAuthorized">
-                <button class="btn-sm btn-success btn rounded mb-2" (click)="addEndProdRow()" *ngIf="!activityService.isToEndProd">Add Row</button>
-                <button class="btn-sm btn-warning btn rounded mb-2" (click)="removeEndProdRow()" *ngIf="activityService.isToEndProd">Undo</button>
-            </ng-container>
+            <div class="activity-container">
+                <button class="btn btn-success rounded mb-2 font-weight-500" (click)="addRow()" *ngIf="isAuthorized && activeUser.USER_TYPE >= 2 && activityService.headerObj.STATUS > 1">Add Activity</button>
+                <ng-container *ngIf="activityService.headerObj.STATUS === 1 && isAuthorized">
+                    <button class="btn btn-success rounded mb-2 font-weight-500" (click)="addEndProdRow()" *ngIf="!activityService.isToEndProd">Add Activity</button>
+                    <button class="btn btn-warning rounded mb-2 font-weight-500" (click)="removeEndProdRow()" *ngIf="activityService.isToEndProd">Cancel Activivity</button>
+                </ng-container>
+            </div>
         </ng-container>
 
         <table class="table table-bordered table-sm table-hover text-center" id="table_activity">

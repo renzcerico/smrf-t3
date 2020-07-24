@@ -2,40 +2,48 @@
     <form #headerForm>
         <div *ngIf="currentStatus">
             <span [ngClass]="currentStatus"></span>
-            <span class="content pl-1 text-uppercase">
+            <span class="content text-uppercase">
                 {{ currentStatusDesc }}
-                <span class="text-muted">|</span>
             </span>
-            <span class="title pl-2">Actual Start: </span>
-            <span class="content pl-1">{{ headerObj.ACTUAL_START | date : 'MM/d/yy HH:mm' }}</span>            
-            <span *ngIf="headerObj.STATUS !== 1" class="title pl-2">Actual End: </span>
-            <span *ngIf="headerObj.STATUS !== 1" class="content pl-1">{{ headerObj.ACTUAL_END | date : 'MM/d/yy HH:mm' }}</span>
-            <div class="form-inline  d-inline-block">
-                <div class="ml-2 form-group">
-                    <label class="title" for="shift">Shift: </label>
-                    <select class="form-control" name="shift" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
-                        <option value="dayshift">DS</option>
-                        <option value="nightshift">NS</option>
-                    </select>
+            <span class="text-muted divider">|</span>
+            <span class="title">Actual Start: </span>
+            <span class="content">{{ headerObj.ACTUAL_START | date : 'MM/d/yy HH:mm' }}</span>            
+            <span *ngIf="headerObj.STATUS !== 1" class="title">Actual End: </span>
+            <span *ngIf="headerObj.STATUS !== 1" class="content">{{ headerObj.ACTUAL_END | date : 'MM/d/yy HH:mm' }}</span>
+            <ng-template *ngIf="isAuthorized; else headerControlElse">
+                <div class="form-inline  d-inline-block">
+                    <div class="ml-2 form-group">
+                        <label class="title" for="shift">Shift: </label>
+                        <select class="form-control" name="shift" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
+                            <option value="dayshift">DS</option>
+                            <option value="nightshift">NS</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-inline  d-inline-block">
-                <div class="ml-2 form-group">
-                    <label class="title" for="mfg_date">MFG date: </label>
-                    <input class="form-control" type="date" name="mfg_date" id="mfg_date" [(ngModel)]="headerObj.MFG_DATE" (ngModelChange)="setIsChanged()">
+                <div class="form-inline  d-inline-block">
+                    <div class="ml-2 form-group">
+                        <label class="title" for="mfg_date">MFG date: </label>
+                        <input class="form-control" type="date" name="mfg_date" id="mfg_date" [(ngModel)]="headerObj.MFG_DATE" (ngModelChange)="setIsChanged()">
+                    </div>
                 </div>
-            </div>
+            </ng-template>
+            <ng-template #headerControlElse>
+                <span class="title">Shift: </span>
+                <span class="content pl-1">{{ headerObj.SHIFT }}</span>                            
+                <span class="title">MFG Date: </span>
+                <span class="content pl-1">{{ headerObj.MFG_DATE }}</span>                             
+            </ng-template>
         </div>
         <div class="form-row">           
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input name="barcode" type="text" id="barcode" class="form-control w-75" #barcode [ngModel]="headerObj.BARCODE" name="barcode" placeholder="#" required (change)="handleBarcodeChange(barcode.value)" autofocus>
+                    <input name="barcode" type="text" id="barcode" class="form-control" #barcode [ngModel]="headerObj.BARCODE" name="barcode" placeholder="#" required (change)="handleBarcodeChange(barcode.value)" autofocus>
                     <label for="barcode">Control Number</label>
                 </div>
             </div>  
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input name="po_number" type="text" id="po_number" class="form-control w-75" [ngModel]="headerObj.PO_NUMBER" placeholder="#" required>
+                    <input name="po_number" type="text" id="po_number" class="form-control" [ngModel]="headerObj.PO_NUMBER" placeholder="#" required>
                     <label for="po_number">PO Number</label>
                 </div>                                                                  
             </div>   
@@ -54,25 +62,25 @@
             <!-- start -->
             <!-- <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input name="schedule_date" type="text" id="schedule_date" class="form-control w-75" [ngModel]="headerObj.SCHEDULE_DATE_START | date : 'MM/d/yy'" name="schedule_date" placeholder="MM/DD/YY HH:mm" required >
+                    <input name="schedule_date" type="text" id="schedule_date" class="form-control" [ngModel]="headerObj.SCHEDULE_DATE_START | date : 'MM/d/yy'" name="schedule_date" placeholder="MM/DD/YY HH:mm" required >
                     <label for="schedule_date">Schedule Date</label>
                 </div>                
             </div>  
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input name="schedule_time" type="text" id="schedule_time" class="form-control w-75" [ngModel]="scheduleTime" placeholder="HHmm - HHmm" required>
+                    <input name="schedule_time" type="text" id="schedule_time" class="form-control" [ngModel]="scheduleTime" placeholder="HHmm - HHmm" required>
                     <label for="schedule_time">Schedule Time</label>
                 </div>                                                                  
             </div>   
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input readonly name="actual_start" type="text" id="actual_start" class="form-control w-75" [ngModel]="headerObj.ACTUAL_START | date : 'MM/d/yy'" placeholder="MM/DD/YYYY" required>
+                    <input readonly name="actual_start" type="text" id="actual_start" class="form-control" [ngModel]="headerObj.ACTUAL_START | date : 'MM/d/yy'" placeholder="MM/DD/YYYY" required>
                     <label for="actual_start">Actual Start</label>
                 </div>
             </div>
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input readonly name="status" type="text" id="status" class="form-control w-75" [ngModel]="headerObj.STATUS" placeholder="#" required>
+                    <input readonly name="status" type="text" id="status" class="form-control" [ngModel]="headerObj.STATUS" placeholder="#" required>
                     <label for="status">Status</label>
                 </div>  
             </div> -->
@@ -80,13 +88,13 @@
             
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <input readonly name="customer" type="text" id="customer" class="form-control w-75" [ngModel]="headerObj.CUSTOMER" placeholder="Name" required>
+                    <input readonly name="customer" type="text" id="customer" class="form-control" [ngModel]="headerObj.CUSTOMER" placeholder="Name" required>
                     <label for="customer">Customer</label>
                 </div>
             </div>
             <div class="col-12 col-md-3 mt-1">                
                 <div class="form-label-group">
-                    <input readonly name="customer_code" type="text" id="customer_code" class="form-control w-75" [ngModel]="headerObj.CUSTOMER_CODE" placeholder="Code" required>
+                    <input readonly name="customer_code" type="text" id="customer_code" class="form-control" [ngModel]="headerObj.CUSTOMER_CODE" placeholder="Code" required>
                     <label for="customer_code">Customer Code</label>
                 </div>
             </div>
@@ -101,13 +109,13 @@
             <div class="form-row">
                 <!-- <div class="col-12 col-md-3 mt-1">
                     <div class="form-label-group">
-                        <input readonly name="customer" type="text" id="customer" class="form-control w-75" [ngModel]="headerObj.CUSTOMER" placeholder="Name" required>
+                        <input readonly name="customer" type="text" id="customer" class="form-control" [ngModel]="headerObj.CUSTOMER" placeholder="Name" required>
                         <label for="customer">Customer</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-3 mt-1">                
                     <div class="form-label-group">
-                        <input readonly name="customer_code" type="text" id="customer_code" class="form-control w-75" [ngModel]="headerObj.CUSTOMER_CODE" placeholder="Code" required>
+                        <input readonly name="customer_code" type="text" id="customer_code" class="form-control" [ngModel]="headerObj.CUSTOMER_CODE" placeholder="Code" required>
                         <label for="customer_code">Customer Code</label>
                     </div>
                 </div>
@@ -119,13 +127,13 @@
                 </div>               -->
                 <div class="col-12 col-md-3 mt-1">
                     <div class="form-label-group">
-                        <input readonly name="old_code" type="text" id="old_code" class="form-control w-75" [ngModel]="headerObj.OLD_CODE" placeholder="Code" required>
+                        <input readonly name="old_code" type="text" id="old_code" class="form-control" [ngModel]="headerObj.OLD_CODE" placeholder="Code" required>
                         <label for="old_code">Old Code</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-3 mt-1">                
                     <div class="form-label-group">
-                        <input readonly name="internal_code" type="text" id="internal_code" class="form-control w-75" [ngModel]="headerObj.INTERNAL_CODE" placeholder="Code" required>
+                        <input readonly name="internal_code" type="text" id="internal_code" class="form-control" [ngModel]="headerObj.INTERNAL_CODE" placeholder="Code" required>
                         <label for="internal_code">Internal Code</label>
                     </div>
                 </div>
@@ -151,17 +159,21 @@
     </button>
 </div>
 
-<div class="m-3 position-absolute right-0 row btn-save-container">
-    <select *ngIf="isAuthorized && headerObj.STATUS < 3 && userType < 3" name="forwardTo" [(ngModel)]="receiverID" id="forwardTo" class="form-control col-12 col-md-2">
-        <option value="0" disabled>Forward to</option>
-        <option *ngFor="let user of usersForwardList;" [value]="user.ID">
-            {{ user.FULL_NAME }}
-        </option>
-    </select>
-    <button class="btn col-12 col-md-5 btn-danger border-100 font-weight-500 px-2 text-uppercase" (click)="updateHeaderStatus(1)" *ngIf="visibleButton === 'endprod'">End Production</button>
-    <button class="btn col-12 col-md-5 btn-success border-100 font-weight-500 px-2 text-uppercase" (click)="updateHeaderStatus(2)" *ngIf="visibleButton === 'approve'">Approve</button>
-    <button class="btn col-12 col-md-5 btn-dark border-100 font-weight-500 px-2 text-uppercase" (click)="header()" *ngIf="showSaveButton">Save</button>
-</div>
+<!-- <div class="container-fluid">
+    <div class="row"> -->
+        <div class="m-3 position-absolute right-0 btn-save-container">
+            <select *ngIf="isAuthorized && headerObj.STATUS < 3 && userType < 3" name="forwardTo" [(ngModel)]="receiverID" id="forwardTo">
+                <option value="0" disabled>Forward to</option>
+                <option *ngFor="let user of usersForwardList;" [value]="user.ID">
+                    {{ user.FULL_NAME }}
+                </option>
+            </select>
+            <button class="btn btn-danger border-100 font-weight-500 px-2 text-uppercase" (click)="updateHeaderStatus(1)" *ngIf="visibleButton === 'endprod'">End Production</button>
+            <button class="btn btn-success border-100 font-weight-500 px-2 text-uppercase" (click)="updateHeaderStatus(2)" *ngIf="visibleButton === 'approve'">Approve</button>
+            <button class="btn btn-dark border-100 font-weight-500 px-2 text-uppercase" (click)="header()" *ngIf="showSaveButton">Save</button>
+        </div>
+    <!-- </div>
+</div> -->
 
 <app-activity></app-activity>
 <app-material [actTotal]="actTotal" [(materials)]="matCollection"></app-material>

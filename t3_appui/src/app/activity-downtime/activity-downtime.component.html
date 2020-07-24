@@ -23,7 +23,7 @@
     <table id="modal_table" class="table table-sm table-bordered table-hover">
         <thead class="text-uppercase">
             <tr>
-                <th *ngIf="isAuthorized" style="width: 10%;" class="align-middle" rowspan="2">Action</th>
+                <!-- <th *ngIf="isAuthorized" style="width: 10%;" class="align-middle" rowspan="2">Action</th> -->
                 <th style="width: 40%;" class="align-middle" rowspan="2">Type</th>
                 <th style="width: 10%;" rowspan="2" class="align-middle">Minutes</th>
                 <!-- <th style="width: 10%;" rowspan="2" class="align-middle">Quantity</th> -->
@@ -37,9 +37,9 @@
         </thead>
         <tbody>
             <tr *ngIf="isAuthorized">
-                <td></td>
+                <!-- <td></td> -->
                 <td class="text-right td-editable">
-                    <div class="td-indicator"></div>
+                    <div class="td-indicator-required"></div>
                     <select 
                         name="downtime_type"
                         ngbAutofocus
@@ -55,7 +55,7 @@
                     </select>
                 </td>                
                 <td class="text-right td-editable">
-                    <div class="td-indicator"></div>
+                    <div class="td-indicator-required"></div>
                     <input
                         type="number"
                         min="0"
@@ -87,33 +87,47 @@
             </tr>
             <tr *ngFor="let val of tempActDowntime; let i = index">
                 <ng-container *ngIf="isAuthorized; else unAuthorized">
-                    <td>
-                        <button class="btn btn-sm btn-danger" *ngIf="!tempActDowntime[i].IS_DELETED" (click)="toggleDelete(i)">x</button>
+                    <!-- <td>
+                        <button class="btn btn-sm btn-danger" *ngIf="!tempActDowntime[i].IS_DELETED" (click)="toggleDelete(i)">&times;</button>
                         <button class="btn btn-sm btn-warning" *ngIf="tempActDowntime[i].IS_DELETED"  (click)="toggleDelete(i)">undo</button>
+                    </td> -->
+                    <td class="text-right td-editable">
+                        <div class="td-indicator-required"></div>
+                        <div class="d-block">
+                            <div class="d-inline-block">
+                                <button class="btn btn-sm btn-danger" *ngIf="!tempActDowntime[i].IS_DELETED" (click)="toggleDelete(i)">
+                                    <fa-icon [icon]="iconDelete"></fa-icon>
+                                </button>
+                                <button class="btn btn-sm btn-info" *ngIf="tempActDowntime[i].IS_DELETED"  (click)="toggleDelete(i)">
+                                    <fa-icon [icon]="iconUndo"></fa-icon>
+                                </button>
+                            </div>
+                            <div class="d-inline-block">
+                                <select
+                                    bind-attr.selected_id="tempActDowntime[i].DOWNTIME_TYPE_ID"
+                                    name="downtime_type"
+                                    ngbAutofocus
+                                    id="downtime_type"
+                                    [ngClass]="tempActDowntime[i].IS_DELETED ? 'downtime-deleted' : ''"
+                                    class="form-control"
+                                    (change)="handleSelectChange($event, i)"
+                                    [(ngModel)]="tempActDowntime[i].DOWNTIME_TYPE_ID"
+                                >
+                                    <option value="{value: -1}" selected disabled>Select Reason</option>
+                                    <option *ngFor="let dtype of downtimeTypes; let i = index;" [ngValue]="dtype.ID" [disabled]="dtype.DISABLED">{{ dtype.NAME }}</option>                
+                                </select>
+                            </div>
+                        </div>
                     </td>
                     <td class="text-right td-editable">
-                        <div class="td-indicator"></div>
-                        <select
-                            bind-attr.selected_id="tempActDowntime[i].DOWNTIME_TYPE_ID"
-                            name="downtime_type"
-                            ngbAutofocus
-                            id="downtime_type"
-                            class="form-control"
-                            (change)="handleSelectChange($event, i)"
-                            [(ngModel)]="tempActDowntime[i].DOWNTIME_TYPE_ID"
-                        >
-                            <option value="{value: -1}" selected disabled>Select Reason</option>
-                            <option *ngFor="let dtype of downtimeTypes; let i = index;" [ngValue]="dtype.ID" [disabled]="dtype.DISABLED">{{ dtype.NAME }}</option>                
-                        </select>
-                    </td>
-                    <td class="text-right td-editable">
-                        <div class="td-indicator"></div>
+                        <div class="td-indicator-required"></div>
                         <input
                             type="number"
                             min="0"
                             class="form-control input-sm editable-content text-right"
                             (ngModelChange)="setIsChanged(i)"
                             (focus)="$event.target.select()"
+                            [ngClass]="tempActDowntime[i].IS_DELETED ? 'downtime-deleted' : ''"
                             [(ngModel)]="tempActDowntime[i].MINUTES">
                     </td>    
                     <!-- <td class="text-right td-editable">
@@ -134,6 +148,7 @@
                             class="form-control editable-content"
                             autosize
                             rows="1"
+                            [ngClass]="tempActDowntime[i].IS_DELETED ? 'downtime-deleted' : ''"
                             (ngModelChange)="setIsChanged(i)"
                             [(ngModel)]="tempActDowntime[i].REMARKS">
                         </textarea>
@@ -180,12 +195,12 @@
                 <th class="px-3">{{ totalMinutes | number: '' }}</th>
                 <td></td>
                 <td></td>
-                <td></td>
+                <!-- <td></td> -->
             </tr>
         </tfoot>
     </table>
 </div>
 <div *ngIf="isAuthorized" class="modal-footer">
-    <button class="btn btn-md btn-secondary" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">Cancel</button>
-    <button class="btn btn-md btn-success" (click)="handleSave()">Save</button>
+    <button class="btn border-100 btn-secondary" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+    <button class="btn border-100 btn-success" (click)="handleSave()">Save</button>
 </div>

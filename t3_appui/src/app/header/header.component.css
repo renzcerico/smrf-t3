@@ -17,7 +17,7 @@
     border-top: 0;
     border-radius: 0;
     box-shadow: none;
-    font-size: 13px !important;
+    font-size: 13.5px !important;
 }
 
 #forwardTo {
@@ -93,7 +93,7 @@ input:read-only {
 }
 
 .form-label-group input ~ label {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500 !important;
     color: #777;
 }
@@ -110,24 +110,26 @@ input:read-only {
 }
 
 #prod_span ~ label {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500 !important;
     color: #777; 
 }
 
-div.col-md-6 > .form-label-group > input {
-    width: 87.5%;
+.divider {
+    padding-left: .5rem !important;
 }
 
 span.title, label.title {
     color: #63605e !important;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500 !important;
+    padding-left: 1rem !important;
 }
 span.content {
     font-size: 13px !important;
     color: #495057;
     font-weight: bold !important;
+    padding-left: .25rem !important;
 }
 
 @media only screen and (min-width: 1900px) {
@@ -145,4 +147,10 @@ span.content {
     border-right: 0;
     border-bottom: 1px #9B8864 solid ;
     font-size: 13px !important;
+}
+
+.btn-save-container button,
+.btn-save-container select {
+    width: 200px;
+    margin: 10px;
 }

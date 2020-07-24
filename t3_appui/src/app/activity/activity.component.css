@@ -34,3 +34,12 @@ tfoot td {
 .date-divider {
     background-color: #b6ffb2 !important;
 }
+
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.activity-container button {
+    width: 200px !important;
+    border-radius: 100px !important;
+}

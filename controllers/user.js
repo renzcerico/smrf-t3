@@ -47,11 +47,11 @@ module.exports.getAllUser = getAllUser;
 
 const deleteUser = async (req, res, next) => {
     try {  
-        const id = req.params.id;
+        const id = parseInt(req.params.id);
 
-        let response = await user.deleteUser(id)
+        let response = await user.deleteUser(id);
 
-        res.status(200).send('Deleted');
+        res.status(200).json(response);
     } catch(err) {
         next(err);
     }
