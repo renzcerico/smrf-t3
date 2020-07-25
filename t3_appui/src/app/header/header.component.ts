@@ -21,6 +21,7 @@ import { HeaderModalComponent } from '../header-modal/header-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../environments/environment';
 import * as io from 'socket.io-client';
+import { LoginComponent } from '../modals/login/login.component';
 
 @Component({
     selector: 'app-home',
@@ -210,8 +211,13 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
 
     barcode() {
         const onComplete = (val) => {
-            const barcodeNum = val;
-            this.headerService.getData(barcodeNum);
+            this.fromBarcode = true;
+            if (this.activeUser) {
+                const barcodeNum = val;
+                this.headerService.getData(barcodeNum);
+            } else {
+                this.modalService.open(LoginComponent);
+            }
         };
 
         const options = { onComplete };
@@ -238,7 +244,15 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     }
 
     handleBarcodeChange(barcode) {
-        this.headerService.getData(barcode);
+        if (!this.fromBarcode) {
+            if (this.activeUser) {
+                this.headerService.getData(barcode);
+            } else {
+                this.modalService.open(LoginComponent);
+            }
+        } else {
+            this.fromBarcode = false;
+        }
     }
 
     async header(showConfirmMessage: boolean = true) {
