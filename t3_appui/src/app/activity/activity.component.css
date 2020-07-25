@@ -31,6 +31,10 @@ tfoot td {
     font-size: 14px;
 }
 
+tbody td {
+    font-size: 14px !important;
+}
+
 .date-divider {
     background-color: #b6ffb2 !important;
 }
