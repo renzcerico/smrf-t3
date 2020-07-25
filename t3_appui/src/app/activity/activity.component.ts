@@ -44,6 +44,7 @@ export class ActivityComponent implements OnInit {
   isToEndProd: boolean;
   headerObj: any;
   servertime: string;
+  lastActivity: any;
 
   get subTotal() {
     let subTotal = 0;
@@ -76,6 +77,8 @@ export class ActivityComponent implements OnInit {
     activityService.activities$.subscribe(
       activities => {
         this.activities = activities;
+        // this.isToEndProd = false;
+        this.lastActivity = this.activities[0];
       }
     );
     activityService.downtimeTypes$.subscribe(
@@ -231,10 +234,9 @@ export class ActivityComponent implements OnInit {
   }
 
   addEndProdRow() {
-    console.log('testing header status...');
-    console.log(this.headerObj.STATUS === 1);
     if (this.headerObj.STATUS === 1) {
-      console.log('header status passed');
+      // this.isToEndProd = true;
+      this.lastActivity = this.activities[0];
       this.activityService.addEndProdRow();
     }
   }
@@ -242,14 +244,15 @@ export class ActivityComponent implements OnInit {
   removeEndProdRow() {
     if (this.headerObj.STATUS === 1) {
         this.activityService.removeEndProdRow();
+        // this.isToEndProd = false;
     }
   }
 
-  get showEndProdAddButton(): boolean {
+  get isNewTimeAfter(): boolean {
     let res = false;
     if (this.activities.length) {
-      if (moment(this.servertime).isSameOrBefore(moment(this.activities[0].END_TIME))) {
-        res = (this.activityService.headerObj.STATUS === 1 && this.isAuthorized) ? true : false;
+      if (moment(this.servertime).isAfter(moment(this.lastActivity.END_TIME))) {
+        res = true;
       }
     }
     return res;

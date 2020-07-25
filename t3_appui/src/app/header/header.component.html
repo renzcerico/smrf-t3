@@ -10,7 +10,7 @@
             <span class="content">{{ headerObj.ACTUAL_START | date : 'MM/d/yy HH:mm' }}</span>            
             <span *ngIf="headerObj.STATUS !== 1" class="title">Actual End: </span>
             <span *ngIf="headerObj.STATUS !== 1" class="content">{{ headerObj.ACTUAL_END | date : 'MM/d/yy HH:mm' }}</span>
-            <ng-template *ngIf="isAuthorized; else headerControlElse">
+            <!-- <ng-template *ngIf="isAuthorized; else headerControlElse"> -->
                 <div class="form-inline  d-inline-block">
                     <div class="ml-2 form-group">
                         <label class="title" for="shift">Shift: </label>
@@ -26,13 +26,13 @@
                         <input class="form-control" type="date" name="mfg_date" id="mfg_date" [(ngModel)]="headerObj.MFG_DATE" (ngModelChange)="setIsChanged()">
                     </div>
                 </div>
-            </ng-template>
-            <ng-template #headerControlElse>
+            <!-- </ng-template>
+                <ng-template #headerControlElse>
                 <span class="title">Shift: </span>
                 <span class="content pl-1">{{ headerObj.SHIFT }}</span>                            
                 <span class="title">MFG Date: </span>
                 <span class="content pl-1">{{ headerObj.MFG_DATE }}</span>                             
-            </ng-template>
+            </ng-template> -->
         </div>
         <div class="form-row">           
             <div class="col-12 col-md-3 mt-1">

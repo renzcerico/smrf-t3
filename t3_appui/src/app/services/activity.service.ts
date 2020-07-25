@@ -209,7 +209,6 @@ export class ActivityService {
     let endAct: Activity;
     let isPush: boolean;
 
-    console.log('adding....');
     let diff = moment(activity.START_TIME).startOf('hour').diff(moment(this.activities[0].START_TIME).startOf('hour'), 'hours');
     if (diff < 0) {
       startAct = this.activities[this.activities.length - 1];
@@ -253,7 +252,7 @@ export class ActivityService {
   }
 
   addEndProdRow() {
-    console.log('creating activity object...');
+    this.isToEndProd = true;
     const start = moment(this.activities[0].END_TIME).startOf('hour').format('DD-MMM-YYYY HH:mm:ss');
     this.activities[0].END_TIME = start;
     const act = this.activityFactory.createActivity({
@@ -262,11 +261,7 @@ export class ActivityService {
       END_TIME        : this.servertime,
       IS_NEW          : 1,
     });
-    console.log('activity object created');
-    console.log('pushing activity object to activities array...');
     this.activities.unshift(act);
-    console.log('activity object pushed');
-    this.isToEndProd = true;
   }
 
   removeEndProdRow() {
