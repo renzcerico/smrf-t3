@@ -250,7 +250,7 @@ export class ActivityComponent implements OnInit {
 
   get isNewTimeAfter(): boolean {
     let res = false;
-    if (this.activities.length) {
+    if (this.activities.length && this.lastActivity) {
       if (moment(this.servertime).isAfter(moment(this.lastActivity.END_TIME))) {
         res = true;
       }
