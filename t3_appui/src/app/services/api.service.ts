@@ -82,7 +82,7 @@ export class ApiService {
     }
 
     getNewBatch(barcode): Observable<any> {
-        return this.http.get(this.url + '/t3api/t3Batch_info/' + barcode);
+        return this.http.get('http://t3apps.tailinsubic.com:3071/t3api/t3Batch_info/' + barcode);
     }
 
     getHeaderCountPerStatus(): Observable<any> {

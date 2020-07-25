@@ -100,6 +100,9 @@ export class UserService {
         if (this.userObj.USER_TYPE > 2) {
           isAuthorized = true;
         }
+        if (this.headerObj.STATUS > this.userObj.USER_TYPE) {
+          isAuthorized = false;
+        }
         switch (this.headerObj.STATUS) {
             case 1:
               if (this.userObj.USER_TYPE >= 3) {

@@ -1,3 +1,4 @@
+import { ServertimeService } from './../services/servertime.service';
 import { HeaderService } from './../services/header.service';
 import {
   Component,
@@ -17,6 +18,7 @@ import { ActivityDowntimeComponent } from '../activity-downtime/activity-downtim
 import { UserService } from './../services/user.service';
 import Swal from 'sweetalert2';
 import { AddRowComponent } from '../modals/add-row/add-row/add-row.component';
+import { HeaderFactory } from './../classes/header-factory';
 
 @Component({
   selector: 'app-activity',
@@ -41,6 +43,7 @@ export class ActivityComponent implements OnInit {
   isAuthorized: boolean;
   isToEndProd: boolean;
   headerObj: any;
+  servertime: string;
 
   get subTotal() {
     let subTotal = 0;
@@ -67,6 +70,8 @@ export class ActivityComponent implements OnInit {
       private cdr: ChangeDetectorRef,
       private modalService: NgbModal,
       private headerService: HeaderService,
+      private serverTimeService: ServertimeService,
+      private headerFactory: HeaderFactory,
       private userService: UserService) {
     activityService.activities$.subscribe(
       activities => {
@@ -89,12 +94,16 @@ export class ActivityComponent implements OnInit {
     headerService.header$.subscribe(
       data => {
         if (Object.keys(data).length > 0) {
-          this.headerObj = data.header_obj;
+          this.headerObj = this.headerFactory.setHeader(data.header_obj);
       } else {
           this.headerObj = {};
       }
       }
     );
+    serverTimeService.time$.subscribe(
+      res => {
+        this.servertime = res.format();
+      });
   }
 
   ngOnInit() {
@@ -222,7 +231,10 @@ export class ActivityComponent implements OnInit {
   }
 
   addEndProdRow() {
+    console.log('testing header status...');
+    console.log(this.headerObj.STATUS === 1);
     if (this.headerObj.STATUS === 1) {
+      console.log('header status passed');
       this.activityService.addEndProdRow();
     }
   }
@@ -233,4 +245,13 @@ export class ActivityComponent implements OnInit {
     }
   }
 
+  get showEndProdAddButton(): boolean {
+    let res = false;
+    if (this.activities.length) {
+      if (moment(this.servertime).isSameOrBefore(moment(this.activities[0].END_TIME))) {
+        res = (this.activityService.headerObj.STATUS === 1 && this.isAuthorized) ? true : false;
+      }
+    }
+    return res;
+  }
 }
