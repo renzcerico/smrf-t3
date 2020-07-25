@@ -150,7 +150,8 @@ span.content {
 }
 
 .btn-save-container button,
-.btn-save-container select {
+.btn-save-container select,
+#undo_button {
     width: 200px;
     margin: 10px;
 }

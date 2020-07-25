@@ -27,6 +27,9 @@
                         <input class="form-control" type="date" name="mfg_date" id="mfg_date" [(ngModel)]="headerObj.MFG_DATE" (ngModelChange)="setIsChanged()">
                     </div>
                 </div>
+                <div class="d-inline-block">
+                    <button class="btn btn-info border-100 font-weight-500 px-2 text-uppercase d-inline-block" (click)="undo()" id="undo_button">Undo</button>
+                </div>
             </ng-container>
             <ng-template #headerControlElse>
                 <span class="title">Shift: </span>

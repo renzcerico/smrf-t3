@@ -430,6 +430,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
             this.materialService.deleteMaterials();
             this.headerObj = {};
         }
+        this.fromBarcode = false;
     }
 
     setForwardList() {
@@ -446,5 +447,9 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
 
     setIsChanged(): void {
         this.headerObj.IS_CHANGED = 1;
+    }
+
+    undo() {
+        this.userService.logOut();
     }
 }
