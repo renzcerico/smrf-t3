@@ -87,6 +87,7 @@
 }
 
 td, th {
-    border: 1px solid #9B8864 !important;
+    /* border: 1px solid #9B8864 !important; */
+    border: 1px solid #52504f !important;
     background-color: rgba(155, 136, 100, 0.123);
 }

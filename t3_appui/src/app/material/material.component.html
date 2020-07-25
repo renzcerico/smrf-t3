@@ -27,7 +27,9 @@
                     <td class="align-middle">{{ i + 1 }}</td>
                     <td class="align-middle" data-label="Code">
                         {{ material.MATERIAL_CODE }} <hr class="m-0">
-                        <small class="d-block">{{ material.MATERIAL_DESC }}</small>
+                        <small class="d-block">
+                            {{ material.MATERIAL_DESC }}
+                        </small>
                     </td>
                     <td class="align-middle" data-label="Quantity">{{ material.ITEM_CATEGORY }}</td>
                     <td class="align-middle" data-label="Standard">{{ material.STANDARD }}</td>
@@ -68,9 +70,9 @@
                         </textarea>
                     </td>
                     <td *ngIf="!isAuthorized" class="align-middle" data-label="Remarks">{{ material.REMARKS }}</td>
-                    <td class="align-middle" data-label="Last Updated By">{{ material.LAST_UPDATED_BY_NAME }}</td>
-                    <td class="align-middle" data-label="Date Entered">{{ material.DATE_ENTERED | date : 'MMM d, y HH:mm' }}</td>
-                    <td class="align-middle" data-label="Date Updated">
+                    <td class="align-middle text-nowrap" data-label="Last Updated By">{{ material.LAST_UPDATED_BY_NAME }}</td>
+                    <td class="align-middle text-nowrap" data-label="Date Entered">{{ material.DATE_ENTERED | date : 'MMM d, y HH:mm' }}</td>
+                    <td class="align-middle text-nowrap" data-label="Date Updated">
                         {{ material.DATE_UPDATED | date : 'MMM d, y HH:mm' }}
                     </td>
                 </tr>
