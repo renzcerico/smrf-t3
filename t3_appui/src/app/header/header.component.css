@@ -87,12 +87,12 @@ input:read-only {
     color: transparent;
 }
 
-.form-label-group input {
+.form-label-group input, .form-label-group select {
     padding-top: 30px;
     padding-bottom: 10px;
 }
 
-.form-label-group input ~ label {
+.form-label-group label{
     font-size: 13px;
     font-weight: 500 !important;
     color: #777;
@@ -139,13 +139,13 @@ span.content {
     } */
 }
 
-#shift_select{
+#shift_select, #group_number_select{
     background-color: transparent !important;
     border-radius: 0;
     border-top: 0;
     border-left: 0;
     border-right: 0;
-    border-bottom: 1px #9B8864 solid ;
+    /* border-bottom: 1px #9B8864 solid ; */
     font-size: 13px !important;
 }
 

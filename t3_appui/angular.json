@@ -58,6 +58,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "dev": {
+                "fileReplacements": [
+                  {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.dev.ts"
+                  }
+                ]
             }
           }
         },
@@ -66,10 +74,16 @@
           "options": {
             "browserTarget": "mvc:build"
           },
+          "dev": {
+            "browserTarget": "mvc:build:dev"
+          },          
           "configurations": {
             "production": {
               "browserTarget": "mvc:build:production"
-            }
+            },
+            "dev": {
+              "browserTarget": "mvc:build:dev"
+            }            
           }
         },
         "extract-i18n": {

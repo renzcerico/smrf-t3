@@ -59,6 +59,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     socket;
     url: string;
     timer: any;
+    fromBarcode: boolean;
 
     get scheduleTime() {
         let res = '';
@@ -188,6 +189,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
 
     ngOnInit() {
         // this.headerService.getData('163178');
+        this.fromBarcode = false;
         this.barcode();
     }
 

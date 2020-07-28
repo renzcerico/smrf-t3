@@ -188,10 +188,7 @@
         </tbody>
         <tfoot class="text-right px-3">
             <tr>
-                <th *ngIf="isAuthorized; else subtotalUnauthorized" class="px-3" colspan="2">Subtotal</th>
-                <ng-template #subtotalUnauthorized>
-                    <th class="px-3">Subtotal</th>
-                </ng-template>
+                <th class="px-3">Subtotal</th>
                 <th class="px-3">{{ totalMinutes | number: '' }}</th>
                 <td></td>
                 <td></td>
