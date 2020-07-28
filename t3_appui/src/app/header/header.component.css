@@ -73,7 +73,6 @@ input:read-only {
 
 .form-label-group > label {
     z-index: -1;
-    background-color: tomato;
     position: absolute;
     top: -3px;
     left: 0;
