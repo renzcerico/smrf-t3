@@ -89,7 +89,7 @@
             </div>
             <div class="col-12 col-md-3 mt-1">
                 <div class="form-label-group">
-                    <label for="shift">Shift: </label>
+                    <label for="shift_select">Shift: </label>
                     <select class="form-control" name="shift" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
                         <option value="0">Select Shift</option>
                         <option value="dayshift">DS</option>
@@ -157,7 +157,7 @@
             <div class="form-row">
                 <div class="col-12 col-md-3 mt-1">
                     <div class="form-label-group">
-                        <label for="group_number">Group Number: </label>
+                        <label for="group_number_select">Group Number: </label>
                         <select class="form-control" name="group_number" id="group_number_select" [(ngModel)]="headerObj.GROUP_NUMBER" (ngModelChange)="setIsChanged()">
                             <option value="0">Select Group Number</option>
                             <option value="fp-01">FP-01</option>
