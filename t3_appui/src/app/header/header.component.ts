@@ -191,6 +191,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         // this.headerService.getData('163178');
         this.fromBarcode = false;
         this.barcode();
+        this.seeLess();
     }
 
     btnSee() {

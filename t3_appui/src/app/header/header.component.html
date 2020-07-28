@@ -10,33 +10,9 @@
             <span class="content">{{ headerObj.ACTUAL_START | date : 'MM/d/yy HH:mm' }}</span>            
             <span *ngIf="headerObj.STATUS !== 1" class="title">Actual End: </span>
             <span *ngIf="headerObj.STATUS !== 1" class="content">{{ headerObj.ACTUAL_END | date : 'MM/d/yy HH:mm' }}</span>
-            <ng-container *ngIf="isAuthorized; else headerControlElse">
-                <!-- <div class="form-inline  d-inline-block">
-                    <div class="ml-2 form-group">
-                        <label class="title" for="shift">Shift: </label>
-                        <select class="form-control" name="shift" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()" *ngIf="!headerObj.ID">
-                            <option value="dayshift">DS</option>
-                            <option value="nightshift">NS</option>
-                        </select>
-                        <span class="content pl-1" *ngIf="headerObj.ID">{{ headerObj.SHIFT }}</span>                            
-                    </div>
-                </div>
-                <div class="form-inline  d-inline-block">
-                    <div class="ml-2 form-group">
-                        <label class="title" for="mfg_date">MFG date: </label>
-                        <input class="form-control" type="date" name="mfg_date" id="mfg_date" [(ngModel)]="headerObj.MFG_DATE" (ngModelChange)="setIsChanged()">
-                    </div>
-                </div> -->
-                <div class="d-inline-block align-right">
-                    <button class="btn btn-info border-100 font-weight-500 px-2 text-uppercase d-inline-block" (click)="undo()" id="undo_button">Undo</button>
-                </div>
-            </ng-container>
-            <ng-template #headerControlElse>
-                <span class="title">Shift: </span>
-                <span class="content pl-1">{{ headerObj.SHIFT }}</span>                            
-                <span class="title">MFG Date: </span>
-                <span class="content pl-1">{{ headerObj.MFG_DATE }}</span>                             
-            </ng-template>
+            <div class="d-inline-block align-right" *ngIf="isAuthorized">
+                <button class="btn btn-info border-100 font-weight-500 px-2 text-uppercase d-inline-block" (click)="undo()" id="undo_button">Undo</button>
+            </div>
         </div>
         <div class="form-row">           
             <div class="col-12 col-md-3 mt-1">
@@ -155,7 +131,7 @@
         </div>
         <div *ngIf="seeResult == 'See less'">
             <div class="form-row">
-                <div class="col-12 col-md-3 mt-1">
+                <div class="col-12 col-md-3 mt-1" style="z-index: 1049;">
                     <div class="form-label-group">
                         <label for="group_number_select">Group Number: </label>
                         <select class="form-control" name="group_number" id="group_number_select" [(ngModel)]="headerObj.GROUP_NUMBER" (ngModelChange)="setIsChanged()">
