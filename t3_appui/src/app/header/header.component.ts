@@ -3,7 +3,7 @@ import { ServertimeService } from './../services/servertime.service';
 import { HeaderFactory } from './../classes/header-factory';
 import { ManpowerService } from './../services/manpower.service';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewChild, AfterContentChecked, AfterViewInit} from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentChecked, AfterViewInit, ViewChildren, QueryList, ElementRef} from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import ScannerDetector from 'js-scanner-detection';
@@ -43,6 +43,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     manPowercollection = [];
     @ViewChild(ActivityComponent, {static: true}) actComponent;
     @ViewChild(MaterialComponent, {static: true}) matComponent;
+    @ViewChildren('header_input') headerInput !: QueryList<ElementRef>;
     actTotal = 0;
     matArr: any;
     actArr: any = [];
@@ -454,5 +455,23 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
 
     undo() {
         this.userService.logOut();
+    }
+
+    handleEnter(event) {
+        const elArr = this.headerInput.toArray();
+
+        const active = elArr.findIndex(index => {
+          return (index.nativeElement.parentElement === event.target.parentElement);
+        });
+
+        if (event.target.attributes.required && !event.target.value) {
+          return;
+        }
+
+        if (active < elArr.length - 1) {
+          elArr[active + 1].nativeElement.focus();
+        } else {
+          event.target.blur();
+        }
     }
 }
