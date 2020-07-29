@@ -179,6 +179,8 @@ export class ActivityService {
                 this.setFillers();
               }
             }
+          } else {
+            this.setFillers();
           }
         }
       }

@@ -42,7 +42,7 @@
                 <tr>
                     <th colspan="2">time</th>
                     <th class="align-middle" rowspan="2">std output</th>
-                    <th class="align-middle" rowspan="2">quantity</th>
+                    <th class="align-middle" colspan="3">quantity</th>
                     <th class="align-middle" rowspan="2">downtime</th>
                     <th class="align-middle" rowspan="2">remarks</th>
                     <th class="align-middle" rowspan="2">last updated by</th>
@@ -51,9 +51,9 @@
                 <tr>
                     <th>start</th>
                     <th>end</th>
-                    <!-- <th>packed</th>
+                    <th>packed</th>
                     <th>adjustment</th>
-                    <th>total</th> -->
+                    <th>total</th>
                     <th>entered</th>
                     <th>updated</th>
                 </tr>
@@ -65,13 +65,13 @@
                     <td class="align-middle" data-label="STD Output">{{headerObj.STD_OUTPUT}}</td>
                     <td class="align-middle" data-label="Packed">
                         <!-- {{ activity.TOTAL_BOXES | number: '' }} -->
-                        {{ activity.TOTAL | number: '' }}
+                        {{ activity.PACKED_QTY | number: '' }}
                     </td>
-                    <!-- <td class="align-middle" data-label="Adjustment">
+                    <td class="align-middle" data-label="Adjustment">
                         {{ activity.ADJ_QTY | number: '' }}
                     </td>
-                    <td class="align-middle" data-label="Total">{{ activity.TOTAL }}</td> -->
-                    <td class="align-middle" data-label="Downtime" (dblclick)="openDowntimeModal($event, i)">
+                    <td class="align-middle text-right" data-label="Total">{{ activity.TOTAL | number: '' }}</td>
+                    <td class="align-middle text-right" data-label="Downtime" (dblclick)="openDowntimeModal($event, i)">
                         {{ activity.TOTAL_DOWNTIME }}
                     </td>
                     <td *ngIf="isAuthorized && (i === 0 || activeUser.USER_TYPE > 1)" class="align-middle td-editable" data-label="Remarks">
@@ -104,7 +104,7 @@
             <ng-template #elseBlock>
                 <tbody>
                     <tr>
-                        <td colspan="9">
+                        <td colspan="12">
                             No Records Found
                         </td>
                     </tr>
@@ -112,12 +112,15 @@
             </ng-template>            
             <tfoot *ngIf="activities.length > 0">
                 <tr class="text-uppercase">
-                    <td colspan="3" class="text-right">Sub total:</td>
+                    <td colspan="2" class="text-right">Sub total:</td>
+                    <td class="text-right">{{ totalStdOutput | number: '' }}</td>
+                    <td class="text-right">{{ packedSubTotal | number: '' }}</td>
+                    <td class="text-right">{{ adjSubTotal | number: '' }}</td>
                     <td class="text-right">{{ subTotal | number: '' }}</td>
                     <td class="text-right">{{ downtimeSubTotal | number: '' }}</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="text-right">Efficiency:</td>
+                    <td class="text-right">{{efficiency | number: '2.2-2' }}%</td>
                     <td></td>
                 </tr>
             </tfoot>

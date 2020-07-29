@@ -191,6 +191,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     ngOnInit() {
         // this.headerService.getData('163178');
         this.fromBarcode = false;
+        this.receiverID = 0;
         this.barcode();
         this.seeLess();
     }
@@ -491,9 +492,5 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         } else {
           event.target.blur();
         }
-    }
-
-    dateChange() {
-        console.log(this.headerObj.isScheduleDateValid());
     }
 }
