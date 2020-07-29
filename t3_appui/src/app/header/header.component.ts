@@ -249,14 +249,16 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     }
 
     handleBarcodeChange(barcode) {
-        if (!this.fromBarcode) {
-            if (this.activeUser) {
-                this.headerService.getData(barcode);
+        if (barcode !== '') {
+            if (!this.fromBarcode) {
+                if (this.activeUser) {
+                    this.headerService.getData(barcode);
+                } else {
+                    this.modalService.open(LoginComponent);
+                }
             } else {
-                this.modalService.open(LoginComponent);
+                this.fromBarcode = false;
             }
-        } else {
-            this.fromBarcode = false;
         }
     }
 
@@ -472,13 +474,36 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         this.headerObj.IS_CHANGED = 1;
     }
 
-    undo() {
-        this.userService.logOut();
+    async undo() {
+        let isConfirmed = false;
+        await Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will erase all unsaved data',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                await Swal.fire({
+                    title: 'Are you really sure?',
+                    text: 'This will erase all unsaved data',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then(res1 => {
+                    isConfirmed = res1.isConfirmed;
+                });
+            }
+        });
+        if (isConfirmed) {
+            this.userService.logOut();
+        }
     }
 
     handleEnter(event) {
         const elArr = this.headerInput.toArray();
-
         const active = elArr.findIndex(index => {
           return (index.nativeElement.parentElement === event.target.parentElement);
         });
@@ -492,5 +517,10 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         } else {
           event.target.blur();
         }
+        event.preventDefault();
+    }
+
+    focus(el) {
+        console.log('focused: ', el);
     }
 }

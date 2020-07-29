@@ -108,6 +108,9 @@ export class HeaderService {
         allowOutsideClick: false,
         onOpen: () => {
           Swal.showLoading();
+        },
+        onAfterClose: () => {
+          document.getElementById('schedule_date').focus();
         }
       });
     }
@@ -151,8 +154,12 @@ export class HeaderService {
                 // this.activityService.setActivities([]);
                 // this.getDataRes = res;
             }
-        );
+        ).catch(err => {
+          Swal.close();
+        });
     }
+
+    document.getElementById('schedule_date').focus();
   }
 
   getUserForwardList() {
