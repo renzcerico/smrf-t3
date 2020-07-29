@@ -135,6 +135,7 @@ const changePassword = async (req = {}, res, next = null) => {
     try {
         let data = req.body;
         delete data.confirm_password;
+        console.log('\x1b[32m','SESSION: ', req.session, '\x1b[0m');
         data.user_id = req.session.t3_user.ID;
         const request = await t3.changePassword(data)
         .catch(error => { console.log('caught', error.message); });

@@ -154,7 +154,7 @@ export class ActivityService {
     if (diff === 0 && !this.activities.length) {
       diff = 1;
     }
-    let filler;
+    let filler: Activity;
     for (let index = 0; index < diff; index++) {
       this.logTime();
       filler = this.activityFactory.createActivity({
@@ -171,7 +171,15 @@ export class ActivityService {
     setInterval(() => {
       if (Object.entries(this.headerObj).length > 0) {
         if (this.headerObj.STATUS === 1) {
-          this.setFillers();
+          if (this.activities.length > 0) {
+            if (this.activities[0].IS_CHANGED) {
+              this.setFillers();
+            } else {
+              if (this.activities[0].IS_NEW) {
+                this.setFillers();
+              }
+            }
+          }
         }
       }
     }, 1000);

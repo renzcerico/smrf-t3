@@ -260,6 +260,24 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     }
 
     async header(showConfirmMessage: boolean = true) {
+        if (!this.headerObj.isShiftValid()) {
+            Swal.fire({
+                title: 'Warning',
+                text: 'Invalid Shift',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+              });
+            return;
+        }
+        if (!this.headerObj.isScheduleDateValid()) {
+            Swal.fire({
+                title: 'Warning',
+                text: 'Invalid Schedule Date',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+              });
+            return;
+        }
         if (showConfirmMessage) {
             let isConfirmed: boolean;
             await Swal.fire({
@@ -473,5 +491,9 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         } else {
           event.target.blur();
         }
+    }
+
+    dateChange() {
+        console.log(this.headerObj.isScheduleDateValid());
     }
 }

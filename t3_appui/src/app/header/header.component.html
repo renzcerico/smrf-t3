@@ -41,7 +41,7 @@
             </div>
             <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
-                    <input class="form-control" #header_input type="date" name="schedule_date" id="schedule_date" [(ngModel)]="headerObj.SCHEDULE_DATE" (ngModelChange)="setIsChanged()">
+                    <input class="form-control" #header_input type="date" [disabled]="headerObj.IS_NEW ? null : true" name="schedule_date" id="schedule_date" [(ngModel)]="headerObj.SCHEDULE_DATE_START" (ngModelChange)="setIsChanged()">
                     <label for="schedule_date">Schedule Date: </label>
                 </div>
             </div>
@@ -66,8 +66,7 @@
             <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <label for="shift_select">Shift: </label>
-                    <select class="form-control" #header_input name="shift" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
-                        <option value="0">Select Shift</option>
+                    <select class="form-control" #header_input name="shift" [disabled]="headerObj.IS_NEW ? null : true" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
                         <option value="dayshift">DS</option>
                         <option value="nightshift">NS</option>
                     </select>
@@ -85,12 +84,12 @@
                     <label for="internal_code">Internal Code</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-3">                
+            <!-- <div class="col-12 col-md-3 mt-3">                
                 <div class="form-label-group">
                     <input readonly name="std_output" type="text" id="std_output" class="form-control" [ngModel]="headerObj.STD_OUTPUT" placeholder="STD Output" required>
                     <label for="std_output">STD Output</label>
                 </div>
-            </div>                                                                   
+            </div>                                                                    -->
             <!-- <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <input name="po_number" type="text" id="po_number" class="form-control" [ngModel]="headerObj.PO_NUMBER" placeholder="#" required>
@@ -134,8 +133,8 @@
                 <div class="col-12 col-md-3 mt-3" style="z-index: 1049;">
                     <div class="form-label-group">
                         <label for="group_number_select">Group Number: </label>
-                        <select class="form-control" #header_input name="group_number" id="group_number_select" [(ngModel)]="headerObj.GROUP_NUMBER" (ngModelChange)="setIsChanged()">
-                            <option value="0">Select Group Number</option>
+                        <select class="form-control" #header_input name="group_number" id="group_number_select" [(ngModel)]="headerObj.GRP_NUM" (ngModelChange)="setIsChanged()">
+                            <option value="0" selected>Select Group Number</option>
                             <option value="fp-01">FP-01</option>
                             <option value="fp-02">FP-02</option>
                             <option value="fp-03">FP-03</option>
@@ -152,12 +151,12 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-12 col-md-3 mt-3">
+                <!-- <div class="col-12 col-md-3 mt-3">
                     <div class="form-label-group">
                         <input readonly name="order_qty" type="text" id="order_qty" class="form-control" [ngModel]="headerObj.ORDER_QUANTITY | number : ''" placeholder="#" required>
                         <label for="order_qty">Order Qty</label>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-12 col-md-6 mt-3" style="z-index: 1049;" (mouseover)="handleProdMouseOver()" (mouseout)="prodHover = 0">                
                     <div class="form-label-group h-100">
                         <input *ngIf="prodHover === 0" readonly name="product_desc" type="text" id="product_desc" class="form-control" [ngModel]="headerObj.PRODUCT_DESCRIPTION" placeholder="Description" required>
