@@ -123,4 +123,13 @@ router.route('/users/:id')
 router.route('/users/:id')
   .post(user.update);
 
+router.route('/request/delete')
+  .post(request.deleteRequest);
+
+router.route('/password')
+  .post(user.changePassword);
+
+router.route('/verify-password')
+  .post(user.verifyCurrentPassword);
+
 module.exports = router;

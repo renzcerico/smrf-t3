@@ -1,0 +1,16 @@
+<form #profileForm="ngForm">
+    <h1 mat-dialog-title>Profile</h1>
+    <div mat-dialog-content style="width: 500px;" class="text-center">
+        <img src="/assets/img/avatar.png" width="100px" id="avatar" alt="avatar">
+        <div class="profile-content">
+            <h5>{{ profile.name }}</h5>
+            <p class="text-lowercase">{{ profile.username }}</p>
+            <p class="text-uppercase">{{ profile.userLevel }}</p>
+            <p class="text-uppercase">{{ profile.department }}</p>
+        </div>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Close</button>
+        <!-- <button mat-raised-button color="primary">Update</button> -->
+    </div>
+</form>

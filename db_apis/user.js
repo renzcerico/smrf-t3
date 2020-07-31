@@ -64,7 +64,9 @@ const getByID = async (id) => {
                     middle_name,
                     username,
                     user_level,
-                    TO_NUMBER(department) department
+                    TO_NUMBER(department) department,
+                    (SELECT name FROM ${ process.env.SCHEMA }.TBL_DEPARTMENT
+                         WHERE ID = department) as department_name
                  FROM ${ process.env.SCHEMA }.TBL_USER
                  WHERE ID = :id`;
 
@@ -96,3 +98,29 @@ const update = async (data) => {
 };
 
 module.exports.update = update;
+
+const changePassword = async (data) => {
+    const sql = `UPDATE ${ process.env.SCHEMA }.TBL_USER 
+                    SET password = :password
+                WHERE ID = :id`;
+
+    const user = data;
+    const result = await database.simpleExecute(sql, user);
+
+    return result.rowsAffected;
+};
+
+module.exports.changePassword = changePassword;
+
+const verifyCurrentPassword = async (data) => {
+    const sql = `SELECT count(id) as count FROM ${ process.env.SCHEMA }.TBL_USER 
+                 WHERE password = :password AND ID = :id`;
+
+    const user = data;
+    const result = await database.simpleExecute(sql, user);
+
+    return result.rows;
+};
+
+module.exports.verifyCurrentPassword = verifyCurrentPassword;
+

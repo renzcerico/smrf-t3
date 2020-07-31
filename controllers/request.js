@@ -299,3 +299,17 @@ const getImage = async (req, res, next) => {
 }
 
 module.exports.getImage = getImage;
+
+const deleteRequest = async (req, res, next) => {
+    try {
+        const id = req.body.id;
+
+        const rows = await request.deleteRequest(id);
+
+        res.status(200).json(rows);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.deleteRequest = deleteRequest;

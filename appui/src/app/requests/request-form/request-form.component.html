@@ -75,6 +75,7 @@
                        [min]="minDate"
                        id="reqDateRequired" 
                        name="reqDateRequired" 
+                       (focus)="myDatepicker.open();"
                        [(ngModel)]="reqDateRequired" 
                        autocomplete="off" 
                        (dateInput)="dateRequiredInput($event.value);"

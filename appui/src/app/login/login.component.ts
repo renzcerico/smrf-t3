@@ -3,6 +3,7 @@ import { Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserService } from './../user.service';
+import { isNull } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
   apiResponse;
   response;
   invalidLogin = true;
+  error = 0;
 
   constructor(private http: HttpClient,
               public router: Router,
@@ -29,12 +31,33 @@ export class LoginComponent implements OnInit {
     this.currentUser();
   }
 
+  requiredFields() {
+    const username = this.loginUsername ? this.loginUsername.trim() : '';
+    const password = this.loginPassword ? this.loginPassword.trim() : '';
+
+    const required = [username, password];
+
+    required.forEach((value) => {
+        if (!value) {
+            this.error = 1;
+        }
+    });
+  }
+
   login() {
     const json = {
-      username: this.loginUsername,
-      password: this.loginPassword
-  };
-    this.userService.progressMode = 'indeterminate';
+        username: this.loginUsername,
+        password: this.loginPassword
+    };
+
+    // this.userService.progressMode = 'indeterminate';
+
+    // this.requiredFields();
+
+    // if (this.error > 0) {
+    //   this.userService.progressMode = 'determinate';
+    //   return;
+    // }
 
     // const httpOptions = {
     //   headers: new HttpHeaders({

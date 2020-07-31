@@ -6,7 +6,7 @@ const post = async (req, res, next) => {
         const data = {
             last_name: transform(req.body.last_name),
             first_name: transform(req.body.first_name),
-            middle_name: transform(req.body.middle_name),
+            middle_name: req.body.middle_name ? transform(req.body.middle_name) : '',
             username: req.body.username.replace(/\s/g, ''),
             user_level: req.body.user_level,
             department: req.body.department
@@ -25,8 +25,11 @@ module.exports.post = post;
 const transform = (string) => {
     const arr = string.split('');
     arr[0] = arr[0].toUpperCase();
+
     return arr.join('');
-}
+};
+
+module.exports.transform = transform;
 
 const getAllUser = async (req, res, next) => {
     try {
@@ -85,7 +88,7 @@ const update = async (req, res, next) => {
             id,
             last_name: transform(req.body.last_name),
             first_name: transform(req.body.first_name),
-            middle_name: transform(req.body.middle_name),
+            middle_name: req.body.middle_name ? transform(req.body.middle_name) : '',
             username: req.body.username.replace(/\s/g, ''),
             user_level: req.body.user_level,
             department: req.body.department
@@ -100,3 +103,42 @@ const update = async (req, res, next) => {
 };
 
 module.exports.update = update;
+
+const changePassword = async (req, res, next) => {
+    try {
+        const id = parseInt(req.body.userID);
+        const password = req.body.password.trim();
+
+        const data = {
+            id,
+            password
+        };
+
+        const result = await user.changePassword(data);
+
+        res.status(200).json(result);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.changePassword = changePassword;
+
+const verifyCurrentPassword = async (req, res, next) => {
+    try {
+        const id = parseInt(req.body.id);
+        const password = req.body.password.trim();
+        const data = {
+            id,
+            password
+        };
+        
+        const result = await user.verifyCurrentPassword(data);
+
+        res.status(200).json(result);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.verifyCurrentPassword = verifyCurrentPassword;

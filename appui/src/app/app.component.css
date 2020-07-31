@@ -46,10 +46,15 @@ mat-drawer {
     position: fixed;
     padding-top: 68px;
     height: 100%;
+    box-shadow: 5px 10px 5px #ded9d6;
 }
 
 mat-drawer-content {
     padding-top: 5rem !important;
+}
+
+.list-group-item {
+    border-right: 0 !important;
 }
 
 /* .footer {

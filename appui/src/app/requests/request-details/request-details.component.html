@@ -132,7 +132,8 @@
                         <div class="form-group row mt-3" *ngIf="reqStatus === 0 && (userLevel === 'requestor' || userLevel === 'chief')">
                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
                             <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                                <button mat-raised-button color="warn" (click)="requestUpdate(false, true)" class="w-100 text-uppercase">Delete</button>
+                                <button mat-raised-button color="warn" (click)="requestDelete(controlNumber)" class="w-100 text-uppercase">Delete</button>
+                                <!-- <button mat-raised-button color="warn" (click)="requestUpdate(false, true)" class="w-100 text-uppercase">Delete</button> -->
                             </div>
                             <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
                                 <button mat-raised-button color="primary" (click)="requestUpdate(true, true)" class="w-100 text-uppercase">Update</button>
