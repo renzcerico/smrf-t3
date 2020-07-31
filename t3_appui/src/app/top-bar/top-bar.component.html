@@ -19,9 +19,6 @@
                 <li class="nav-item"><a href="javascript:void(0)" class="nav-link text-success small bold" (click)="openHeaderModal(4)">CLOSED<span class="ml-1 badge badge-danger" *ngIf="headerCount[3].COUNT">{{headerCount[3].COUNT | counterPipe}}</span></a></li>
             </ul> -->
             <ul class="navbar-nav ml-auto mr-3">
-                <li class="nav-item active">
-                    <a class="nav-link font-weight-500 small" href="javascript:void(0)">DASHBOARD</a>
-                </li>
                 <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link small" (click)="openHeaderModal(1, headerCount[0].WIP)">
                     WIP
@@ -48,7 +45,7 @@
             </ul>
             <div>
                 <div id="user_profile" *ngIf="userProfile">
-                    <div display="dynamic" ngbDropdown class="d-inline-block">
+                    <div display="dynamic" ngbDropdown class="d-inline-block" style="z-index: 999;">
                         <button class="btn btn-outline-none text-green" id="user_profile_dropdown" ngbDropdownToggle>
                             <fa-icon [icon]="faUser"></fa-icon>
                             {{ username }}
