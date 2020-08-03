@@ -3,7 +3,7 @@ import { ServertimeService } from './../services/servertime.service';
 import { HeaderFactory } from './../classes/header-factory';
 import { ManpowerService } from './../services/manpower.service';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewChild, AfterContentChecked, AfterViewInit} from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentChecked, AfterViewInit, ViewChildren, QueryList, ElementRef} from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import ScannerDetector from 'js-scanner-detection';
@@ -43,6 +43,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     manPowercollection = [];
     @ViewChild(ActivityComponent, {static: true}) actComponent;
     @ViewChild(MaterialComponent, {static: true}) matComponent;
+    @ViewChildren('header_input') headerInput !: QueryList<ElementRef>;
     actTotal = 0;
     matArr: any;
     actArr: any = [];
@@ -190,6 +191,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     ngOnInit() {
         // this.headerService.getData('163178');
         this.fromBarcode = false;
+        this.receiverID = 0;
         this.barcode();
         this.seeLess();
     }
@@ -247,18 +249,38 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     }
 
     handleBarcodeChange(barcode) {
-        if (!this.fromBarcode) {
-            if (this.activeUser) {
-                this.headerService.getData(barcode);
+        if (barcode !== '') {
+            if (!this.fromBarcode) {
+                if (this.activeUser) {
+                    this.headerService.getData(barcode);
+                } else {
+                    this.modalService.open(LoginComponent);
+                }
             } else {
-                this.modalService.open(LoginComponent);
+                this.fromBarcode = false;
             }
-        } else {
-            this.fromBarcode = false;
         }
     }
 
     async header(showConfirmMessage: boolean = true) {
+        if (!this.headerObj.isShiftValid()) {
+            Swal.fire({
+                title: 'Warning',
+                text: 'Invalid Shift',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+              });
+            return;
+        }
+        if (!this.headerObj.isScheduleDateValid()) {
+            Swal.fire({
+                title: 'Warning',
+                text: 'Invalid Schedule Date',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+              });
+            return;
+        }
         if (showConfirmMessage) {
             let isConfirmed: boolean;
             await Swal.fire({
@@ -452,7 +474,53 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         this.headerObj.IS_CHANGED = 1;
     }
 
-    undo() {
-        this.userService.logOut();
+    async undo() {
+        let isConfirmed = false;
+        await Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will erase all unsaved data',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                await Swal.fire({
+                    title: 'Are you really sure?',
+                    text: 'This will erase all unsaved data',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then(res1 => {
+                    isConfirmed = res1.isConfirmed;
+                });
+            }
+        });
+        if (isConfirmed) {
+            this.userService.logOut();
+        }
+    }
+
+    handleEnter(event) {
+        const elArr = this.headerInput.toArray();
+        const active = elArr.findIndex(index => {
+          return (index.nativeElement.parentElement === event.target.parentElement);
+        });
+
+        if (event.target.attributes.required && !event.target.value) {
+          return;
+        }
+
+        if (active < elArr.length - 1) {
+          elArr[active + 1].nativeElement.focus();
+        } else {
+          event.target.blur();
+        }
+        event.preventDefault();
+    }
+
+    focus(el) {
+        console.log('focused: ', el);
     }
 }

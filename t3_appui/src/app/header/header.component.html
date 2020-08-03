@@ -1,4 +1,4 @@
-<div class="container-fluid mt-2" id="header_production_order">
+<div class="container-fluid mt-2 sticky-top pb-2 bg-white" id="header_production_order">
     <form #headerForm>
         <div *ngIf="currentStatus">
             <span [ngClass]="currentStatus"></span>
@@ -11,118 +11,117 @@
             <span *ngIf="headerObj.STATUS !== 1" class="title">Actual End: </span>
             <span *ngIf="headerObj.STATUS !== 1" class="content">{{ headerObj.ACTUAL_END | date : 'MM/d/yy HH:mm' }}</span>
             <div class="d-inline-block align-right" *ngIf="isAuthorized">
-                <button class="btn btn-info border-100 font-weight-500 px-2 text-uppercase d-inline-block" (click)="undo()" id="undo_button">Undo</button>
+                <button class="btn btn-info border-100 font-weight-500 px-2 text-uppercase d-inline-block" (click)="undo()" type="button" id="undo_button">Undo</button>
             </div>
         </div>
         <div class="form-row">           
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-2">
                 <div class="form-label-group">
-                    <input name="barcode" type="text" id="barcode" class="form-control" #barcode [ngModel]="headerObj.BARCODE" name="barcode" placeholder="#" required (change)="handleBarcodeChange(barcode.value)" autofocus>
+                    <input name="barcode" type="text" (focus)="focus('barcode')" id="barcode" class="form-control" #barcode [ngModel]="headerObj.BARCODE" name="barcode" placeholder="#" (change)="handleBarcodeChange(barcode.value)" tabindex="1">
                     <label for="barcode">Barcode Number</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-2">
                 <div class="form-label-group">
                     <input readonly name="customer" type="text" id="customer" class="form-control" [ngModel]="headerObj.CUSTOMER" placeholder="Name" required>
                     <label for="customer">Customer</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-2">
                 <div class="form-label-group">
                     <input name="po_number" type="text" id="po_number" class="form-control" [ngModel]="headerObj.PO_NUMBER" placeholder="#" required>
                     <label for="po_number">PO Number</label>
                 </div>                                                                  
             </div>
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-2">
                 <div class="form-label-group">
                     <input readonly name="order_qty" type="text" id="order_qty" class="form-control" [ngModel]="headerObj.ORDER_QUANTITY | number : ''" placeholder="#" required>
                     <label for="order_qty">Order Qty</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
-                    <input class="form-control" type="date" name="schedule_date" id="schedule_date" [(ngModel)]="headerObj.SCHEDULE_DATE" (ngModelChange)="setIsChanged()">
-                    <label for="schedule_date">Schedule Date: </label>
+                    <input class="form-control" (focus)="focus('schedule_date')" (keyup.enter)="handleEnter($event)" #header_input type="date" tabindex="2" [disabled]="headerObj.IS_NEW ? null : true" name="schedule_date" id="schedule_date" [(ngModel)]="headerObj.SCHEDULE_DATE_START" (ngModelChange)="setIsChanged()" autofocus>
+                    <label for="schedule_date" id="test">Schedule Date: </label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">                
+            <div class="col-12 col-md-3 mt-3">                
                 <div class="form-label-group">
                     <input readonly name="customer_code" type="text" id="customer_code" class="form-control" [ngModel]="headerObj.CUSTOMER_CODE" placeholder="Code" required>
                     <label for="customer_code">Customer Code</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <input readonly name="old_code" type="text" id="old_code" class="form-control" [ngModel]="headerObj.OLD_CODE" placeholder="Code" required>
                     <label for="old_code">Old Code</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <input readonly name="shipping_date" type="text" id="shipping_date" class="form-control" [ngModel]="headerObj.SHIPPING_DATE | date : 'MM/d/yy'" placeholder="MM/DD/YYYY" required>
                     <label for="shipping_date">Shipping Date</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <label for="shift_select">Shift: </label>
-                    <select class="form-control" name="shift" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
-                        <option value="0">Select Shift</option>
+                    <select class="form-control" tabindex="3" (keyup.enter)="handleEnter($event)" (keydown.enter)="$event.preventDefault()" #header_input name="shift" [disabled]="headerObj.IS_NEW ? null : true" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
                         <option value="dayshift">DS</option>
                         <option value="nightshift">NS</option>
                     </select>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">                
+            <div class="col-12 col-md-3 mt-3">                
                 <div class="form-label-group">
                     <input readonly name="customer_specs" type="text" id="customer_specs" class="form-control" [ngModel]="headerObj.CUSTOMER_SPEC" placeholder="Specification" required>
                     <label for="customer_specs">Customer Specification</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">                
+            <div class="col-12 col-md-3 mt-3">                
                 <div class="form-label-group">
                     <input readonly name="internal_code" type="text" id="internal_code" class="form-control" [ngModel]="headerObj.INTERNAL_CODE" placeholder="Code" required>
                     <label for="internal_code">Internal Code</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">                
+            <!-- <div class="col-12 col-md-3 mt-3">                
                 <div class="form-label-group">
                     <input readonly name="std_output" type="text" id="std_output" class="form-control" [ngModel]="headerObj.STD_OUTPUT" placeholder="STD Output" required>
                     <label for="std_output">STD Output</label>
                 </div>
-            </div>                                                                   
-            <!-- <div class="col-12 col-md-3 mt-1">
+            </div>                                                                    -->
+            <!-- <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <input name="po_number" type="text" id="po_number" class="form-control" [ngModel]="headerObj.PO_NUMBER" placeholder="#" required>
                     <label for="po_number">PO Number</label>
                 </div>                                                                  
             </div>   
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <input readonly name="shipping_date" type="text" id="shipping_date" class="form-control" [ngModel]="headerObj.SHIPPING_DATE | date : 'MM/d/yy'" placeholder="MM/DD/YYYY" required>
                     <label for="shipping_date">Shipping Date</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <input readonly name="order_qty" type="text" id="order_qty" class="form-control" [ngModel]="headerObj.ORDER_QUANTITY | number : ''" placeholder="#" required>
                     <label for="order_qty">Order Qty</label>
                 </div>
             </div>
             
-            <div class="col-12 col-md-3 mt-1">
+            <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
                     <input readonly name="customer" type="text" id="customer" class="form-control" [ngModel]="headerObj.CUSTOMER" placeholder="Name" required>
                     <label for="customer">Customer</label>
                 </div>
             </div>
-            <div class="col-12 col-md-3 mt-1">                
+            <div class="col-12 col-md-3 mt-3">                
                 <div class="form-label-group">
                     <input readonly name="customer_code" type="text" id="customer_code" class="form-control" [ngModel]="headerObj.CUSTOMER_CODE" placeholder="Code" required>
                     <label for="customer_code">Customer Code</label>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mt-1">                
+            <div class="col-12 col-md-6 mt-3">                
                 <div class="form-label-group">
                     <input readonly name="customer_specs" type="text" id="customer_specs" class="form-control" [ngModel]="headerObj.CUSTOMER_SPEC" placeholder="Specification" required>
                     <label for="customer_specs">Customer Specification</label>
@@ -131,11 +130,11 @@
         </div>
         <div *ngIf="seeResult == 'See less'">
             <div class="form-row">
-                <div class="col-12 col-md-3 mt-1" style="z-index: 1049;">
+                <div class="col-12 col-md-3 mt-3" style="z-index: 1049;">
                     <div class="form-label-group">
                         <label for="group_number_select">Group Number: </label>
-                        <select class="form-control" name="group_number" id="group_number_select" [(ngModel)]="headerObj.GROUP_NUMBER" (ngModelChange)="setIsChanged()">
-                            <option value="0">Select Group Number</option>
+                        <select class="form-control" (keyup.enter)="handleEnter($event)" (keydown.enter)="$event.preventDefault()" #header_input tabindex="4" name="group_number" id="group_number_select" [(ngModel)]="headerObj.GRP_NUM" (ngModelChange)="setIsChanged()">
+                            <option value="0" selected>Select Group Number</option>
                             <option value="fp-01">FP-01</option>
                             <option value="fp-02">FP-02</option>
                             <option value="fp-03">FP-03</option>
@@ -152,20 +151,20 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-12 col-md-3 mt-1">
+                <!-- <div class="col-12 col-md-3 mt-3">
                     <div class="form-label-group">
                         <input readonly name="order_qty" type="text" id="order_qty" class="form-control" [ngModel]="headerObj.ORDER_QUANTITY | number : ''" placeholder="#" required>
                         <label for="order_qty">Order Qty</label>
                     </div>
-                </div>
-                <div class="col-12 col-md-6 mt-1" style="z-index: 1049;" (mouseover)="handleProdMouseOver()" (mouseout)="prodHover = 0">                
+                </div> -->
+                <div class="col-12 col-md-6 mt-3" style="z-index: 1049;" (mouseover)="handleProdMouseOver()" (mouseout)="prodHover = 0">                
                     <div class="form-label-group h-100">
                         <input *ngIf="prodHover === 0" readonly name="product_desc" type="text" id="product_desc" class="form-control" [ngModel]="headerObj.PRODUCT_DESCRIPTION" placeholder="Description" required>
                         <span *ngIf="prodHover === 1" id="prod_span" readonly>{{ headerObj.PRODUCT_DESCRIPTION || 'Description' }}</span>
                         <label for="product_desc">Product Description</label>
                     </div>
                 </div>                                         
-                <!-- <div class="col-12 col-md-3 mt-1">
+                <!-- <div class="col-12 col-md-3 mt-3">
                     <div class="form-label-group">
                         <label for="shift">Shift: </label>
                         <select class="form-control" name="shift" id="shift_select" [(ngModel)]="headerObj.SHIFT" (ngModelChange)="setIsChanged()">
@@ -175,25 +174,25 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-12 col-md-3 mt-1">                
+                <div class="col-12 col-md-3 mt-3">                
                     <div class="form-label-group">
                         <input readonly name="customer_specs" type="text" id="customer_specs" class="form-control" [ngModel]="headerObj.CUSTOMER_SPEC" placeholder="Specification" required>
                         <label for="customer_specs">Customer Specification</label>
                     </div>
                 </div>                                 -->
-                <!-- <div class="col-12 col-md-3 mt-1">
+                <!-- <div class="col-12 col-md-3 mt-3">
                     <div class="form-label-group">
                         <input readonly name="old_code" type="text" id="old_code" class="form-control" [ngModel]="headerObj.OLD_CODE" placeholder="Code" required>
                         <label for="old_code">Old Code</label>
                     </div>
                 </div>
-                <div class="col-12 col-md-3 mt-1">                
+                <div class="col-12 col-md-3 mt-3">                
                     <div class="form-label-group">
                         <input readonly name="internal_code" type="text" id="internal_code" class="form-control" [ngModel]="headerObj.INTERNAL_CODE" placeholder="Code" required>
                         <label for="internal_code">Internal Code</label>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 mt-1" style="z-index: 1049;" (mouseover)="handleProdMouseOver()" (mouseout)="prodHover = 0">                
+                <div class="col-12 col-md-6 mt-3" style="z-index: 1049;" (mouseover)="handleProdMouseOver()" (mouseout)="prodHover = 0">                
                     <div class="form-label-group h-100">
                         <input *ngIf="prodHover === 0" readonly name="product_desc" type="text" id="product_desc" class="form-control" [ngModel]="headerObj.PRODUCT_DESCRIPTION" placeholder="Description" required>
                         <span *ngIf="prodHover === 1" id="prod_span" readonly>{{ headerObj.PRODUCT_DESCRIPTION || 'Description' }}</span>
@@ -205,7 +204,7 @@
     </form>
 </div>
 
-<div class="d-none w-100" id="container_see_more">
+<div class="d-none w-100" style="z-index: 1;" id="container_see_more">
     <div id="blur-container" class="blurred-bg p-3"></div>
     <button class="btn btn-light text-muted border-radius-0 font-weight-500 btn-sm form-control" 
         id="btn_see_more"

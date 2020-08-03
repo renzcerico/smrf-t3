@@ -66,7 +66,7 @@ export class ApiService {
     }
 
     changePassword(data): Observable<any> {
-        return this.http.post(this.url + '/t3api/change-password', data);
+        return this.http.post(this.url + '/t3api/change-password', data, this.setHeaders());
     }
 
     getManpowerList(): Observable<any> {

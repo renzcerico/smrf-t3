@@ -30,6 +30,10 @@ export default class Header {
     MFG_DATE: string;
     servertime: any;
     shifts: Array<any> = [];
+    GRP_NUM: string;
+    STD_OUTPUT: number;
+    dayshift = 'dayshift';
+    nightshift = 'nightshift';
 
     constructor(jsonObj, private servertimeService: ServertimeService) {
         servertimeService.time$.subscribe(
@@ -37,25 +41,34 @@ export default class Header {
                 this.servertime = moment(datetime).format('DD-MMM-YYYY HH:mm:ss');
             }
         );
-        const dayshift = 'dayshift';
-        const nightshift = 'nightshift';
-        const dateString = moment(this.servertime).format('MM/DD/YYYY');
-
-        this.shifts[dayshift] = {
-          first_hour: moment( dateString + ' 08:00', 'MM/DD/YYYY HH:mm'),
-          breaktime_start: moment( dateString + ' 12:00', 'MM/DD/YYYY HH:mm'),
-          breaktime_end: moment( dateString + ' 13:00', 'MM/DD/YYYY HH:mm')
-        };
-
-        this.shifts[nightshift] = {
-          first_hour: moment(dateString + ' 19:00', 'MM/DD/YYYY HH:mm'),
-          breaktime_start: moment(dateString + ' 00:00', 'MM/DD/YYYY HH:mm'),
-          breaktime_end: moment(dateString + ' 01:00', 'MM/DD/YYYY HH:mm')
-        };
 
         this.ID = jsonObj.ID || null;
         this.BARCODE = jsonObj.BARCODE || (jsonObj.HEADER_ID ? jsonObj.HEADER_ID.toString() : '') || '';
         this.ACTUAL_START = (jsonObj.ACTUAL_START ? moment(jsonObj.ACTUAL_START ).format('DD-MMM-YYYY HH:mm:ss') : this.servertime );
+
+
+        let dateString = moment(this.ACTUAL_START).format('MM/DD/YYYY');
+        const breakPoint = moment(dateString + ' 00:00');
+        const breakPoin1 = moment(dateString + ' 08:00');
+
+        if (moment(this.ACTUAL_START).isBetween(breakPoint, breakPoin1)) {
+            dateString = moment(dateString).subtract(1, 'day').format('MM/DD/YYYY');
+        }
+
+        this.shifts[this.nightshift] = {
+            first_hour: moment(dateString + ' 19:00', 'MM/DD/YYYY HH:mm'),
+            breaktime_start: moment(moment(dateString).add(1, 'day').format('MM/DD/YYYY') + ' 00:00', 'MM/DD/YYYY HH:mm'),
+            breaktime_end: moment(moment(dateString).add(1, 'day').format('MM/DD/YYYY') + ' 01:00', 'MM/DD/YYYY HH:mm'),
+            allowed_schedule_start: [dateString, moment(dateString).add(1, 'day').format('MM/DD/YYYY')]
+        };
+
+        this.shifts[this.dayshift] = {
+          first_hour: moment(dateString + ' 08:00', 'MM/DD/YYYY HH:mm'),
+          breaktime_start: moment(dateString + ' 12:00', 'MM/DD/YYYY HH:mm'),
+          breaktime_end: moment(dateString + ' 13:00', 'MM/DD/YYYY HH:mm'),
+          allowed_schedule_start: [dateString]
+        };
+
         this.ACTUAL_END = (jsonObj.ACTUAL_END ? moment(jsonObj.ACTUAL_END ).format('DD-MMM-YYYY HH:mm:ss') : '' ) || '';
         this.STATUS = jsonObj.STATUS || 1;
         this.PO_NUMBER = jsonObj.PO_NUMBER || jsonObj.CUST_PO_NUMBER || '';
@@ -68,21 +81,31 @@ export default class Header {
         this.OLD_CODE = jsonObj.OLD_CODE || jsonObj.PRODUCT_CODE_OLD || '';
         this.INTERNAL_CODE = jsonObj.INTERNAL_CODE || jsonObj.PRODUCT_CODE || '';
         this.PRODUCT_DESCRIPTION = jsonObj.PRODUCT_DESCRIPTION || jsonObj.PRODUCT_DESC || '';
+
         if (jsonObj.SHIFT) {
             this.SHIFT = jsonObj.SHIFT;
         } else {
-            if (moment(this.servertime).isBetween(this.shifts[dayshift].first_hour, this.shifts[nightshift].first_hour)) {
+            if (moment(this.ACTUAL_START).isBetween(this.shifts[this.dayshift].first_hour, this.shifts[this.nightshift].first_hour)) {
                 this.SHIFT = 'dayshift';
             } else {
                 this.SHIFT = 'nightshift';
             }
         }
-        if (jsonObj.MFG_DATE) {
-            this.MFG_DATE = moment(jsonObj.MFG_DATE).format('YYYY-MM-DD');
+
+        if (jsonObj.SCHEDULE_DATE_START) {
+            this.SCHEDULE_DATE_START = moment(jsonObj.SCHEDULE_DATE_START).format('YYYY-MM-DD');
         } else {
-            this.MFG_DATE = moment(this.servertime).format('YYYY-MM-DD');
+            this.SCHEDULE_DATE_START = moment(this.servertime).format('YYYY-MM-DD');
+            if (this.SHIFT === 'nightshift') {
+                if (
+                    moment(this.ACTUAL_START).isBetween(this.shifts[this.nightshift].breaktime_start, this.shifts[this.dayshift].first_hour)
+                ) {
+                    this.SCHEDULE_DATE_START = moment(this.servertime).subtract(1, 'day').format('YYYY-MM-DD');
+                }
+            }
         }
-        this.SCHEDULE_DATE_START = jsonObj.SCHEDULE_DATE_START || '';
+
+        // this.SCHEDULE_DATE_START = jsonObj.SCHEDULE_DATE_START || '';
         this.SCHEDULE_DATE_END = jsonObj.SCHEDULE_DATE_END || '';
         this.FORWARDED_BY = jsonObj.FORWARDED_BY || null;
         this.REVIEWED_BY = jsonObj.REVIEWED_BY || null;
@@ -92,6 +115,33 @@ export default class Header {
         this.FORWARDED_AT = (jsonObj.FORWARDED_AT ? moment(jsonObj.FORWARDED_AT ).format('DD-MMM-YYYY HH:mm:ss') : '') || '';
         (jsonObj.IS_NEW === 0 ? this.IS_NEW = 0 : this.IS_NEW = 1);
         (jsonObj.IS_CHANGED === 0 ? this.IS_CHANGED = 0 : this.IS_CHANGED = 1);
+        this.GRP_NUM = jsonObj.GRP_NUM || 'fp-01';
+        this.STD_OUTPUT = jsonObj.STD_OUTPUT || 0;
+    }
+
+    isScheduleDateValid(): boolean {
+        let res = true;
+        // tslint:disable-next-line: max-line-length
+        const allowed = this.shifts[this.SHIFT].allowed_schedule_start.find( el => moment(el).isSame(moment(this.SCHEDULE_DATE_START), 'day'));
+        if (!allowed) {
+            res = false;
+        }
+        return res;
+    }
+
+    isShiftValid(): boolean {
+        let res = true;
+        let start;
+        let end;
+        if (this.SHIFT === 'nightshift') {
+            start = moment(this.shifts[this.nightshift].first_hour);
+            end = moment(this.shifts[this.dayshift].first_hour);
+        } else {
+            start = moment(this.shifts[this.dayshift].first_hour);
+            end = moment(this.shifts[this.nightshift].first_hour);
+        }
+        res = moment(this.ACTUAL_START).isBetween(start, end);
+        return res;
     }
 
     getJson() {
@@ -112,7 +162,7 @@ export default class Header {
             INTERNAL_CODE: this.INTERNAL_CODE,
             PRODUCT_DESCRIPTION: this.PRODUCT_DESCRIPTION,
             SHIFT: this.SHIFT,
-            SCHEDULE_DATE_START: this.SCHEDULE_DATE_START,
+            SCHEDULE_DATE_START: moment(this.SCHEDULE_DATE_START).format('DD-MMM-YYYY HH:mm:ss'),
             SCHEDULE_DATE_END: this.SCHEDULE_DATE_END,
             FORWARDED_BY: this.FORWARDED_BY,
             REVIEWED_BY: this.REVIEWED_BY,
@@ -122,7 +172,8 @@ export default class Header {
             FORWARDED_AT: this.FORWARDED_AT,
             IS_CHANGED: this.IS_CHANGED,
             IS_NEW: this.IS_NEW,
-            MFG_DATE: moment(this.MFG_DATE).format('DD-MMM-YYYY HH:mm:ss')
+            MFG_DATE: moment(this.MFG_DATE).format('DD-MMM-YYYY HH:mm:ss'),
+            GRP_NUM: this.GRP_NUM
         };
         return obj;
     }

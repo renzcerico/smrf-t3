@@ -9,7 +9,9 @@
 .text-green {
     color: #28a745 !important;
 }
-
+#header_production_order{
+    z-index: 2 !important;
+}
 #header_production_order input, #prod_span,
 #forwardTo {
     border-right: 0;
@@ -69,12 +71,13 @@ input:read-only {
 
 .form-label-group {
     position: relative;
+    padding-right: 40px;
 }
 
 .form-label-group > label {
     z-index: -1;
     position: absolute;
-    top: -19px;
+    top: -17px;
     left: 0;
     display: block;
     width: 100%;
@@ -93,10 +96,10 @@ input:read-only {
     color: transparent;
 }
 
-.form-label-group input, .form-label-group select {
+/* .form-label-group input, .form-label-group select {
     padding-top: 30px;
     padding-bottom: 10px;
-}
+} */
 
 .form-label-group label {
     font-size: 13px;

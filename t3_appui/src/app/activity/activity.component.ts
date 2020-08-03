@@ -56,6 +56,26 @@ export class ActivityComponent implements OnInit {
     return subTotal;
   }
 
+  get packedSubTotal() {
+    let subTotal = 0;
+    if (this.activities.length) {
+      this.activities.forEach( (el) => {
+        subTotal += el.PACKED_QTY;
+      });
+    }
+    return subTotal;
+  }
+
+  get adjSubTotal() {
+    let subTotal = 0;
+    if (this.activities.length) {
+      this.activities.forEach( (el) => {
+        subTotal += el.ADJ_QTY;
+      });
+    }
+    return subTotal;
+  }
+
   get downtimeSubTotal() {
     let subTotal = 0;
     if (this.activities.length) {
@@ -254,6 +274,22 @@ export class ActivityComponent implements OnInit {
       if (moment(this.servertime).isAfter(moment(this.lastActivity.END_TIME))) {
         res = true;
       }
+    }
+    return res;
+  }
+
+  get totalStdOutput(): number {
+    let res = 0;
+    if (this.activities.length && this.headerObj.STD_OUTPUT) {
+      res = this.activities.length * this.headerObj.STD_OUTPUT;
+    }
+    return res;
+  }
+
+  get efficiency(): number {
+    let res = 0;
+    if (this.totalStdOutput) {
+      res = (this.subTotal / this.totalStdOutput) * 100;
     }
     return res;
   }
