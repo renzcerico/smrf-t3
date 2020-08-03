@@ -130,6 +130,24 @@ export class RequestDetailsComponent implements OnInit {
 
   }
 
+  requestDelete(id) {
+      const url = '/localapi/request/delete';
+      const data = { id };
+
+      this.http.post(url, data)
+          .subscribe(
+              res => {
+                  this.notificationStatus = !this.notificationStatus;
+                  this.notificationResult = 'You have been successfully deleted a request.';
+
+                  this.msg();
+              },
+              err => {
+                  console.log(err);
+              }
+          );
+  }
+
   previewImg(img) {
     this.requestForm.previewImg(img);
   }

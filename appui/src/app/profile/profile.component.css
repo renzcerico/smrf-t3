@@ -1,0 +1,15 @@
+.profile-content {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.profile-content p,
+.profile-content h5 {
+    color: #474646;
+    margin-bottom: 0px;
+    /* font-weight: 500; */
+}
+
+.profile-content p {
+    font-size: 14px;
+}

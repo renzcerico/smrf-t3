@@ -8,14 +8,31 @@
       [routerLink]="['']">
       Service Maintenance
     </a>
-    <div class="text-right w-100 h-100" *ngIf="user">
-      <span class="navbar-text small text-muted">
+    <button class="h-100 float-left" color="primary" type="button" mat-button (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="ml-auto" *ngIf="user" [matMenuTriggerFor]="menu">
+      <span class="navbar-text small text-muted h-100">
         <img src="/assets/img/avatar.png" width="25px" id="avatar" alt="avatar">
         {{ userProfile.name }}
       </span>
-      <button class="h-100" color="primary" type="button" mat-button (click)="toggleMenu()">
-        <mat-icon>menu</mat-icon>
+      <button mat-icon-button>
+        <mat-icon color="primary">arrow_drop_down</mat-icon>
       </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="showProfileDialog();">
+          <mat-icon>person_outline</mat-icon>
+          <span class="text-muted">Profile</span>
+        </button>
+        <button mat-menu-item (click)="showChangePasswordDialog();">
+          <mat-icon>vpn_key</mat-icon>
+          <span class="text-muted">Change Password</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span class="text-muted">Logout</span>
+        </button>
+      </mat-menu>
     </div>
   </mat-toolbar>
   <mat-progress-bar [mode]="progressMode" value="100"></mat-progress-bar>

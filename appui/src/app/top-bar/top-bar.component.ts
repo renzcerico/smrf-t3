@@ -1,4 +1,7 @@
-import { SidenavServiceService} from './../sidenav-service.service';
+import { ProfileComponent } from './../profile/profile.component';
+import { ChangePasswordComponent } from './../change-password/change-password.component';
+import { MatDialog } from '@angular/material/dialog';
+import { SidenavServiceService } from './../sidenav-service.service';
 import { UserService } from './../user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -6,8 +9,8 @@ import { requests } from './../request';
 import { Component, OnInit } from '@angular/core';
 import { Injectable, Input, Directive, ViewContainerRef, AfterContentChecked } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +33,8 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
     public http: HttpClient,
     private userService: UserService,
     public router: Router,
-    public sidenavService: SidenavServiceService) {
+    public sidenavService: SidenavServiceService,
+    public dialog: MatDialog) {
     this.user = userService.userLoggedIn;
     this.progressMode = userService.progressMode;
   }
@@ -62,10 +66,22 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
   }
 
   logout() {
-    location.reload();
+    const url = '/localapi/logout';
+    const options = { headers: new HttpHeaders().set('Content-Type', 'application/json'), withCredentials: true };
+
+    this.http.get(url, options).subscribe(res => console.log(res), err => console.log(err));
+    window.location.reload();
   }
 
   toggleMenu() {
     this.sidenavService.toggle();
+  }
+
+  showChangePasswordDialog() {
+      this.dialog.open(ChangePasswordComponent);
+  }
+
+  showProfileDialog() {
+      this.dialog.open(ProfileComponent);
   }
 }

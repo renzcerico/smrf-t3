@@ -196,3 +196,21 @@ const transfer = async (data) => {
 };
 
 module.exports.transfer = transfer;
+
+const deleteRequest = async (id) => {
+    const sql = `BEGIN 
+                    DELETE FROM ${ process.env.SCHEMA }.tblrequests where req_id = :id;
+                    DELETE FROM ${ process.env.SCHEMA }.tblrequests_dtl where req_id = :id;
+                    COMMIT;
+                END;`;
+    
+    const bind = {
+        id
+    };
+
+    const result = await database.simpleExecute(sql, bind);
+
+    return result;
+};
+
+module.exports.deleteRequest = deleteRequest;

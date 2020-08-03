@@ -36,6 +36,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RequestComponent } from './requests/request/request.component';
@@ -59,6 +60,8 @@ import { ManpowerComponent } from './manpower/manpower.component';
 import { DepartmentServicesComponent } from './department-services/department-services.component';
 import { DepartmentComponent } from './department/department.component';
 import { ServicesDialogComponent } from './services-dialog/services-dialog.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import * as $ from 'jquery';
 
@@ -88,6 +91,8 @@ import * as $ from 'jquery';
     DepartmentServicesComponent,
     DepartmentComponent,
     ServicesDialogComponent,
+    ChangePasswordComponent,
+    ProfileComponent
   ],
   imports: [
     NgbModule,
@@ -135,7 +140,8 @@ import * as $ from 'jquery';
     MatListModule,
     MatIconModule,
     MatCheckboxModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule
   ],
   entryComponents: [
     // DepartmentComponent
