@@ -258,6 +258,22 @@ const createDowntimeTypes = async (downtime_type) => {
 
 module.exports.createDowntimeTypes = createDowntimeTypes;
 
+const getAllPositions = async () => {
+    const q = `begin ${process.env.SCHEMA}.T3_PACKAGE.GET_ALL_POSITIONS (:cursor); end;`;
+    let binds ={
+        cursor : {
+            dir: oracle.BIND_OUT,
+            type: oracle.CURSOR
+        }
+    }
+
+    const res = await database.resultsetExecute(q, binds)
+        .catch(error => { console.log('caught', error.message); });
+    return res;
+}
+
+module.exports.getAllPositions = getAllPositions;
+
 const consoleError = (text) => {
     console.log('\x1b[47m','\x1b[31m', text, '\x1b[0m');
 }

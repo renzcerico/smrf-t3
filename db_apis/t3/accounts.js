@@ -17,8 +17,15 @@ const insert = async (data) => {
         }
     };
 
-    const result = await database.simpleExecute(sqlInsert, binds);
-    return result;
+    return new Promise((resolve, reject) => {
+        database.simpleExecute(sqlInsert, binds).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        }).finally(() => {
+            connect.close();
+        }) 
+    });
 };
 
 module.exports.insert = insert;

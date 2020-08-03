@@ -29,10 +29,10 @@ export default class Header {
     FORWARDED_AT: string;
     MFG_DATE: string;
     servertime: any;
-    shifts: Array<any> = [];
+    dayshift = 'dayshift';
+    shifts: object = {};
     GRP_NUM: string;
     STD_OUTPUT: number;
-    dayshift = 'dayshift';
     nightshift = 'nightshift';
 
     constructor(jsonObj, private servertimeService: ServertimeService) {
@@ -59,6 +59,7 @@ export default class Header {
             first_hour: moment(dateString + ' 19:00', 'MM/DD/YYYY HH:mm'),
             breaktime_start: moment(moment(dateString).add(1, 'day').format('MM/DD/YYYY') + ' 00:00', 'MM/DD/YYYY HH:mm'),
             breaktime_end: moment(moment(dateString).add(1, 'day').format('MM/DD/YYYY') + ' 01:00', 'MM/DD/YYYY HH:mm'),
+            last_hour: moment(moment(dateString).add(1, 'day').format('MM/DD/YYYY') + ' 05:00', 'MM/DD/YYYY HH:mm'),
             allowed_schedule_start: [dateString, moment(dateString).add(1, 'day').format('MM/DD/YYYY')]
         };
 
@@ -66,6 +67,7 @@ export default class Header {
           first_hour: moment(dateString + ' 08:00', 'MM/DD/YYYY HH:mm'),
           breaktime_start: moment(dateString + ' 12:00', 'MM/DD/YYYY HH:mm'),
           breaktime_end: moment(dateString + ' 13:00', 'MM/DD/YYYY HH:mm'),
+          last_hour: moment(dateString + ' 17:00', 'MM/DD/YYYY HH:mm'),
           allowed_schedule_start: [dateString]
         };
 
@@ -173,8 +175,14 @@ export default class Header {
             IS_CHANGED: this.IS_CHANGED,
             IS_NEW: this.IS_NEW,
             MFG_DATE: moment(this.MFG_DATE).format('DD-MMM-YYYY HH:mm:ss'),
-            GRP_NUM: this.GRP_NUM
+            GRP_NUM: this.GRP_NUM,
+            SHIFT_OBJ: this.shifts[this.SHIFT]
         };
         return obj;
+    }
+
+    getShift() {
+        console.log('getting shift data.....');
+        return this.shifts[this.SHIFT] || true;
     }
  }

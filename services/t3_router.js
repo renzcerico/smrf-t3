@@ -54,6 +54,9 @@ t3_router.route('/set-user')
 t3_router.route('/get-server-time')
   .get(t3.getServerTime);
 
+t3_router.route('/get-all-positions')
+.get(t3.getAllPositions);
+
 t3_router.route('/change-password')
   .post(t3.changePassword);
 

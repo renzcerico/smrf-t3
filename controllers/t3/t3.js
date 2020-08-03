@@ -97,6 +97,19 @@ const getServerTime = async (req = {}, res, next = null) => {
 
 module.exports.getServerTime = getServerTime;
 
+const getAllPositions = async (req = {}, res, next = null) => {
+    try {
+        const request = await t3.getAllPositions()
+        .catch(error => { console.log('caught', error.message); });
+        res.status(201).json(request);
+      } catch (err) {
+        next(err);
+      }
+}
+
+module.exports.getAllPositions = getAllPositions;
+
+
 const get = async (req, res, next) => {
     try {
         

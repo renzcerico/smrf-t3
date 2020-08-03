@@ -163,7 +163,9 @@ export class ActivityService {
                 END_TIME: this.expectedTime.end,
                 IS_NEW: 1,
             });
-            this.activities.unshift(filler);
+            if (this.isAutoAddAllowed(filler)) {
+                this.activities.unshift(filler);
+            }
         }
     }
 
@@ -263,12 +265,18 @@ export class ActivityService {
 
     addEndProdRow() {
         this.isToEndProd = true;
+        let end = '';
         const start = moment(this.activities[0].END_TIME).startOf('hour').format('DD-MMM-YYYY HH:mm:ss');
         this.activities[0].END_TIME = start;
+        if (moment(this.headerObj.ACTUAL_START).isSame(moment(this.servertime), 'day')) {
+            end = this.servertime;
+        } else {
+            end = moment(start).add(1, 'hour').format('DD-MMM-YYYY HH:mm:ss');
+        }
         const act = this.activityFactory.createActivity({
             HEADER_ID: this.headerObj.ID,
             START_TIME: start,
-            END_TIME: this.servertime,
+            END_TIME: end,
             IS_NEW: 1,
         });
         this.activities.unshift(act);
@@ -277,6 +285,16 @@ export class ActivityService {
     removeEndProdRow() {
         this.activities.splice(0, 1);
         this.isToEndProd = false;
+    }
+
+    isAutoAddAllowed(nextAct: Activity): boolean {
+        const nextStartTime = moment(nextAct.START_TIME);
+        const shift =  this.headerObj.SHIFT_OBJ;
+        const endHour = shift.last_hour;
+        if (nextStartTime.isSameOrAfter(endHour)) {
+            return false;
+        }
+        return true;
     }
 
 }

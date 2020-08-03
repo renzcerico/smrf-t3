@@ -105,4 +105,8 @@ export class ApiService {
         return this.http.get(this.url + '/t3api/get-server-time');
     }
 
+    getAllPositions(): Observable<any> {
+        return this.http.get(this.url + '/t3api/get-all-positions');
+    }
+
 }

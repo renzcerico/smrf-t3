@@ -20,12 +20,12 @@
             </thead>
             <tbody *ngIf="manpowers.length > 0; else elseBlock">
                 <tr *ngFor="let position of positions; let i = index;">
-                    <td class="align-middle" data-label="Position">{{ position.position }}</td>
+                    <td class="align-middle" data-label="Position">{{ position.POSITION }}</td>
                     <td *ngIf="!isAuthorized" class="align-middle" data-label="Manpower">
-                        <span *ngIf="positions[i].selected_index !== 0">
-                            {{ accounts[positions[i].selected_index].FIRST_NAME }} {{ accounts[positions[i].selected_index].LAST_NAME }}
+                        <span *ngIf="positions[i].SELECTED_INDEX !== 0">
+                            {{ accounts[positions[i].SELECTED_INDEX].FIRST_NAME }} {{ accounts[positions[i].SELECTED_INDEX].LAST_NAME }}
                         </span>
-                        <span *ngIf="positions[i].selected_index === 0">
+                        <span *ngIf="positions[i].SELECTED_INDEX === 0">
                             No Manpower Setup
                         </span>
                     </td>
@@ -39,8 +39,8 @@
                             name="manpowerID" 
                             #manpowerID 
                             (change)="handleChange($event, i)"
-                            [(ngModel)]="positions[i].selected"
-                            [attr.selected_index]="positions[i].selected_index"
+                            [(ngModel)]="positions[i].SELECTED"
+                            [attr.SELECTED_INDEX]="positions[i].SELECTED_INDEX"
                             #tdEditable >
                             <!-- <option value="0">No Manpower Setup</option> -->
                             <!-- FIX DISABLE ON LOAD -->

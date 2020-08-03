@@ -484,18 +484,18 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
             confirmButtonText: 'Yes',
             cancelButtonText: 'No'
         }).then(async (res) => {
-            if (res.isConfirmed) {
-                await Swal.fire({
-                    title: 'Are you really sure?',
-                    text: 'This will erase all unsaved data',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No'
-                }).then(res1 => {
-                    isConfirmed = res1.isConfirmed;
-                });
-            }
+            // if (res.isConfirmed) {
+            //     await Swal.fire({
+            //         title: 'Are you really sure?',
+            //         text: 'This will erase all unsaved data',
+            //         icon: 'question',
+            //         showCancelButton: true,
+            //         confirmButtonText: 'Yes',
+            //         cancelButtonText: 'No'
+            //     }).then(res1 => {
+            //     });
+            // }
+            isConfirmed = res.isConfirmed;
         });
         if (isConfirmed) {
             this.userService.logOut();
