@@ -47,3 +47,15 @@ tbody td {
     width: 200px !important;
     border-radius: 100px !important;
 }
+
+.clickable-indicator {
+    top: -5px;
+    left: 2px;
+    position: absolute;
+    font-weight: 700 !important;
+    color: #28a745!important;
+}
+
+.clickable-indicator::before {
+    content: "+";
+}
