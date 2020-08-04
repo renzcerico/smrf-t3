@@ -72,16 +72,16 @@
                     <td class="align-middle" data-label="STD Output">{{headerObj.STD_OUTPUT}}</td>
                     <td class="align-middle position-relative" data-label="Packed">
                         <!-- {{ activity.TOTAL_BOXES | number: '' }} -->
-                        <span class="clickable-indicator"></span>
+                        <span class="clickable-indicator" *ngIf="isAuthorized && (i === 0 || activeUser.USER_TYPE > 1)"></span>
                         {{ activity.PACKED_QTY | number: '' }}
                     </td>
                     <td class="align-middle position-relative" data-label="Adjustment">
-                        <span class="clickable-indicator"></span>
+                        <span class="clickable-indicator" *ngIf="isAuthorized && (i === 0 || activeUser.USER_TYPE > 1)"></span>
                         {{ activity.ADJ_QTY | number: '' }}
                     </td>
                     <td class="align-middle text-right" data-label="Total">{{ activity.TOTAL | number: '' }}</td>
                     <td class="align-middle text-right position-relative" data-label="Downtime" (dblclick)="openDowntimeModal($event, i)">
-                        <span class="clickable-indicator"></span>
+                        <span class="clickable-indicator" *ngIf="isAuthorized && (i === 0 || activeUser.USER_TYPE > 1)"></span>
                         {{ activity.TOTAL_DOWNTIME }}
                     </td>
                     <td *ngIf="isAuthorized && (i === 0 || activeUser.USER_TYPE > 1)" class="align-middle td-editable" data-label="Remarks">
