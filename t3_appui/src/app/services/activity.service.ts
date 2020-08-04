@@ -163,7 +163,7 @@ export class ActivityService {
                 END_TIME: this.expectedTime.end,
                 IS_NEW: 1,
             });
-            if (this.isAutoAddAllowed(filler)) {
+            if (this.isAutoAddAllowed(filler) && !this.isToEndProd) {
                 this.activities.unshift(filler);
             }
         }
@@ -248,6 +248,7 @@ export class ActivityService {
                 START_TIME: start,
                 END_TIME: end,
                 IS_NEW: 1,
+                IS_CHANGED: 0,
             });
             if (isPush) {
                 this.activities.push(filler);
@@ -278,6 +279,7 @@ export class ActivityService {
             START_TIME: start,
             END_TIME: end,
             IS_NEW: 1,
+            IS_CHANGED: 0
         });
         this.activities.unshift(act);
     }
@@ -290,10 +292,18 @@ export class ActivityService {
     isAutoAddAllowed(nextAct: Activity): boolean {
         const nextStartTime = moment(nextAct.START_TIME);
         const shift =  this.headerObj.SHIFT_OBJ;
-        const endHour = shift.last_hour;
-        if (nextStartTime.isSameOrAfter(endHour)) {
+        let endHour;
+        if (this.headerObj.SHIFT === 'nightshift') {
+            endHour = moment(shift.last_hour).add(3 , 'hours');
+        } else {
+            endHour = moment(shift.last_hour).add(2 , 'hours');
+        }
+        if (!nextStartTime.isBetween(shift.first_hour, endHour)) {
             return false;
         }
+        // if (nextStartTime.isSameOrAfter(endHour)) {
+        //     return false;
+        // }
         return true;
     }
 

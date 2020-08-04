@@ -86,6 +86,13 @@ export class AddRowComponent implements OnInit {
       isValid: true,
       message: 'Allowed'
     };
+    if (this.startTime === '' || this.endTime === '') {
+        res = {
+          isValid: false,
+          message: 'Incomplete Input'
+        };
+        return res;
+      }
     if (!mntStart.isValid() || !mntEnd.isValid()) {
       res = {
         isValid: false,

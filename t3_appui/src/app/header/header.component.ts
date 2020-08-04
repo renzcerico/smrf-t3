@@ -272,7 +272,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
               });
             return;
         }
-        if (!this.headerObj.isScheduleDateValid()) {
+        if (this.headerObj.IS_NEW && !this.headerObj.isScheduleDateValid()) {
             Swal.fire({
                 title: 'Warning',
                 text: 'Invalid Schedule Date',

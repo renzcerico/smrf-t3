@@ -117,7 +117,7 @@ export default class Header {
         this.FORWARDED_AT = (jsonObj.FORWARDED_AT ? moment(jsonObj.FORWARDED_AT ).format('DD-MMM-YYYY HH:mm:ss') : '') || '';
         (jsonObj.IS_NEW === 0 ? this.IS_NEW = 0 : this.IS_NEW = 1);
         (jsonObj.IS_CHANGED === 0 ? this.IS_CHANGED = 0 : this.IS_CHANGED = 1);
-        this.GRP_NUM = jsonObj.GRP_NUM || 'fp-01';
+        this.GRP_NUM = jsonObj.GRP_NUM || 'p-01';
         this.STD_OUTPUT = jsonObj.STD_OUTPUT || 0;
     }
 
