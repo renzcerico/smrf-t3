@@ -90,7 +90,6 @@ export class ManpowerService {
   }
 
   setManpower(manpower: Array<any> = []) {
-    console.log(this.defaultManpower);
     const manpowerArr = [];
     let manpowerObj: Manpower;
     this.defaultManpower.forEach(el => {
@@ -102,7 +101,7 @@ export class ManpowerService {
         //   el.MANPOWER_ID = this.activeUser.ID;
         // }
         const empytManpower = new Manpower({
-            ID: el.ID,
+            POSITION_ID: el.ID,
             DATE_ENTERED: this.servertime,
             DATE_UPDATED: this.servertime,
         });

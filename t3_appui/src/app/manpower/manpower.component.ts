@@ -57,7 +57,6 @@ export class ManpowerComponent implements OnInit {
         await this.apis.getAllPositions().toPromise().then(res => {
             this.positions = res;
         });
-        console.log(this.positions);
     }
 
     async getAllAccounts() {

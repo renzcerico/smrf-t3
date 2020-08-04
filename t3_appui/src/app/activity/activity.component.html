@@ -29,11 +29,13 @@
 
         <ng-container *ngIf="activityService.headerObj">
             <div class="activity-container">
-                <button class="btn btn-success rounded mb-2 font-weight-500" (click)="addRow()" *ngIf="isAuthorized && activeUser.USER_TYPE >= 2 && activityService.headerObj.STATUS > 1">Add Activity</button>
-                <ng-container *ngIf="activityService.headerObj.STATUS === 1 && isAuthorized && isNewTimeAfter">
-                    <button class="btn btn-success rounded mb-2 font-weight-500" (click)="addEndProdRow()" *ngIf="!activityService.isToEndProd">Add Activity</button>
-                    <button class="btn btn-warning rounded mb-2 font-weight-500" (click)="removeEndProdRow()" *ngIf="activityService.isToEndProd">Cancel Activivity</button>
-                </ng-container>
+                <button class="btn btn-success rounded mb-2 font-weight-500" (click)="addRow()" *ngIf="isAuthorized && activeUser.USER_TYPE >= 2; else buttonElse">Add Activity</button>
+                <ng-template #buttonElse>
+                    <ng-container *ngIf="activityService.headerObj.STATUS === 1 && isAuthorized && isNewTimeAfter">
+                        <button class="btn btn-success rounded mb-2 font-weight-500" (click)="addEndProdRow()" *ngIf="!activityService.isToEndProd">Add Activity</button>
+                        <button class="btn btn-warning rounded mb-2 font-weight-500" (click)="removeEndProdRow()" *ngIf="activityService.isToEndProd">Cancel Activivity</button>
+                    </ng-container>
+                </ng-template>
             </div>
         </ng-container>
 

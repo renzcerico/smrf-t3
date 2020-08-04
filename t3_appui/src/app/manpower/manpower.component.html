@@ -13,7 +13,7 @@
                 </tr>
                 <tr>
                     <th width="6%">From</th>
-                    <th width="6%">To</th >
+                    <th width="6%">To</th>
                     <th>Entered</th>
                     <th>Updated</th>
                 </tr>
@@ -23,7 +23,8 @@
                     <td class="align-middle" data-label="Position">{{ position.POSITION }}</td>
                     <td *ngIf="!isAuthorized" class="align-middle" data-label="Manpower">
                         <span *ngIf="positions[i].SELECTED_INDEX !== 0">
-                            {{ accounts[positions[i].SELECTED_INDEX].FIRST_NAME }} {{ accounts[positions[i].SELECTED_INDEX].LAST_NAME }}
+                            {{ accounts[positions[i].SELECTED_INDEX].FIRST_NAME }}
+                            {{ accounts[positions[i].SELECTED_INDEX].LAST_NAME }}
                         </span>
                         <span *ngIf="positions[i].SELECTED_INDEX === 0">
                             No Manpower Setup
@@ -31,23 +32,12 @@
                     </td>
                     <td *ngIf="isAuthorized" class="align-bottom td-editable" data-label="Manpower">
                         <div class="td-indicator-required"></div>
-                        <!-- (focus)="manpowerFocus(manpowerID.value)" 
-                        (change)="manpower($event)" -->
-                        <select 
-                            class="form-control manpower_list" 
-                            max="10" 
-                            name="manpowerID" 
-                            #manpowerID 
-                            (change)="handleChange($event, i)"
-                            [(ngModel)]="positions[i].SELECTED"
-                            [attr.SELECTED_INDEX]="positions[i].SELECTED_INDEX"
-                            #tdEditable >
-                            <!-- <option value="0">No Manpower Setup</option> -->
-                            <!-- FIX DISABLE ON LOAD -->
-                            <option *ngFor="let account of accounts; let ii = index"
-                                    [disabled]="account.DISABLED"
-                                    value="{{ account.ID }}">
-                                    {{ account.FIRST_NAME}} {{ account.LAST_NAME}}
+                        <select class="form-control manpower_list" max="10" name="manpowerID" #manpowerID
+                            (change)="handleChange($event, i)" [(ngModel)]="positions[i].SELECTED"
+                            [attr.SELECTED_INDEX]="positions[i].SELECTED_INDEX" #tdEditable>
+                            <option *ngFor="let account of accounts; let ii = index" [disabled]="account.DISABLED"
+                                value="{{ account.ID }}">
+                                {{ account.FIRST_NAME}} {{ account.LAST_NAME}}
                             </option>
                         </select>
                     </td>
@@ -56,70 +46,52 @@
                             {{manpowers[i].START_TIME}}
                         </span>
                         <span *ngIf="!manpowers[i].START_TIME">
-                            
+
                         </span>
                     </td>
                     <td *ngIf="isAuthorized" class="align-bottom td-editable" data-label="Start">
                         <div class="td-indicator"></div>
-                        <input type="text" 
-                            class="form-control start_time" 
-                            name="startTime"
-                            #startTime
-                            [mask]="'00:00'"
-                            (blur)="validateInput($event, i, 'start', 'blur')"
-                            (ngModelChange)="handleInput(i)"
-                            [(ngModel)]="manpowers[i].START_TIME"
-                            (focus)="$event.target.select();"
+                        <input type="text" class="form-control start_time" name="startTime" #startTime [mask]="'00:00'"
+                            (blur)="validateInput($event, i, 'start', 'blur')" (ngModelChange)="handleInput(i)"
+                            [(ngModel)]="manpowers[i].START_TIME" (focus)="$event.target.select();"
                             (keyup.enter)="time(startTime.value, $event, i, 'start');"
-                            (keydown.enter)="preventEnter($event)"
-                            placeholder="HHmm"
-                            #tdEditable />
+                            (keydown.enter)="preventEnter($event)" placeholder="HHmm" #tdEditable />
                     </td>
-                        <!-- (keydown)="formatTime(startTime.value, $event)" -->
+                    <!-- (keydown)="formatTime(startTime.value, $event)" -->
                     <td *ngIf="!isAuthorized" class="align-middle" data-label="End">
                         <span *ngIf="manpowers[i].END_TIME">
                             {{manpowers[i].END_TIME}}
                         </span>
                         <span *ngIf="!manpowers[i].END_TIME">
-                            
+
                         </span>
                     </td>
                     <td *ngIf="isAuthorized" class="align-bottom td-editable" data-label="End">
                         <div class="td-indicator"></div>
-                        <input type="text" 
-                                class="form-control end_time"
-                                name="endTime" 
-                                #endTime
-                                [mask]="'00:00'"
-                                (blur)="validateInput($event, i, 'end', 'blur')"
-                                (ngModelChange)="handleInput(i)"
-                                [(ngModel)]="manpowers[i].END_TIME"
-                                (focus)="$event.target.select();"
-                                (keyup.enter)="time(endTime.value, $event, i, 'end');"
-                                (keydown.enter)="preventEnter($event)"
-                                placeholder="HHmm"
-                                #tdEditable />
+                        <input type="text" class="form-control end_time" name="endTime" #endTime [mask]="'00:00'"
+                            (blur)="validateInput($event, i, 'end', 'blur')" (ngModelChange)="handleInput(i)"
+                            [(ngModel)]="manpowers[i].END_TIME" (focus)="$event.target.select();"
+                            (keyup.enter)="time(endTime.value, $event, i, 'end');"
+                            (keydown.enter)="preventEnter($event)" placeholder="HHmm" #tdEditable />
                     </td>
                     <td *ngIf="!isAuthorized" class="align-middle" data-label="Remarks">
                         <span *ngIf="manpowers[i].REMARKS">
                             {{manpowers[i].REMARKS}}
                         </span>
                         <span *ngIf="!manpowers[i].REMARKS">
-                            
+
                         </span>
-                    </td>                    
+                    </td>
                     <td *ngIf="isAuthorized" class="align-bottom td-editable" data-label="Remarks">
                         <div class="td-indicator"></div>
-                        <textarea class="form-control remarks" 
-                            (keydown.enter)="preventEnter($event)" 
-                            autosize rows="1" 
-                            (ngModelChange)="handleInput(i)"
-                            [(ngModel)]="manpowers[i].REMARKS"
-                            #tdEditable></textarea>
+                        <textarea class="form-control remarks" (keydown.enter)="preventEnter($event)" autosize rows="1"
+                            (ngModelChange)="handleInput(i)" [(ngModel)]="manpowers[i].REMARKS" #tdEditable></textarea>
                     </td>
                     <td class="align-middle" data-label="Updated By">{{manpowers[i].LAST_UPDATED_BY_NAME}}</td>
-                    <td class="align-middle" data-label="Date Entered">{{manpowers[i].DATE_ENTERED | date : 'MMM d, y HH:mm' }}</td>
-                    <td class="align-middle" data-label="Date Updated">{{manpowers[i].DATE_UPDATED | date : 'MMM d, y HH:mm' }}</td>
+                    <td class="align-middle" data-label="Date Entered">
+                        {{manpowers[i].DATE_ENTERED | date : 'MMM d, y HH:mm' }}</td>
+                    <td class="align-middle" data-label="Date Updated">
+                        {{manpowers[i].DATE_UPDATED | date : 'MMM d, y HH:mm' }}</td>
                 </tr>
             </tbody>
             <ng-template #elseBlock>

@@ -17,7 +17,7 @@
         <div class="form-row">           
             <div class="col-12 col-md-3 mt-2">
                 <div class="form-label-group">
-                    <input name="barcode" type="text" (focus)="focus('barcode')" id="barcode" class="form-control" #barcode [ngModel]="headerObj.BARCODE" name="barcode" placeholder="#" (change)="handleBarcodeChange(barcode.value)" tabindex="1">
+                    <input name="barcode" type="text" id="barcode" class="form-control" #barcode [ngModel]="headerObj.BARCODE" name="barcode" placeholder="#" (change)="handleBarcodeChange(barcode.value)" tabindex="1">
                     <label for="barcode">Barcode Number</label>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-12 col-md-3 mt-3">
                 <div class="form-label-group">
-                    <input class="form-control" (focus)="focus('schedule_date')" (keyup.enter)="handleEnter($event)" #header_input type="date" tabindex="2" [disabled]="headerObj.IS_NEW ? null : true" name="schedule_date" id="schedule_date" [(ngModel)]="headerObj.SCHEDULE_DATE_START" (ngModelChange)="setIsChanged()" autofocus>
+                    <input class="form-control" (keyup.enter)="handleEnter($event)" #header_input type="date" tabindex="2" [disabled]="headerObj.IS_NEW ? null : true" name="schedule_date" id="schedule_date" [(ngModel)]="headerObj.SCHEDULE_DATE_START" (ngModelChange)="setIsChanged()" autofocus>
                     <label for="schedule_date" id="test">Schedule Date: </label>
                 </div>
             </div>
@@ -135,18 +135,18 @@
                         <label for="group_number_select">Group Number: </label>
                         <select class="form-control" (keyup.enter)="handleEnter($event)" (keydown.enter)="$event.preventDefault()" #header_input tabindex="4" name="group_number" id="group_number_select" [(ngModel)]="headerObj.GRP_NUM" (ngModelChange)="setIsChanged()">
                             <option value="0" selected>Select Group Number</option>
-                            <option value="fp-01">FP-01</option>
-                            <option value="fp-02">FP-02</option>
-                            <option value="fp-03">FP-03</option>
-                            <option value="fp-04">FP-04</option>
-                            <option value="fp-05">FP-05</option>
-                            <option value="fp-06">FP-06</option>
-                            <option value="fp-07">FP-07</option>
-                            <option value="fp-08">FP-08</option>
-                            <option value="fp-09">FP-09</option>
-                            <option value="fp-10">FP-10</option>
-                            <option value="fp-11">FP-11</option>
-                            <option value="fp-11">FP-11</option>
+                            <option value="p-01">P-01</option>
+                            <option value="p-02">P-02</option>
+                            <option value="p-03">P-03</option>
+                            <option value="p-04">P-04</option>
+                            <option value="p-05">P-05</option>
+                            <option value="p-06">P-06</option>
+                            <option value="p-07">P-07</option>
+                            <option value="p-08">P-08</option>
+                            <option value="p-09">P-09</option>
+                            <option value="p-10">P-10</option>
+                            <option value="p-11">P-11</option>
+                            <option value="p-12">P-12</option>
                             <option value="stp-2">STP-2</option>
                         </select>
                     </div>

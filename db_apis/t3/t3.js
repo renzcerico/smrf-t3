@@ -38,7 +38,7 @@ const storeAll = async (data) => {
                 type: oracle.NUMBER
             }
         }
-        console.log(binds.header_obj);
+        console.log(binds.manpower_data);
         const result = await connect.execute(query, binds, {autoCommit: true})
         .catch(error => { console.log('caught', error.message); });
         return result.outBinds.output;
@@ -225,7 +225,6 @@ const changePassword = async (data) => {
         dir: oracle.BIND_OUT,
         type: oracle.DB_TYPE_CHAR
     }
-    consoleSuccess(binds);
     const res = await database.simpleExecute(q, binds)
         .catch(error => { console.log('caught', error.message); });
     return parseInt(res.outBinds.status, 10);
