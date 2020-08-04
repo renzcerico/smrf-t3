@@ -101,12 +101,12 @@
                         <div class="td-indicator"></div>
                     </td>
                     <td *ngIf="!isAuthorized || (i > 0 && activeUser.USER_TYPE === 1)" class="text-center align-middle" data-label="Remarks">{{ activity.REMARKS }}</td>
-                    <td class="align-middle" data-label="Updated By">{{ activity.LAST_UPDATED_BY_NAME }}</td>
-                    <td class="align-middle" data-label="Date Entered">
+                    <td class="align-middle text-nowrap" data-label="Updated By">{{ activity.LAST_UPDATED_BY_NAME }}</td>
+                    <td class="align-middle text-nowrap" data-label="Date Entered">
                         {{ activity.DATE_ENTERED | date : 'MMM d, y HH:mm' }}
                         <!-- {{ activity.DATE_ENTERED ? (activity.DATE_ENTERED | date : 'MMM d, y HH:mm') : "" }} -->
                     </td>
-                    <td class="align-middle" data-label="Date Updated">
+                    <td class="align-middle text-nowrap" data-label="Date Updated">
                         {{ activity.DATE_UPDATED !== 'Invalid date' ? (activity.DATE_UPDATED | date : 'MMM d, y HH:mm') : null  }}
                     </td>                    
                 </tr>
