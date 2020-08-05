@@ -9,6 +9,11 @@ textarea:focus {
     right: 0;
 }
 
+th {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+}
+
 .legend-editable {
     background-color: bisque;
     padding: 2.5px;
