@@ -4,6 +4,7 @@ import { ActivityFactory } from './classes/activity-factory';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,52 +37,53 @@ const maskConfig: Partial<IConfig> = {
 };
 
 @NgModule({
-declarations: [
-AppComponent,
-TopBarComponent,
-HeaderComponent,
-MaterialComponent,
-ManpowerComponent,
-FooterComponent,
-ActivityComponent,
-ActivityDetailsComponent,
-ActivityDowntimeComponent,
-AccountsComponent,
-HeaderModalComponent,
-CounterPipePipe,
-LoginComponent,
-AddRowComponent,
-ChangePasswordComponent
-],
-entryComponents: [
-ActivityDetailsComponent,
-ActivityDowntimeComponent,
-HeaderModalComponent,
-LoginComponent,
-AddRowComponent,
-ChangePasswordComponent,
-],
-imports: [
-AutosizeModule,
-BrowserModule,
-FontAwesomeModule,
-AppRoutingModule,
-FormsModule,
-NgxMaskModule.forRoot(maskConfig),
-ReactiveFormsModule,
-BrowserAnimationsModule,
-HttpClientModule,
-NgbModule,
-// AngularFontAwesomeModule
-],
-providers: [
-ApiService,
-ActivityFactory,
-AccountFactory,
-HeaderFactory,
-// { provide: LocationStrategy, useClass: HashLocationStrategy }
-],
-bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        TopBarComponent,
+        HeaderComponent,
+        MaterialComponent,
+        ManpowerComponent,
+        FooterComponent,
+        ActivityComponent,
+        ActivityDetailsComponent,
+        ActivityDowntimeComponent,
+        AccountsComponent,
+        HeaderModalComponent,
+        CounterPipePipe,
+        LoginComponent,
+        AddRowComponent,
+        ChangePasswordComponent
+    ],
+    entryComponents: [
+        ActivityDetailsComponent,
+        ActivityDowntimeComponent,
+        HeaderModalComponent,
+        LoginComponent,
+        AddRowComponent,
+        ChangePasswordComponent,
+    ],
+    imports: [
+        AutosizeModule,
+        BrowserModule,
+        FontAwesomeModule,
+        AppRoutingModule,
+        NgSelectModule,
+        FormsModule,
+        NgxMaskModule.forRoot(maskConfig),
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        NgbModule,
+        // AngularFontAwesomeModule
+    ],
+    providers: [
+        ApiService,
+        ActivityFactory,
+        AccountFactory,
+        HeaderFactory,
+        // { provide: LocationStrategy, useClass: HashLocationStrategy }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
     constructor(private lib: FaIconLibrary) {

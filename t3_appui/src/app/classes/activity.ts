@@ -128,4 +128,15 @@ export default class Activity {
         };
         return json;
     }
+
+    get OUTPUT_PER_MINUTE(): number {
+        const res = this.TOTAL / this.TOTAL_MINUTES;
+        return res;
+    }
+
+    get TOTAL_MINUTES(): number {
+        // consider downtime
+        const res = moment(this.END_TIME).diff(moment(this.START_TIME), 'minutes') - this.TOTAL_DOWNTIME;
+        return res;
+    }
 }

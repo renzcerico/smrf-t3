@@ -40,6 +40,17 @@
                                 {{ account.FIRST_NAME}} {{ account.LAST_NAME}}
                             </option>
                         </select>
+                        <!-- <ng-select
+                            autofocus
+                            (change)="handleChange($event, i)"
+                            [(ngModel)]="positions[i].SELECTED"
+                            [attr.SELECTED_INDEX]="positions[i].SELECTED_INDEX"
+                            >
+                            <ng-option *ngFor="let account of accounts; let ii = index" [disabled]="account.DISABLED"
+                                value="{{ account.ID }}">
+                                {{ account.FIRST_NAME}} {{ account.LAST_NAME}}
+                            </ng-option>
+                        </ng-select>                         -->
                     </td>
                     <td *ngIf="!isAuthorized" class="align-middle" data-label="Start">
                         <span *ngIf="manpowers[i].START_TIME">

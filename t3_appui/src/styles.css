@@ -1,8 +1,15 @@
+@import "~@ng-select/ng-select/themes/material.theme.css";
+
 input:focus,
 select:focus,
 textarea:focus {
     border-bottom: 2px solid #28a745 !important;
     box-shadow: #28a745 !important;
+}
+
+.ng-input input:focus {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
 }
 
 .right-0 {

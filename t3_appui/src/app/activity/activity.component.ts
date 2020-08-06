@@ -56,6 +56,16 @@ export class ActivityComponent implements OnInit {
     return subTotal;
   }
 
+  get outputPerMinuteSubtotal() {
+    let outputPerMinuteSubtotal = 0;
+    if (this.activities.length) {
+      this.activities.forEach( (el) => {
+        outputPerMinuteSubtotal += el.OUTPUT_PER_MINUTE;
+      });
+    }
+    return outputPerMinuteSubtotal;
+  }
+
   get packedSubTotal() {
     let subTotal = 0;
     if (this.activities.length) {
@@ -281,15 +291,18 @@ export class ActivityComponent implements OnInit {
   get totalStdOutput(): number {
     let res = 0;
     if (this.activities.length && this.headerObj.STD_OUTPUT) {
-      res = this.activities.length * this.headerObj.STD_OUTPUT;
+      res = (this.activities.length * this.headerObj.STD_OUTPUT);
     }
     return res;
   }
 
+  get stdOutputPerMinute(): number {
+    return this.totalStdOutput / 60;
+  }
   get efficiency(): number {
     let res = 0;
     if (this.totalStdOutput) {
-      res = (this.subTotal / this.totalStdOutput) * 100;
+      res = (this.outputPerMinuteSubtotal / this.stdOutputPerMinute) * 100;
     }
     return res;
   }
