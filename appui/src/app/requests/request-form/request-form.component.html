@@ -251,10 +251,20 @@
     <div class="form-group row" *ngIf="requestType === 'request'">
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-            <button class="form-control text-uppercase" mat-raised-button color="warn" type="button">Cancel</button>
+            <button class="form-control text-uppercase" 
+                    [routerLink]="['/manage-request']"
+                    mat-raised-button 
+                    color="warn" 
+                    type="button">Cancel</button>
         </div>
         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-            <button class="form-control text-uppercase" mat-raised-button color="primary" (click)="btnRequest(reqForm)">Submit</button>
+            <button class="form-control text-uppercase"
+                    mat-raised-button color="primary" 
+                    (click)="btnRequest(reqForm)"
+                    [disabled]="isDisabled">
+                    <mat-spinner [diameter]="25" class="d-inline-block" *ngIf="isDisabled"></mat-spinner>
+                    <span *ngIf="!isDisabled">Request</span>
+            </button>
         </div>
     </div>
 

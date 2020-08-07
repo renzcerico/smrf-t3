@@ -8,7 +8,7 @@
       [routerLink]="['']">
       Service Maintenance
     </a>
-    <button class="h-100 float-left" color="primary" type="button" mat-button (click)="toggleMenu()">
+    <button class="h-100 float-left" color="primary" type="button" mat-button (click)="toggleMenu()" *ngIf="user">
       <mat-icon>menu</mat-icon>
     </button>
     <div class="ml-auto" *ngIf="user" [matMenuTriggerFor]="menu">

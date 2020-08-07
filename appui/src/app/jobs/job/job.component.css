@@ -24,3 +24,10 @@ td {
     font-weight: 500;
     font-size: 13px;
 }
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}

@@ -17,6 +17,7 @@ export class ManageRequestsComponent implements OnInit {
   requestsList = [];
   req: any;
   port = '/localapi/';
+  isAdmin = false;
 
   constructor(public dialog: MatDialog,
               public reqSer: RequestService,
@@ -25,6 +26,7 @@ export class ManageRequestsComponent implements OnInit {
 
   async ngOnInit() {
     this.assignedPerson = this.userService.userLevel === 'requestor' ? 'Dept. Head' : 'Created By';
+    this.isAdmin = this.userService.userLevel === 'admin' ? true : false;
 
     await this.getAllRequest();
 
@@ -43,15 +45,8 @@ export class ManageRequestsComponent implements OnInit {
             element[`color`] = 'text-danger';
             element[`router`] = '/requests/';
             this.requestsList.push(element);
-          } else if ((element.REQ_STATUS === 1) && (this.userService.userLevel === 'requestor')) {
-            element[`REQ_STATUS`] = 'Open';
-            element[`color`] = 'text-secondary';
-            element[`router`] = '/manage-jobs/';
-            this.requestsList.push(element);
-          } else if ((element.REQ_STATUS === 1) &&
-                     (this.userService.userLevel === 'head' ||
-                     this.userService.userLevel === 'supervisor' ||
-                     this.userService.userLevel === 'admin')) {
+          }
+           else if (element.REQ_STATUS === 1) {
             element[`REQ_STATUS`] = 'Open';
             element[`color`] = 'text-secondary';
             element[`router`] = '/requests/';

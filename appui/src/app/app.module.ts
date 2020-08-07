@@ -37,6 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RequestComponent } from './requests/request/request.component';
@@ -141,7 +142,8 @@ import * as $ from 'jquery';
     MatIconModule,
     MatCheckboxModule,
     MatTabsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     // DepartmentComponent

@@ -18,7 +18,12 @@
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
             <mat-form-field class="w-100">
-                <input matInput [matDatepicker]="picker" placeholder="Estimated Completion Date:" [(ngModel)]="jobOrderEstDateRequired" name="jobOrderEstDateRequired" required />
+                <input matInput
+                       [matDatepicker]="picker" 
+                       placeholder="Estimated Completion Date:" 
+                       [(ngModel)]="jobOrderEstDateRequired"
+                       (focus)="picker.open();" 
+                       name="jobOrderEstDateRequired" required />
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -289,7 +294,7 @@
     <div class="form-group row" *ngIf="buttonVisibility">
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-        <button mat-raised-button color="warn" class="text-uppercase w-100">{{ btnCancel }}</button>
+        <button mat-raised-button color="warn" class="text-uppercase w-100" [routerLink]="['/job']" >{{ btnCancel }}</button>
         </div>
         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
             <button mat-raised-button color="primary" class="text-uppercase w-100" (click)="createJobOrder()">{{ btnTxt }}</button>

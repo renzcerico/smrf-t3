@@ -59,6 +59,8 @@ export class RequestFormComponent implements OnInit, AfterContentChecked {
   minDate: Date = new Date();
   minDateValidation = false;
 
+  isDisabled = false;
+
   constructor(public http: HttpClient, public userService: UserService, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -157,7 +159,7 @@ export class RequestFormComponent implements OnInit, AfterContentChecked {
 
       console.log(this.errorNum);
       if (this.errorNum === 0) {
-
+          this.isDisabled = true;
           // this.json = {
           //   reqRecipient: this.userService.recipient,
           //   reqDateRequired: moment(this.reqDateRequired).format('DD-MMM-YYYY HH:mm:ss').toString(),
@@ -200,11 +202,11 @@ export class RequestFormComponent implements OnInit, AfterContentChecked {
 
                       if (this.response.success === 'Y') {
                           this.successRequest = !this.successRequest;
-
                           setTimeout(() => {
                             this.successRequest = !this.successRequest;
                             form.resetForm('');
                             this.reset();
+                            this.isDisabled = false;
                           }, 3000);
                       } else {
                         alert('Error! ' + this.response.success);
@@ -317,7 +319,7 @@ export class RequestFormComponent implements OnInit, AfterContentChecked {
     const reader = new FileReader();
     const array = ['jpg', 'jpeg', 'png'];
 
-    if (array.includes(fileExtension)) {
+    if (array.includes(fileExtension.toLowerCase())) {
       reader.readAsDataURL(file[0]);
       this.fileToPush.push(file[0]);
       // tslint:disable-next-line: variable-name
