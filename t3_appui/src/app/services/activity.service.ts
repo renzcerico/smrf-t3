@@ -29,6 +29,7 @@ export class ActivityService {
     timer: any;
     servertime: any;
     isToEndProd: boolean;
+    headerObj1: Header;
 
     constructor(
         private apiService: ApiService,
@@ -61,7 +62,8 @@ export class ActivityService {
         headerService.header$.subscribe(
             data => {
                 if (Object.keys(data).length > 0) {
-                    this.headerObj = this.headerFactory.setHeader(data.header_obj).getJson();
+                    this.headerObj = data;
+                    this.headerObj1 = data;
                 } else {
                     this.headerObj = {};
                 }
@@ -162,6 +164,7 @@ export class ActivityService {
                 START_TIME: this.expectedTime.start,
                 END_TIME: this.expectedTime.end,
                 IS_NEW: 1,
+                IS_CHANGED: 0
             });
             if (this.isAutoAddAllowed(filler) && !this.isToEndProd) {
                 this.activities.unshift(filler);
@@ -173,17 +176,7 @@ export class ActivityService {
         setInterval(() => {
             if (Object.entries(this.headerObj).length > 0) {
                 if (this.headerObj.STATUS === 1) {
-                    if (this.activities.length > 0) {
-                        if (this.activities[0].IS_CHANGED) {
-                            this.setFillers();
-                        } else {
-                            if (this.activities[0].IS_NEW) {
-                                this.setFillers();
-                            }
-                        }
-                    } else {
-                        this.setFillers();
-                    }
+                    this.setFillers();
                 }
             }
         }, 1000);
@@ -291,7 +284,7 @@ export class ActivityService {
 
     isAutoAddAllowed(nextAct: Activity): boolean {
         const nextStartTime = moment(nextAct.START_TIME);
-        const shift =  this.headerObj.SHIFT_OBJ;
+        const shift =  this.headerObj.shifts[this.headerObj.SHIFT];
         let endHour;
         if (this.headerObj.SHIFT === 'nightshift') {
             endHour = moment(shift.last_hour).add(3 , 'hours');
@@ -301,10 +294,24 @@ export class ActivityService {
         if (!nextStartTime.isBetween(shift.first_hour, endHour)) {
             return false;
         }
+        if (this.activities.length) {
+            if (this.activities[0].PACKED_QTY <= 0) {
+                return false;
+            }
+        }
         // if (nextStartTime.isSameOrAfter(endHour)) {
         //     return false;
         // }
         return true;
+    }
+
+    endProduction() {
+        const headerEnd = moment(this.headerObj.ACTUAL_END);
+        const actStart = moment(this.activities[0].START_TIME);
+        const actEnd = moment(this.activities[0].END_TIME);
+        if (headerEnd.isBetween(actStart, actEnd)) {
+            this.activities[0].END_TIME = headerEnd.format('DD-MMM-YYYY HH:mm:ss');
+        }
     }
 
 }

@@ -13,6 +13,8 @@ export default class Account {
     USER_LEVEL: string;
     CREATED_AT: string;
     USERNAME: string;
+    DISPLAY_NAME: string;
+    DISABLED: number;
     // headerObj: Header;
     userTypes = {
         user        : 1,
@@ -36,6 +38,8 @@ export default class Account {
         this.USER_LEVEL  = jsonObj.USER_LEVEL || '';
         this.CREATED_AT  = jsonObj.CREATED_AT || '';
         this.USERNAME    = jsonObj.USERNAME || '';
+        this.DISPLAY_NAME = this.FIRST_NAME + ' ' + this.LAST_NAME;
+        this.DISABLED = jsonObj.DISABLED || 0;
     }
 
     get USER_TYPE() {

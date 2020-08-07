@@ -1,11 +1,14 @@
+import { AccountFactory } from './../classes/account-factory';
 import Swal from 'sweetalert2';
 import Manpower from './../classes/manpower';
 import { ManpowerService } from './../services/manpower.service';
-import { Component, OnInit, AfterContentChecked, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, AfterContentChecked, ViewChild, ViewChildren, ElementRef, QueryList, Renderer2 } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { resetFakeAsyncZone } from '@angular/core/testing';
 import { UserService } from '../services/user.service';
 import * as moment from 'moment';
+import { NgbDropdown, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
+import Account from '../classes/account';
 
 @Component({
     selector: 'app-manpower',
@@ -14,9 +17,11 @@ import * as moment from 'moment';
 })
 export class ManpowerComponent implements OnInit {
     @ViewChildren('tdEditable') tdEditable !: QueryList<ElementRef>;
+    @ViewChildren(NgbDropdown) posDropdowns !: QueryList<NgbDropdown>;
+    posDropdownItems: ElementRef[];
     positions: any = [];
     tempManpower: any = [];
-    accounts: Array<any>;
+    accounts: Account[];
     manpowerSelected = [];
     manpowerOnFocus = 0;
     activeUser;
@@ -24,9 +29,14 @@ export class ManpowerComponent implements OnInit {
     userType: number;
     isAuthorized: boolean;
     apiResponse: any;
-
+    activeDropdown: NgbDropdown;
+    filteredOptions: any[];
+    filteredDropdownItems: NgbDropdownItem[];
     constructor(public apis: ApiService,
                 private manpowerService: ManpowerService,
+                private el: ElementRef,
+                private accountFactory: AccountFactory,
+                private renderer: Renderer2,
                 private userService: UserService) {
         this.manpowerService.manpower$.subscribe(
             async manpower => {
@@ -63,13 +73,17 @@ export class ManpowerComponent implements OnInit {
         await this.apis.getManpowerList().toPromise()
             .then(
                 res => {
-                    this.accounts = res;
-                    this.accounts.unshift({
+                    const arr: Account[] = [];
+                    res.forEach(element => {
+                        arr.push(this.accountFactory.setAccount(element));
+                    });
+                    this.accounts = arr;
+                    this.accounts.unshift(this.accountFactory.setAccount({
                         ID: 0,
                         FIRST_NAME: 'No Manpower Setup',
                         LAST_NAME: '',
                         DISABLED: 0,
-                    });
+                    }));
                 }
             );
         if (!this.manpowers) {
@@ -203,4 +217,74 @@ export class ManpowerComponent implements OnInit {
         this.tempManpower = manpowerCollection;
     }
 
+    dropdownToggle(index: number) {
+        const arr = this.posDropdowns.toArray();
+        const dropdown = arr[index];
+        this.optionQuery = '';
+        const searchEl = this.el.nativeElement.querySelector('#search_' + index);
+        searchEl.value = '';
+        if (dropdown.isOpen()) {
+            setTimeout(() => {
+                this.renderer.selectRootElement('#search_' + index).focus();
+            }, 150);
+        }
+    }
+
+    inputChange(event) {
+        const target = event.target as HTMLInputElement;
+        this.optionQuery = target.value;
+    }
+
+    set optionQuery(q: any) {
+        this.filteredOptions = this.accounts.filter(account => {
+            return account.DISPLAY_NAME.toLowerCase().includes(q.toLowerCase());
+        });
+    }
+
+    get optionQuery(): any {
+        return this.filteredOptions;
+    }
+
+    // set activeDropdownItems(index) {
+    //     const arr = this.posDropdownItems.toArray();
+    //     this.filteredDropdownItems = arr.filter(el => {
+    //     })
+    // }
+
+    itemFocus(index, event) {
+        event.preventDefault();
+        const el = this.el.nativeElement.querySelector('button[parent_dropdown="pos_dd_' + index + '"]');
+        el.focus();
+    }
+
+    inputFocus(ddIndex, itemIndex, event) {
+        if (itemIndex === 0) {
+            event.stopPropagation();
+            const el = this.el.nativeElement.querySelector('#search_' + ddIndex);
+            el.focus();
+        }
+    }
+
+    handleSelect(i, ii) {
+        const arr = this.posDropdowns.toArray();
+        const dd = this.el.nativeElement.querySelector('#pos_dd_' + i);
+        const currValIndex = parseInt(dd.getAttribute('selected_index'), 10);
+        const newValIndex = this.accounts.findIndex(acc => acc.ID === this.optionQuery[ii].ID);
+        if (currValIndex > 0) {
+            this.accounts[currValIndex].DISABLED = 0;
+        }
+        // this.renderer.setProperty(dd, 'selected_index', newValIndex);
+        this.positions[i].SELECTED_INDEX = newValIndex;
+        this.positions[i].SELECTED = this.accounts[newValIndex].ID;
+        if (newValIndex > 0) {
+            this.accounts[newValIndex].DISABLED = 1;
+        }
+        if (newValIndex === 0) {
+            this.manpowers[i].START_TIME = '';
+            this.manpowers[i].END_TIME = '';
+            this.manpowers[i].REMARKS = '';
+        }
+        this.manpowers[i].setManpowerID(this.positions[i].SELECTED);
+        this.handleInput(i);
+    }
 }

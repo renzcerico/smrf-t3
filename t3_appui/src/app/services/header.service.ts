@@ -9,13 +9,16 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { environment } from '../../environments/environment';
 import * as io from 'socket.io-client';
 import Swal from 'sweetalert2';
+import { HeaderFactory } from '../classes/header-factory';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeaderService {
+  private dataSource = new Subject<any>();
   private headerSource = new Subject<any>();
   private headerCountSource = new Subject<any>();
+  data$ = this.dataSource.asObservable();
   header$ = this.headerSource.asObservable();
   headerCount$ = this.headerCountSource.asObservable();
   header: Header;
@@ -63,7 +66,8 @@ export class HeaderService {
 
   constructor(private apiService: ApiService,
               public http: HttpClient,
-              ) {
+              private headerFactory: HeaderFactory,
+            ) {
     // this.getHeaderCountPerStatus();
     this.url = environment.BE_SERVER;
     this.socket = io(this.url);
@@ -72,8 +76,21 @@ export class HeaderService {
     this.getHeaderCountPerStatus.subscribe();
   }
 
-  setHeaderObj(headerObj) {
-    // const header = new Header(headerObj);
+  setData(data) {
+    // const header = new Header(data);
+    this.dataSource.next(data);
+    if (Object.keys(data).length > 0) {
+        this.setHeaderObj(data.header_obj);
+    } else {
+        this.setHeaderObj(null);
+    }
+  }
+
+  setHeaderObj(header) {
+    let headerObj = {};
+    if (header) {
+        headerObj = this.headerFactory.setHeader(header);
+    }
     this.headerSource.next(headerObj);
   }
 
@@ -122,7 +139,7 @@ export class HeaderService {
     );
     if (this.getDataRes.isExisting) {
         this.currentData = this.getDataRes;
-        this.setHeaderObj(this.getDataRes);
+        this.setData(this.getDataRes);
         if (!isCurrentUser) {
             Swal.close();
         }

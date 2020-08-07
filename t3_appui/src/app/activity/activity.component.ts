@@ -63,7 +63,7 @@ export class ActivityComponent implements OnInit {
         outputPerMinuteSubtotal += el.OUTPUT_PER_MINUTE;
       });
     }
-    return outputPerMinuteSubtotal;
+    return Math.floor(outputPerMinuteSubtotal);
   }
 
   get packedSubTotal() {
@@ -126,11 +126,7 @@ export class ActivityComponent implements OnInit {
     });
     headerService.header$.subscribe(
       data => {
-        if (Object.keys(data).length > 0) {
-          this.headerObj = this.headerFactory.setHeader(data.header_obj);
-      } else {
-          this.headerObj = {};
-      }
+          this.headerObj = data;
       }
     );
     serverTimeService.time$.subscribe(
@@ -297,7 +293,7 @@ export class ActivityComponent implements OnInit {
   }
 
   get stdOutputPerMinute(): number {
-    return this.totalStdOutput / 60;
+    return Math.floor(this.totalStdOutput / 60);
   }
   get efficiency(): number {
     let res = 0;

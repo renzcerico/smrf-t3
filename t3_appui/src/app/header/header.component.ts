@@ -145,9 +145,14 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
                 this.manPowercollection = manpower;
             }
         );
+        headerService.data$.subscribe(
+            data => {
+                this.setData(data);
+            }
+        );
         headerService.header$.subscribe(
             header => {
-                this.setData(header);
+                this.headerObj = header;
             }
         );
         this.userService.user$.subscribe(
@@ -437,13 +442,16 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
                     this.headerObj.APPROVED_AT = this.timer.format('DD-MMM-YYYY HH:mm:ss');
                     break;
             }
+            if (action === 1) {
+                this.activityService.endProduction();
+            }
             this.header(false);
         }
     }
 
     setData(data) {
         if (Object.keys(data).length > 0) {
-            this.headerObj = this.headerFactory.setHeader(data.header_obj);
+            this.headerService.setHeaderObj(data.header_obj);
             this.visibleStatus(this.headerObj.STATUS);
             this.manpowerService.setManpower(data.manpower_collection);
             this.activityService.setActivities(data.activity_collection);
