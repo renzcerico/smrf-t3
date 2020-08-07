@@ -259,7 +259,7 @@ export class ManpowerComponent implements OnInit {
 
     inputFocus(ddIndex, itemIndex, event) {
         if (itemIndex === 0) {
-            event.stopPropagation();
+            event.preventDefault();
             const el = this.el.nativeElement.querySelector('#search_' + ddIndex);
             el.focus();
         }
@@ -269,7 +269,7 @@ export class ManpowerComponent implements OnInit {
         const arr = this.posDropdowns.toArray();
         const dd = this.el.nativeElement.querySelector('#pos_dd_' + i);
         const currValIndex = parseInt(dd.getAttribute('selected_index'), 10);
-        const newValIndex = this.accounts.findIndex(acc => acc.ID === this.optionQuery[ii].ID);
+        const newValIndex = this.accounts.findIndex(acc => acc.ID === this.optionQuery[ii].ID) || 0;
         if (currValIndex > 0) {
             this.accounts[currValIndex].DISABLED = 0;
         }

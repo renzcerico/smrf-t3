@@ -65,7 +65,7 @@
                             [attr.m-id]="material.id"
                             #tdEditable
                             autosize rows="1"
-                            (keydown.enter)="onKeyDown($event)">
+                            (keyup.enter)="onKeyDown($event)">
                             {{ material.REMARKS }}
                         </textarea>
                     </td>

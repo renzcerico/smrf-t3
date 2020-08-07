@@ -30,6 +30,10 @@ option:disabled {
     display: none;
 }
 
+#container_manpower .table-responsive::-webkit-scrollbar {
+    display: none;
+}
+
 .custom-select-btn {
     text-align: left !important;
 }
