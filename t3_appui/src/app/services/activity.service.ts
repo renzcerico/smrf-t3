@@ -260,9 +260,11 @@ export class ActivityService {
     addEndProdRow() {
         this.isToEndProd = true;
         let end = '';
+        const actualStart = moment(this.headerObj.ACTUAL_START);
         const start = moment(this.activities[0].END_TIME).startOf('hour').format('DD-MMM-YYYY HH:mm:ss');
+        const lastActStart = moment(this.activities[0].START_TIME);
         this.activities[0].END_TIME = start;
-        if (moment(this.headerObj.ACTUAL_START).isSame(moment(this.servertime), 'day')) {
+        if (actualStart.isBetween(lastActStart, moment(start))) {
             end = this.servertime;
         } else {
             end = moment(start).add(1, 'hour').format('DD-MMM-YYYY HH:mm:ss');

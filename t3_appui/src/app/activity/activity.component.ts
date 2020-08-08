@@ -63,7 +63,7 @@ export class ActivityComponent implements OnInit {
         outputPerMinuteSubtotal += el.OUTPUT_PER_MINUTE;
       });
     }
-    return Math.floor(outputPerMinuteSubtotal);
+    return outputPerMinuteSubtotal;
   }
 
   get packedSubTotal() {
@@ -293,7 +293,7 @@ export class ActivityComponent implements OnInit {
   }
 
   get stdOutputPerMinute(): number {
-    return Math.floor(this.totalStdOutput / 60);
+    return this.totalStdOutput / 60;
   }
   get efficiency(): number {
     let res = 0;

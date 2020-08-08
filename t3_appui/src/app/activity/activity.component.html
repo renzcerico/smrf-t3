@@ -123,10 +123,10 @@
             <tfoot *ngIf="activities.length > 0">
                 <tr class="text-uppercase">
                     <td colspan="2" class="text-right">Sub total:</td>
-                    <td class="text-right">{{ totalStdOutput | number: '' }}</td>
+                    <td class="text-right">{{ totalStdOutput | number: '' }} <small>({{stdOutputPerMinute | number: '2.2-2' }} / min)</small></td>
                     <td class="text-right">{{ packedSubTotal | number: '' }}</td>
                     <td class="text-right">{{ adjSubTotal | number: '' }}</td>
-                    <td class="text-right">{{ subTotal | number: '' }}</td>
+                    <td class="text-right">{{ subTotal | number: '' }} <small>({{outputPerMinuteSubtotal | number: '2.2-2' }} / min)</small> </td>
                     <td class="text-right">{{ downtimeSubTotal | number: '' }}</td>
                     <td></td>
                     <td class="text-right">Efficiency:</td>
