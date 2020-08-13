@@ -113,7 +113,7 @@ input[type=number] {
     }
   }
 
-.btn:not(#user_profile_dropdown):not(.custom-select-btn) {
+.btn:not(#user_profile_dropdown):not(.custom-select-btn):not(.dropdown-option):not(#btn_see_more) {
     width: 200px;
     margin: 10px;
     border-radius: 100px;

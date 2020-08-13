@@ -49,7 +49,7 @@
                                 <input type="text" (keydown.arrowdown)="itemFocus(i, $event)" (focus)="$event.target.select();" (input)="inputChange($event)"
                                     name="search" [id]="'search_' + i" class="form-control py-0" placeholder="{{accounts[position.SELECTED_INDEX].DISPLAY_NAME}}">
                                 <ng-container  *ngIf="optionQuery; optionsElse">
-                                    <button class="btn btn-sm w-100 text-left" ngbDropdownItem
+                                    <button class="btn dropdown-option btn-sm w-100 text-left" ngbDropdownItem
                                         *ngFor="let account of optionQuery; let ii = index" (keyup.arrowup)="inputFocus(i,ii, $event)"
                                         [disabled]="account.DISABLED ? true: null" [attr.parent_dropdown]="'pos_dd_' + i"
                                         (click)="handleSelect(i, ii)">
