@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserService } from './../user.service';
 import { isNull } from 'util';
+import * as io from 'socket.io-client';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +24,20 @@ export class LoginComponent implements OnInit {
   response;
   invalidLogin = true;
   error = 0;
-
+    socket;
   constructor(private http: HttpClient,
               public router: Router,
               private userService: UserService) { }
 
+  testObservable = new Observable<any>((observer) => {
+    this.socket.on('receive_test', (data) => {
+      alert(data);
+    });
+  });
+
   ngOnInit(): void {
     this.currentUser();
+    this.socket = io('/smrf');
   }
 
   requiredFields() {
@@ -158,6 +167,10 @@ export class LoginComponent implements OnInit {
                   console.log(err);
                 }
               );
+  }
+  test() {
+      console.log('test');
+      this.socket.emit('test', 'renz burat');
   }
 
 }
