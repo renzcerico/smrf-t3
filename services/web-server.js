@@ -13,6 +13,7 @@ const cookieParser = require('cookie-parser');
 const io = require('socket.io');
 const sharedsession = require('express-socket.io-session');
 const fileUpload = require('express-fileupload');
+const { emit } = require('process');
 require('dotenv').config();
 
 
@@ -80,7 +81,8 @@ function initialize() {
     
     // socket io setup
     const socketIO = io.listen(httpServer);
-    
+    const smrfSocket = io.of('/smrf');
+
     socketIO.use(sharedsession(session));
     socketIO.on('connection', (socket) => {
       socket.on('headerStatusUpdate', (data) => {
@@ -89,6 +91,12 @@ function initialize() {
       socket.on('updatedHeader', (data) => {
         socketIO.emit('headerUpdated', data);
       });
+    });
+
+    smrfSocket.on('connection', socket => {
+        smrfSocket.on('test', data => {
+            smrfSocket.emit('receive_test', data);
+        });
     });
 
     // fileupload set up
