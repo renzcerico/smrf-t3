@@ -38,7 +38,7 @@ export class UserService {
       }
     );
 
-    headerService.header$.subscribe(
+    headerService.data$.subscribe(
         data => {
           if (Object.keys(data).length > 0) {
               this.headerObj = this.headerFactory.setHeader(data.header_obj);
@@ -65,7 +65,7 @@ export class UserService {
     this.api.logout()
     .subscribe(
         res => {
-          this.headerService.setHeaderObj({});
+          this.headerService.setData({});
           this.setUser(null);
         },
         err => {

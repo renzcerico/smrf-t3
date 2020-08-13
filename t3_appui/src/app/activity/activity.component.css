@@ -39,15 +39,6 @@ tbody td {
     background-color: #b6ffb2 !important;
 }
 
-.font-weight-500 {
-    font-weight: 500;
-}
-
-.activity-container button {
-    width: 200px !important;
-    border-radius: 100px !important;
-}
-
 .clickable-indicator {
     top: -5px;
     left: 2px;

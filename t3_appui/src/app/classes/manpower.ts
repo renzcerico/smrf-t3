@@ -29,6 +29,6 @@ export default class Manpower {
     }
 
     setManpowerID(id: number) {
-        this.MANPOWER_ID = id;
+        this.MANPOWER_ID = id || 0;
     }
 }

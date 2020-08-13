@@ -42,6 +42,7 @@ function initialize() {
         'http://localhost:4203',
         'http://localhost:3000',
         'http://t3apps.tailinsubic.com/',
+        'http://t3apps.tailinsubic.com',
         'http://service.tailinsubic.com/'
       ];
       const origin = req.headers.origin;

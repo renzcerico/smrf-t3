@@ -8,12 +8,11 @@
     color: #495057;
     vertical-align: middle;
     background-size: 8px 10px;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     text-align-last: center;
+    border-color: #ced4da;
 }
 
 .no-select {
@@ -22,4 +21,25 @@
 
 .highlight {
     background-color: #b6ffb2 !important;
+}
+
+input, select {
+    border-right: 0;
+    border-left: 0;
+    border-top: 0;
+    border-radius: 0;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    box-shadow: none;
+    font-size: 13.5px !important;
+}
+
+input:focus, select:focus {
+    border-bottom: 2px solid #28a745 !important;
+    border-bottom-width: 2px !important;
+    border-bottom-style: solid !important;
+    border-bottom-color: rgb(40, 167, 69) !important;
+    box-shadow: none !important;
 }

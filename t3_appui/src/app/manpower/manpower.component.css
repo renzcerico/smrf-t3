@@ -18,3 +18,34 @@
 option:disabled {
     color: #c9c7c6;
 }
+
+.pos-select-dropdown {
+    max-height: 200px !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+    z-index: 1050;
+}
+
+.pos-select-dropdown::-webkit-scrollbar {
+    display: none;
+}
+
+#container_manpower .table-responsive::-webkit-scrollbar {
+    display: none;
+}
+
+.custom-select-btn {
+    text-align: left !important;
+}
+
+.custom-select-btn:focus {
+    border-bottom: 2px solid #28a745 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.custom-select-btn::after {
+    position: absolute;
+    top: 40%;
+    right: 6px;
+}

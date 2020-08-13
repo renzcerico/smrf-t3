@@ -4,6 +4,7 @@ const login = require('../controllers/t3/logins.js');
 const personnel = require('../controllers/t3/personnel.js');
 const header = require('../controllers/t3/header.js');
 const t3 = require('../controllers/t3/t3.js');
+const mailer = require('../controllers/t3/mailer.js');
 const accounts = require('../controllers/t3/accounts.js');
 
 t3_router.route('/header')
@@ -65,5 +66,11 @@ t3_router.route('/t3Batch_info/:barcode')
 
 t3_router.route('/create-downtime-types')
 .post(t3.createDowntimeTypes);
+
+t3_router.route('/create-mail-acc')
+.get(mailer.createTestAccount);
+
+t3_router.route('/send-mail')
+.get(mailer.send);
 
 module.exports = t3_router;

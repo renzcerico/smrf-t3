@@ -126,11 +126,7 @@ export class ActivityComponent implements OnInit {
     });
     headerService.header$.subscribe(
       data => {
-        if (Object.keys(data).length > 0) {
-          this.headerObj = this.headerFactory.setHeader(data.header_obj);
-      } else {
-          this.headerObj = {};
-      }
+          this.headerObj = data;
       }
     );
     serverTimeService.time$.subscribe(
