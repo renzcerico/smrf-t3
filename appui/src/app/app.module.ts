@@ -38,6 +38,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxMatDatetimePickerModule,
+         NgxMatTimepickerModule,
+         NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RequestComponent } from './requests/request/request.component';
@@ -143,7 +146,10 @@ import * as $ from 'jquery';
     MatCheckboxModule,
     MatTabsModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule
   ],
   entryComponents: [
     // DepartmentComponent

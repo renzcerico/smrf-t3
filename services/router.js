@@ -11,6 +11,7 @@ const requestList = require('../controllers/list_of_request.js');
 const user = require('../controllers/user.js');
 const job = require('../controllers/job.js');
 const services = require('../controllers/services.js');
+const email  = require('../controllers/email.js');
 
 router.route('/login')
   .post(login.post);
@@ -131,5 +132,8 @@ router.route('/password')
 
 router.route('/verify-password')
   .post(user.verifyCurrentPassword);
+
+router.route('/email')
+  .get(email.send);
 
 module.exports = router;
