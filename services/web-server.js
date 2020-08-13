@@ -81,21 +81,25 @@ function initialize() {
     
     // socket io setup
     const socketIO = io.listen(httpServer);
-    const smrfSocket = io.of('/smrf');
-
+    
     socketIO.use(sharedsession(session));
     socketIO.on('connection', (socket) => {
-      socket.on('headerStatusUpdate', (data) => {
-        socketIO.emit('updateHeaderStatus', data);
-      })
-      socket.on('updatedHeader', (data) => {
-        socketIO.emit('headerUpdated', data);
-      });
+        socket.on('headerStatusUpdate', (data) => {
+            socketIO.emit('updateHeaderStatus', data);
+        })
+        socket.on('updatedHeader', (data) => {
+            socketIO.emit('headerUpdated', data);
+        });
     });
-
-    smrfSocket.on('connection', socket => {
-        smrfSocket.on('test', data => {
-            smrfSocket.emit('receive_test', data);
+    
+    const smrfSocket = socketIO.of('/smrf');
+    smrfSocket.on('connection', ws => {
+        console.log('smrf connected');
+        ws.on('test', data => {
+            console.log('test received');
+            console.log('emitting test...');
+            ws.broadcast.emit('received', data);
+            console.log('test emitted');
         });
     });
 

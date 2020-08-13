@@ -28,19 +28,20 @@ export class LoginComponent implements OnInit {
   constructor(private http: HttpClient,
               public router: Router,
               private userService: UserService) {
-        this.testObservable.subscribe();
               }
 
   testObservable = new Observable<any>((observer) => {
-    this.socket.on('receive_test', (data) => {
-      alert(data);
+    this.socket.on('received', (data) => {
+        console.log('test received');
+        alert(data);
     });
   });
 
   ngOnInit(): void {
     this.currentUser();
     this.socket = io('/smrf');
-  }
+    this.testObservable.subscribe();
+}
 
   requiredFields() {
     const username = this.loginUsername ? this.loginUsername.trim() : '';

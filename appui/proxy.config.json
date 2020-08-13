@@ -4,6 +4,12 @@
     "secure": false,
     "logLevel": "debug"
   },
+  "/socket.io/*": {
+    "target": "ws://localhost:3070/socket.io",
+    "ws": true,
+    "secure": false,
+    "logLevel": "debug"
+  },  
     "/api/*": {
     "target": "http://localhost:3002",
     "secure": false,
