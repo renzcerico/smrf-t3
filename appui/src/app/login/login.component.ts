@@ -27,7 +27,9 @@ export class LoginComponent implements OnInit {
     socket;
   constructor(private http: HttpClient,
               public router: Router,
-              private userService: UserService) { }
+              private userService: UserService) {
+        this.testObservable.subscribe();
+              }
 
   testObservable = new Observable<any>((observer) => {
     this.socket.on('receive_test', (data) => {
