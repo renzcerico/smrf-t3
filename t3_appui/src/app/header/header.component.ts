@@ -3,7 +3,7 @@ import { ServertimeService } from './../services/servertime.service';
 import { HeaderFactory } from './../classes/header-factory';
 import { ManpowerService } from './../services/manpower.service';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewChild, AfterContentChecked, AfterViewInit, ViewChildren, QueryList, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentChecked, AfterViewInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import ScannerDetector from 'js-scanner-detection';
@@ -11,7 +11,7 @@ import * as moment from 'moment';
 import { ActivityComponent } from '../activity/activity.component';
 import { MaterialComponent } from './../material/material.component';
 import { MaterialService } from './../services/material.service';
-import {ActivityService} from '../services/activity.service';
+import { ActivityService } from '../services/activity.service';
 import Activity from '../classes/activity';
 import Header from '../classes/header';
 import { HeaderService } from '../services/header.service';
@@ -41,8 +41,8 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     actCollection = [];
     matCollection = [];
     manPowercollection = [];
-    @ViewChild(ActivityComponent, {static: true}) actComponent;
-    @ViewChild(MaterialComponent, {static: true}) matComponent;
+    @ViewChild(ActivityComponent, { static: true }) actComponent;
+    @ViewChild(MaterialComponent, { static: true }) matComponent;
     @ViewChildren('header_input') headerInput !: QueryList<ElementRef>;
     actTotal = 0;
     matArr: any;
@@ -82,32 +82,32 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         // 3 : completed
         // 4 : closed
         // tslint:disable-next-line: no-inferrable-types
-        if ( !this.isAuthorized ) {
+        if (!this.isAuthorized) {
             return 'none';
         }
-        if ( this.headerObj.STATUS > 3 ) {
+        if (this.headerObj.STATUS > 3) {
             return 'none';
         }
         if (this.userType === 1) {
-          if (this.headerObj.STATUS !== 1) {
-            return 'none';
-          }
-          return 'endprod';
+            if (this.headerObj.STATUS !== 1) {
+                return 'none';
+            }
+            return 'endprod';
         } else if (this.userType === 2) {
-          if (this.headerObj.STATUS === 1) {
-            return 'endprod';
-          } else if (this.headerObj.STATUS === 2) {
-            return 'approve';
-          }
+            if (this.headerObj.STATUS === 1) {
+                return 'endprod';
+            } else if (this.headerObj.STATUS === 2) {
+                return 'approve';
+            }
         } else if (this.userType >= 3) {
-          if (this.headerObj.STATUS === 1) {
-            return 'endprod';
-          } else if (this.headerObj.STATUS > 1) {
-            return 'approve';
-          }
+            if (this.headerObj.STATUS === 1) {
+                return 'endprod';
+            } else if (this.headerObj.STATUS > 1) {
+                return 'approve';
+            }
         }
         return 'none';
-      }
+    }
 
     get showSaveButton() {
         if (this.headerObj.STATUS === 1) {
@@ -132,9 +132,9 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
         private userService: UserService) {
         activityService.activities$.subscribe(
             activities => {
-              this.actCollection = activities;
+                this.actCollection = activities;
             }
-          );
+        );
         materialService.materials$.subscribe(
             materials => {
                 this.matCollection = materials;
@@ -274,7 +274,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
                 text: 'Invalid Shift',
                 icon: 'warning',
                 confirmButtonText: 'OK',
-              });
+            });
             return;
         }
         if (this.headerObj.IS_NEW && !this.headerObj.isScheduleDateValid()) {
@@ -283,7 +283,7 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
                 text: 'Invalid Schedule Date',
                 icon: 'warning',
                 confirmButtonText: 'OK',
-              });
+            });
             return;
         }
         if (showConfirmMessage) {
@@ -314,19 +314,19 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
             allowEscapeKey: false,
             allowOutsideClick: false,
             onOpen: () => {
-              Swal.showLoading();
+                Swal.showLoading();
             }
-          });
+        });
         // tslint:disable-next-line: variable-name
         const activity_collection = [];
         this.actCollection.forEach(el => {
             activity_collection.push(el.getJson());
         });
         const json = {
-            header_obj          : this.headerObj.getJson(),
-            material_collection : this.matCollection,
-            manpower_collection : this.manPowercollection,
-            user_id             : this.activeUser.ID,
+            header_obj: this.headerObj.getJson(),
+            material_collection: this.matCollection,
+            manpower_collection: this.manPowercollection,
+            user_id: this.activeUser.ID,
             activity_collection,
         };
         await this.apis.header(json).toPromise()
@@ -339,12 +339,29 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
                             text: 'Transaction Saved.',
                             icon: 'success',
                             confirmButtonText: 'Okay',
-                        }).then(response => {
-                            this.userService.logOut();
+                        }).then(async (response) => {
+                            if (this.userType > 1) {
+                                let confirmed = false;
+                                await Swal.fire({
+                                    title: 'Notice',
+                                    showCancelButton: true,
+                                    text: 'Would you like to perform another transaction?',
+                                    icon: 'question',
+                                    confirmButtonText: 'Yes',
+                                    cancelButtonText: 'No'
+                                }).then(confirm => {
+                                    confirmed = confirm.isConfirmed;
+                                });
+                                if (!confirmed) {
+                                    this.userService.logOut();
+                                }
+                            } else {
+                                this.userService.logOut();
+                            }
                         });
                         const emitData = {
                             barcode: json.header_obj.BARCODE,
-                            user:   this.activeUser.ID
+                            user: this.activeUser.ID
                         };
                         this.socket.emit('updatedHeader', emitData);
                     }
@@ -357,12 +374,12 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
                         confirmButtonText: 'Okay',
                     });
                 }
-                );
+            );
     }
 
     handleProdMouseOver() {
         if (Object.entries(this.headerObj).length > 0) {
-            if (this.headerObj.PRODUCT_DESCRIPTION.length >= 60 ) {
+            if (this.headerObj.PRODUCT_DESCRIPTION.length >= 60) {
                 this.prodHover = 1;
             }
         }
@@ -389,9 +406,9 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
             icon: 'question',
             confirmButtonText: 'Yes',
             cancelButtonText: 'No'
-          }).then((confirm) => {
+        }).then((confirm) => {
             isConfirmed = confirm.isConfirmed;
-          });
+        });
         if (isConfirmed) {
             // user types
             // 1 : manpower
@@ -467,15 +484,15 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     }
 
     setForwardList() {
-       this.headerService.userForwardList
-        .subscribe(
-            res => {
-                this.usersForwardList = res;
-            },
-            err => {
-                console.log(err);
-            }
-        );
+        this.headerService.userForwardList
+            .subscribe(
+                res => {
+                    this.usersForwardList = res;
+                },
+                err => {
+                    console.log(err);
+                }
+            );
     }
 
     setIsChanged(): void {
@@ -513,17 +530,17 @@ export class HeaderComponent implements OnInit, AfterContentChecked, AfterViewIn
     handleEnter(event) {
         const elArr = this.headerInput.toArray();
         const active = elArr.findIndex(index => {
-          return (index.nativeElement.parentElement === event.target.parentElement);
+            return (index.nativeElement.parentElement === event.target.parentElement);
         });
 
         if (event.target.attributes.required && !event.target.value) {
-          return;
+            return;
         }
 
         if (active < elArr.length - 1) {
-          elArr[active + 1].nativeElement.focus();
+            elArr[active + 1].nativeElement.focus();
         } else {
-          event.target.blur();
+            event.target.blur();
         }
         event.preventDefault();
     }

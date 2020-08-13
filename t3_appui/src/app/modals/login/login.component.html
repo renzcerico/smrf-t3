@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body m-4">
         <form id="form_login" [formGroup]="loginForm">    
-            <div class="form-label-group">
+            <div class="form-label-group pr-0">
                 <input type="text"
                     ngBAutoFocus
                     id="username" 
@@ -18,7 +18,7 @@
                     placeholder="" required autofocus>
                 <label for="username">Username</label>
             </div>
-            <div class="form-label-group">
+            <div class="form-label-group pr-0">
                 <input type="password" 
                        id="password" 
                        class="form-control" 
@@ -27,7 +27,7 @@
                 <label for="password">Password</label>
             </div>
             <ngb-alert class="alert-danger font-weight-500" [dismissible]="false" [hidden]="loginHidden">Invalid username or password.</ngb-alert>
-            <button class="btn btn-success border-100 form-control font-weight-bold mt-2"
+            <button class="btn btn-success border-100 w-100 form-control font-weight-bold mx-0 mt-2"
                     (click)="login()">LOGIN
             </button>
         </form>

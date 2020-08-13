@@ -114,7 +114,7 @@ export class TopBarComponent implements OnInit, AfterContentChecked {
     }
 
     showChangePasswordModal() {
-        const modalRef = this.modalService.open(ChangePasswordComponent, {size: 'sm'});
+        const modalRef = this.modalService.open(ChangePasswordComponent, {size: 'md'});
     }
 
     loggedOut() {

@@ -23,7 +23,7 @@ option:disabled {
     max-height: 200px !important;
     overflow-y: scroll !important;
     overflow-x: hidden;
-    z-index: 2;
+    z-index: 1050;
 }
 
 .pos-select-dropdown::-webkit-scrollbar {

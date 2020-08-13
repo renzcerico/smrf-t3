@@ -32,11 +32,11 @@
 
         <ng-container *ngIf="activityService.headerObj">
             <div class="activity-container">
-                <button class="btn btn-success rounded mb-2 font-weight-500" (click)="addRow()" *ngIf="isAuthorized && activeUser.USER_TYPE >= 2; else buttonElse">Add Activity</button>
+                <button class="btn btn-success" (click)="addRow()" *ngIf="isAuthorized && activeUser.USER_TYPE >= 2; else buttonElse">Add Activity</button>
                 <ng-template #buttonElse>
                     <ng-container *ngIf="activityService.headerObj.STATUS === 1 && isAuthorized && isNewTimeAfter">
-                        <button class="btn btn-success rounded mb-2 font-weight-500" (click)="addEndProdRow()" *ngIf="!activityService.isToEndProd">Add Activity</button>
-                        <button class="btn btn-warning rounded mb-2 font-weight-500" (click)="removeEndProdRow()" *ngIf="activityService.isToEndProd">Cancel Activivity</button>
+                        <button class="btn btn-success" (click)="addEndProdRow()" *ngIf="!activityService.isToEndProd">Add Activity</button>
+                        <button class="btn btn-warning" (click)="removeEndProdRow()" *ngIf="activityService.isToEndProd">Cancel Activivity</button>
                     </ng-container>
                 </ng-template>
             </div>
@@ -123,10 +123,10 @@
             <tfoot *ngIf="activities.length > 0">
                 <tr class="text-uppercase">
                     <td colspan="2" class="text-right">Sub total:</td>
-                    <td class="text-right">{{ totalStdOutput | number: '' }} <small>({{stdOutputPerMinute | number: '2.2-2' }} / min)</small></td>
+                    <td class="text-right">{{ totalStdOutput | number: '' }}</td>
                     <td class="text-right">{{ packedSubTotal | number: '' }}</td>
                     <td class="text-right">{{ adjSubTotal | number: '' }}</td>
-                    <td class="text-right">{{ subTotal | number: '' }} <small>({{outputPerMinuteSubtotal | number: '2.2-2' }} / min)</small> </td>
+                    <td class="text-right">{{ subTotal | number: '' }}</td>
                     <td class="text-right">{{ downtimeSubTotal | number: '' }}</td>
                     <td></td>
                     <td class="text-right">Efficiency:</td>

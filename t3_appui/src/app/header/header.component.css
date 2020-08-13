@@ -2,10 +2,6 @@
     font-weight: 500;
 }
 
-.border-100 {
-    border-radius: 100px;
-}
-
 .text-green {
     color: #28a745 !important;
 }
@@ -65,48 +61,6 @@ input:read-only {
     border-radius: 0;
 }
 
-/*******************
-*  FLOATING LABELS *
-********************/
-
-.form-label-group {
-    position: relative;
-    padding-right: 40px;
-}
-
-.form-label-group > label {
-    z-index: -1;
-    position: absolute;
-    top: -17px;
-    left: 0;
-    display: block;
-    width: 100%;
-    margin-bottom: 0;
-    line-height: 2.5;
-    color: #495057;
-    border: 1px solid transparent;
-    transition: all .1s ease-in-out;
-}
-
-.form-label-group input::placeholder,
-.form-label-group input::-moz-placeholder,
-.form-label-group input::-ms-input-placeholder,
-.form-label-group input::-webkit-input-placeholder,
-.form-label-group input:-ms-input-placeholder {
-    color: transparent;
-}
-
-/* .form-label-group input, .form-label-group select {
-    padding-top: 30px;
-    padding-bottom: 10px;
-} */
-
-.form-label-group label {
-    font-size: 13px;
-    font-weight: 500 !important;
-    color: #777;
-}
-
 #prod_span {
     border-bottom: 1px solid #ced4da;
     /* white-space: nowrap; */
@@ -156,11 +110,4 @@ span.content {
     border-right: 0;
     /* border-bottom: 1px #9B8864 solid ; */
     font-size: 13px !important;
-}
-
-.btn-save-container button,
-.btn-save-container select,
-#undo_button {
-    width: 200px;
-    margin: 10px;
 }
