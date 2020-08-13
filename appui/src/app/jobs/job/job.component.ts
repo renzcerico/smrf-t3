@@ -11,16 +11,20 @@ import { requests } from '../../request';
 export class JobComponent implements OnInit, AfterContentChecked {
 
   requestsList = [];
+  jobTableHeader: string;
   jobRouter: string;
   jobTitle: string;
   jobStatus: string;
   jobStatusText: string;
   port = '/localapi/';
   req: any = [];
+  isAdmin = false;
+  jobTableData: string;
 
   constructor(public userService: UserService, public http: HttpClient) { }
 
   async ngOnInit() {
+    this.isAdmin = this.userService.userLevel === 'admin' ? true : false;
     this.requestsList = [];
     await this.getAllRequest();
   }
@@ -37,11 +41,15 @@ export class JobComponent implements OnInit, AfterContentChecked {
     if (this.userService.jobOrder === 1) {
       this.jobRouter = '/jobs/';
       this.jobTitle = 'Pick "NEW" Service Requests';
+      this.jobTableHeader = 'Request <br />No.';
+      this.jobTableData = 'RN';
       this.jobStatus = 'New!';
       this.jobStatusText = 'text-info';
     } else if (this.userService.jobOrder === 2) {
       this.jobRouter = '/manage-jobs/';
       this.jobTitle = 'Manage Assigned Job Orders';
+      this.jobTableHeader = 'Job Order <br />No.';
+      this.jobTableData = 'JO'
       this.jobStatus = 'Wip';
       this.jobStatusText = 'text-danger';
     } else if (this.userService.jobOrder === 3) {

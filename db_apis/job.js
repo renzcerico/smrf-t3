@@ -85,9 +85,19 @@ const create = async (data) => {
         }
     };
     
-    const result = await database.simpleExecute(sql, binds);
+    // const result = await database.simpleExecute(sql, binds);
 
-    return result;
+    // return result;
+    return new Promise((resolve, reject) => {
+        database.simpleExecute(sql, binds)
+        .then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        }).finally(() => {
+            connect.close();
+        });
+    });
 };
 
 module.exports.create = create;

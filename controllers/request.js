@@ -157,10 +157,18 @@ const requestPost = async (req, res, next) => {
     console.log('\x1b[32m', binds, '\x1b[0m');
 
     try {
-        const result = await database.simpleExecute(baseQuery, binds);
-
-        res.status(201).json(result.outBinds);
-
+        await database.simpleExecute(baseQuery, binds)
+            .then(response => {
+                res.status(201).json(response.outBinds);
+            })
+            .catch(err => {
+                next(err);
+            })
+            .finally(() => {
+                connect.close();
+            });
+        // res.status(201).json(result.outBinds);
+        
     } catch (err) {
         next(err);
     }

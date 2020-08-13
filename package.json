@@ -10,6 +10,7 @@
   "author": "= <=> (=)",
   "license": "ISC",
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^4.0.1",
     "@ng-select/ng-select": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
@@ -21,6 +22,7 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.4.11",
     "oracledb": "^4.2.0",
+    "sendmail": "^1.6.1",
     "socket.io": "^2.3.0",
     "uuid": "^8.2.0"
   },

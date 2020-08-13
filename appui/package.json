@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^2.0.4",
     "@angular/animations": "~9.1.9",
     "@angular/cdk": "^9.2.4",
     "@angular/common": "~9.1.9",
@@ -27,7 +28,6 @@
     "bootstrap": "4.2.1",
     "core-js": "^2.5.4",
     "jquery": "^3.5.1",
-    "lite-server": "^2.5.4",
     "moment": "^2.26.0",
     "ngx-autosize": "^1.8.0",
     "ngx-bootstrap": "^4.1.1",

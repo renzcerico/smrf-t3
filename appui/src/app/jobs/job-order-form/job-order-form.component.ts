@@ -127,8 +127,8 @@ export class JobOrderFormComponent implements OnInit {
                   const ds = res[keyJobs][0].DATE_STARTED;
                   const df = res[keyJobs][0].DATE_FINISHED;
 
-                  this.jobOrderDateStarted = ds ? moment(ds).format('Y/MM/DD HH:mm') : '';
-                  this.jobOrderDateFinished = df ? moment(df).format('Y/MM/DD HH:mm') : '';
+                  this.jobOrderDateStarted = ds ? new Date(moment(ds).format('Y/MM/DD HH:mm')) : '';
+                  this.jobOrderDateFinished = df ? new Date(moment(df).format('Y/MM/DD HH:mm')) : '';
                   this.jobOrderDowntime = res[keyJobs][0].TOTAL_DOWNTIME;
                   this.manpowerList = res[keyManpower];
                   this.jobOrderStatus = res[keyJobs][0].STATUS;
