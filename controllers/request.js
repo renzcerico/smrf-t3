@@ -3,6 +3,8 @@ const session   = require('express-session');
 const oracledb  = require('oracledb');
 const database  = require('../services/database.js');
 const fs        = require('fs');
+const { default: mailer } = require('../services/email/mailer.js');
+const nodemailer = require('../services/email/mailer');
 
 const requestData = (req) => {
     // const loggedIn = req.session.username;
@@ -159,6 +161,13 @@ const requestPost = async (req, res, next) => {
     try {
         await database.simpleExecute(baseQuery, binds)
             .then(response => {
+                const mailer = new nodemailer();
+                mailer.sendMail('job_request_created', {
+                    receiver: 'renz',
+                    sender: 'diether',
+                    receiverEmail: 'renz.martin_cerico@tailinsubic.net',
+                    objID: 192
+                });
                 res.status(201).json(response.outBinds);
             })
             .catch(err => {
