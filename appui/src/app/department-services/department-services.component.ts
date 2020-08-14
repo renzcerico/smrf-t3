@@ -1,3 +1,4 @@
+import { WebsocketService } from './../websocket.service';
 import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserComponent } from './../user/user.component';
@@ -18,7 +19,12 @@ export class DepartmentServicesComponent implements OnInit {
 
   constructor(public http: HttpClient,
               public userService: UserService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public websocketService: WebsocketService) {
+                  this.websocketService.departmentsUpdated.subscribe(async () => {
+                    await this.getAllDepartments();
+                  });
+              }
 
   async ngOnInit() {
     await this.getAllDepartments();

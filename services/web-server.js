@@ -95,11 +95,14 @@ function initialize() {
     const smrfSocket = socketIO.of('/smrf');
     smrfSocket.on('connection', ws => {
         console.log('smrf connected');
-        ws.on('test', data => {
-            console.log('test received');
-            console.log('emitting test...');
-            ws.broadcast.emit('received', data);
-            console.log('test emitted');
+        ws.on('departmentsUpdated', () => {
+            smrfSocket.emit('departmentsUpdated');
+        });
+        ws.on('servicesUpdated', () => {
+            smrfSocket.emit('servicesUpdated');
+        });
+        ws.on('accountsUpdated', () => {
+            smrfSocket.emit('accountsUpdated');
         });
     });
 

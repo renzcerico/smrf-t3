@@ -163,6 +163,6 @@ input[type=number] {
     color: #777;
 }
 
-.modal-body .form-label-group > label {
+.modal-body .form-label-group > label, #formCreateAccount label {
     z-index: 1021 !important;
 }
