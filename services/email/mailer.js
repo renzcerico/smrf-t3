@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const template = require('./template');
 
 class mailer {
-    transport;
+    // transport = null;
     constructor() {
         this.transport = nodemailer.createTransport({
             host: 'mail.tailinsubic.net',

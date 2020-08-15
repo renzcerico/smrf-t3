@@ -1,23 +1,22 @@
 class template {
-    receiver = '';
-    mail_content = '';
-    mail_action_link = '';
-    mail_action_text = '';
-    objID = null;
-    type = '';
-    types = {
-        'job_request_created': {
-            'mail_content': 'You have a new job request. You can view it by clicking the button below.',
-            'mail_action_link': 'http://service.tailinsubic.com/requests/',
-            'mail_action_text': 'view job request'
-        }
-    }
-
+    // receiver = '';
+    // mail_content = '';
+    // mail_action_link = '';
+    // mail_action_text = '';
+    // objID = null;
+    // type = '';
     constructor(type, params) {
         this.type = type;
         this.receiver = params.receiver;
         this.sender = params.sender;
         this.objID = params.objID;
+        this.types = {
+            'job_request_created': {
+                'mail_content': 'You have a new job request. You can view it by clicking the button below.',
+                'mail_action_link': 'http://service.tailinsubic.com/requests/',
+                'mail_action_text': 'view job request'
+            }
+        }
     }
 
     generateTemplate() {
@@ -72,7 +71,7 @@ class template {
                 ${mail_content}
             </p>
 
-            <a class="action-button" href="${mail_action_link}">${mail_action_text}</a>
+            <a class="action-button" href="${mail_action_link}" style="width:100%;">${mail_action_text}</a>
 
             <p class="action-backup">Or by using this link: <a href="${mail_action_link}">${mail_action_text}</a></p>
         </body>
