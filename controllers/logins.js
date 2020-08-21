@@ -14,7 +14,7 @@ function loginForm(req) {
       let login = loginForm(req);
       
       login = await logins.validLogin(login);
-
+      
       if (login.length > 0) {
         req.session.username = login;
         res.status(200).json(login);

@@ -1,45 +1,39 @@
 class template {
-    receiver = '';
-    mail_content = '';
-    mail_action_link = '';
-    mail_action_text = '';
-    objID = null;
-    type = '';
-    types = {
-        'job_request_created': {
-            'mail_content': 'You have a new job request. You can view it by clicking the button below.',
-            'mail_action_link': 'http://service.tailinsubic.com/requests/',
-            'mail_action_text': 'view job request'
-        },
-        'job_request_rejected': {
-            'mail_content': 'A job request you sent was rejected. You can view it by clicking the button below.',
-            'mail_action_link': 'http://service.tailinsubic.com/requests/',
-            'mail_action_text': 'view job request'
-        },
-        'job_request_accepted': {
-            'mail_content': 'A job request you sent was accepted. You can view it by clicking the button below.',
-            'mail_action_link': 'http://service.tailinsubic.com/requests/',
-            'mail_action_text': 'view job request'
-        },
-        'account_created': {
-            'mail_content': 'An smrf account was created for you. You can view it by clicking the button below.',
-            'mail_action_link': 'http://service.tailinsubic.com/requests/',
-            'mail_action_text': 'view job request'
-        },
-    }
+    // receiver = '';
+    // mail_content = '';
+    // mail_action_link = '';
+    // mail_action_text = '';
+    // objID = null;
+    // type = '';
+
 
     constructor(type, params) {
-        this.type = type;
-        this.receiver = params.receiver;
-        this.sender = params.sender;
-        this.objID = params.objID;
         this.types = {
             'job_request_created': {
                 'mail_content': 'You have a new job request. You can view it by clicking the button below.',
                 'mail_action_link': 'http://service.tailinsubic.com/requests/',
                 'mail_action_text': 'view job request'
-            }
-        }
+            },
+            'job_request_rejected': {
+                'mail_content': 'A job request you sent was rejected. You can view it by clicking the button below.',
+                'mail_action_link': 'http://service.tailinsubic.com/requests/',
+                'mail_action_text': 'view job request'
+            },
+            'job_request_accepted': {
+                'mail_content': 'A job request you sent was accepted. You can view it by clicking the button below.',
+                'mail_action_link': 'http://service.tailinsubic.com/requests/',
+                'mail_action_text': 'view job request'
+            },
+            'account_created': {
+                'mail_content': 'An smrf account was created for you. You can view it by clicking the button below.',
+                'mail_action_link': 'http://service.tailinsubic.com/requests/',
+                'mail_action_text': 'view job request'
+            },
+        };
+        this.type = type;
+        this.receiver = params.receiver;
+        this.sender = params.sender;
+        this.objID = params.objID;
     }
 
     generateTemplate() {
