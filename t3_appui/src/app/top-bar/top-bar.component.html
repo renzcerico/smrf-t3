@@ -51,6 +51,7 @@
                             {{ username }}
                         </button>
                         <div ngbDropdownMenu aria-labelledby="user_profile_dropdown" class="dropdown-menu dropdown-menu-left">
+                            <a *ngIf="userProfile.USER_TYPE === 4" href="/accounts" ngbDropdownItem class="text-muted">Accounts</a>
                             <a href="javascript:void(0)" ngbDropdownItem class="text-muted" (click)="showChangePasswordModal()">Change Password</a>
                             <a href="javascript:void(0)" (click)="loggedOut()" ngbDropdownItem class="text-muted">Logout</a>
                         </div>
