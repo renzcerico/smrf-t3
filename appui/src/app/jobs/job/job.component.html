@@ -24,9 +24,9 @@
                         <tr *ngFor="let req of requestsList; let i = index;" [routerLink]="[jobRouter, req.REQ_ID]">
                             <td>{{ req.DEPARTMENT_NAME + '-' + this.jobTableData + '-' + req.REQ_ID }}</td>
                             <td [class]="jobStatusText">{{ jobStatus | titlecase }}</td>
-                            <td>{{ req.NAME_CREATED_BY }}</td>
-                            <td class="text-ellipsis" [title]="req.SERVICE_DESCRIPTION">{{ req.SERVICE_DESCRIPTION }}</td>
                             <td>{{ req.NAME }}</td>
+                            <td class="text-ellipsis" [title]="req.SERVICE_DESCRIPTION">{{ req.SERVICE_DESCRIPTION }}</td>
+                            <td>{{ req.NAME_CREATED_BY }}</td>
                             <td>
                                 {{ req.CREATION_DATE | date: 'MMM dd, yyyy HH:mm' }} 
                             </td>
