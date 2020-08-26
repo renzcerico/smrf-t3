@@ -86,8 +86,13 @@ export class HeaderModalComponent implements OnInit {
   }
 
   openHeader(barcode) {
-    this.activeModal.dismiss('Cross click');
-    this.headerService.getData(barcode);
+    const pathname = window.location.pathname;
+    if (pathname !== '/') {
+        window.location.replace('/');
+    } else {
+        this.activeModal.dismiss('Cross click');
+        this.headerService.getData(barcode);
+    }
   }
 
   refreshSource() {
