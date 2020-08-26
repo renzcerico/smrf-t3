@@ -20,7 +20,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let dept of departments;" (click)="showDepartmentDialog(dept.ID)">
+                                <tr *ngFor="let dept of departments;" (dblclick)="showDepartmentDialog(dept.ID)">
                                     <td class="align-middle">{{ dept.NAME | uppercase }}</td>
                                     <td class="align-middle">
                                         <span *ngIf="dept.REP_NAME">
@@ -56,7 +56,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let service of services;" (click)="showServicesDialog(service.SR_TYPE_ID);">
+                                <tr *ngFor="let service of services;" (dblclick)="showServicesDialog(service.SR_TYPE_ID);">
                                     <td class="align-middle">
                                         {{ service.SR_TYPE_CODE | uppercase }}
                                     </td>
@@ -91,7 +91,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let account of accounts;" (click)="showAccountDialog(account.USER_ID)">
+                                <tr *ngFor="let account of accounts;" (dblclick)="showAccountDialog(account.USER_ID)">
                                     <td class="align-middle">
                                         {{ account.NAME | uppercase }}
                                     </td>

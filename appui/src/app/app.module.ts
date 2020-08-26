@@ -41,6 +41,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxMatDatetimePickerModule,
          NgxMatTimepickerModule,
          NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RequestComponent } from './requests/request/request.component';
@@ -149,7 +150,8 @@ import * as $ from 'jquery';
     MatProgressSpinnerModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    MatSnackBarModule,
   ],
   entryComponents: [
     // DepartmentComponent

@@ -1,8 +1,10 @@
 import { WebsocketService } from './../websocket.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import { MsgComponent } from './../msg/msg.component';
+import { MatSnackBar, MatSnackBarModule  } from '@angular/material/snack-bar';
 // import { ReactiveFormsModule , FormGroup, FormControlName, Validators, FormControl } from '@angular/forms';
 
 export interface DialogData {
@@ -25,12 +27,20 @@ export class DepartmentComponent implements OnInit {
     constructor(public http: HttpClient,
                 public webSocketService: WebsocketService,
                 public router: Router,
-                @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+                @Inject(MAT_DIALOG_DATA) public data: DialogData,
+                public dialog: MatDialog,
+                private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
         this.departmentID = this.data.id;
         this.getUsersByDepartment();
         this.getDepartmentDetails();
+    }
+
+    showSnackbar(msg) {
+        this.snackBar.openFromComponent(MsgComponent, {
+            duration: 10000,
+        });
     }
 
     submitDepartment() {
@@ -52,8 +62,9 @@ export class DepartmentComponent implements OnInit {
 
             // Add service representative
             this.addServiceRepresentative();
-
         }
+        this.showSnackbar('Test');
+        this.dialog.closeAll();
     }
 
     addServiceRepresentative() {
